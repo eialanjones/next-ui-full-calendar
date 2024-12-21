@@ -58,7 +58,7 @@ export default function MonthView({
 
   function handleAddEvent(selectedDay: number) {
     showModal({
-      title: "Add Event",
+      title: "Adicionar Evento",
       body: <AddEventModal />,
       getter: async () => {
         const startDate = new Date(
@@ -109,8 +109,8 @@ export default function MonthView({
 
   const daysOfWeek =
     weekStartsOn === "monday"
-      ? ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-      : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      ? ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]
+      : ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
   const firstDayOfMonth = new Date(
     currentDate.getFullYear(),
@@ -258,7 +258,7 @@ export default function MonthView({
                   {dayEvents.length === 0 && (
                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <span className="text-white tracking-tighter text-lg font-semibold">
-                        Add Event
+                        Adicionar Evento
                       </span>
                     </div>
                   )}

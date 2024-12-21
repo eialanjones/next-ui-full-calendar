@@ -180,7 +180,7 @@ export const SchedulerProvider = ({
   };
 
   const getDayName = (day: number) => {
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const days = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
     return days[day];
   };
 

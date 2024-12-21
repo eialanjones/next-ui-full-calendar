@@ -113,7 +113,7 @@ export default function WeeklyView({
 
   function handleAddEvent(event?: Event) {
     showModal({
-      title: "Add Event",
+      title: "Adicionar Evento",
       body: <AddEventModal />,
       getter: async () => {
         const startDate = event?.startDate || new Date();
@@ -222,7 +222,7 @@ export default function WeeklyView({
       >
         <div className="sticky top-0 left-0 z-30 bg-default-100 rounded-tl-lg h-full border-0  flex items-center justify-center">
           <span className="text-lg font-semibold text-muted-foreground">
-            Week {getters.getWeekNumber(currentDate)}
+            Semana {getters.getWeekNumber(currentDate)}
           </span>
         </div>
 
@@ -339,7 +339,7 @@ export default function WeeklyView({
                       className="col-span-1 border-default-200 h-16 z-20 relative transition duration-300 cursor-pointer border-r border-b text-center text-sm text-muted-foreground"
                     >
                       <div className="absolute bg-default-100 flex items-center justify-center text-xs opacity-0 transition duration-250 hover:opacity-100 w-full h-full">
-                        Add Event
+                        Adicionar Evento
                       </div>
                     </div>
                   ))}

@@ -71,7 +71,7 @@ export default function SelectDate({
     <div>
       <div className="w-full flex gap-4 max-w-full flex-wrap">
         <DateRangePicker
-          label="Stay duration"
+          label="Duração do Evento"
           isRequired
           value={{ start: dateState.startDate, end: dateState.endDate }}
           className="w-full"
@@ -101,7 +101,7 @@ export default function SelectDate({
 
         <div className="flex flex-wrap gap-4">
           <TimeInput
-            label="Start Time"
+            label="Hora de Início"
             defaultValue={dateState?.startTime}
             onChange={(e: Time) => {
               setDateState({
@@ -112,7 +112,7 @@ export default function SelectDate({
           />
 
           <TimeInput
-            label="End Time"
+            label="Hora de Término"
             defaultValue={dateState?.endTime}
             onChange={(e: Time) => {
               setDateState({

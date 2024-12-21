@@ -67,7 +67,7 @@ export default function DailyView({
     setTimelinePosition(y);
   };
 
-  const getFormattedDayTitle = () => currentDate.toDateString();
+  const getFormattedDayTitle = () => currentDate.toLocaleDateString('pt-BR', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
 
   const dayEvents = getters.getEventsForDay(
     currentDate?.getDate() || 0,
@@ -76,7 +76,7 @@ export default function DailyView({
 
   function handleAddEvent(event?: Event) {
     showModal({
-      title: CustomEventModal?.CustomAddEventModal?.title || "Add Event",
+      title: CustomEventModal?.CustomAddEventModal?.title || "Adicionar Evento",
       body: (
         <AddEventModal
           CustomAddEventModal={
@@ -152,7 +152,7 @@ export default function DailyView({
               startContent={<ArrowLeft />}
               onClick={handlePrevDay}
             >
-              Prev
+              Anterior
             </Button>
           )}
           {nextButton ? (
@@ -163,7 +163,7 @@ export default function DailyView({
               onClick={handleNextDay}
               endContent={<ArrowRight />}
             >
-              Next
+              Próximo
             </Button>
           )}
         </div>
@@ -186,7 +186,7 @@ export default function DailyView({
                     </div>
                   );
                 })
-              : "No events for today"}
+              : "Nenhum evento para hoje"}
           </AnimatePresence>
         </div>
 
@@ -221,7 +221,7 @@ export default function DailyView({
                   className="cursor-pointer w-full relative border-b  hover:bg-default-200/50  transition duration-300  p-4 h-[64px] text-left text-sm text-muted-foreground border-default-200"
                 >
                   <div className="absolute bg-default-200 flex items-center justify-center text-xs opacity-0 transition left-0 top-0 duration-250 hover:opacity-100 w-full h-full">
-                    Add Event
+                    Adicionar Evento
                   </div>
                 </div>
               ))}

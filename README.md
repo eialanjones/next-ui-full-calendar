@@ -162,7 +162,7 @@ export default function Home() {
           CustomComponents={{
             CustomEventModal: {
               CustomAddEventModal: {
-                title: "Custom Add Event",
+                title: "Custom Adicionar Evento",
                 CustomForm: MyCustomForm,
               },
             },
@@ -235,7 +235,7 @@ This component is the main calendar view. It supports day, week, and month views
   - **mobileViews**: `("day" | "week" | "month")[]` – The available views for mobile devices.
 
 - **CustomComponents** `(optional)`: `CustomComponents` – Customize components such as event modals, buttons, and tabs.
-  - **CustomEventModal**: Customize event modals, such as the Add Event form.
+  - **CustomEventModal**: Customize event modals, such as the Adicionar Evento form.
   - **customTabs**: Customize the tabs for Day, Week, and Month.
   
 - **classNames** `(optional)`: `ClassNames` – Customize the styling of buttons, tabs, and other elements.
@@ -492,7 +492,7 @@ export interface ClassNames {
 
 #### ButtonClassNames
 
-Specifies class names for previous, next, and add event buttons.
+Specifies class names for previous, next, and Adicionar Evento buttons.
 
 ```ts
 export interface ButtonClassNames {

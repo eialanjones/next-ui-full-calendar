@@ -68,10 +68,10 @@ export default function AddEventModal({
   }, [data, reset]);
 
   const colorOptions = [
-    { key: "blue", name: "Blue" },
-    { key: "red", name: "Red" },
-    { key: "green", name: "Green" },
-    { key: "yellow", name: "Yellow" },
+    { key: "blue", name: "Azul" },
+    { key: "red", name: "Vermelho" },
+    { key: "green", name: "Verde" },
+    { key: "yellow", name: "Amarelo" },
   ];
 
   function getEventColor(variant: Variant) {
@@ -127,16 +127,16 @@ export default function AddEventModal({
         <>
           <Input
             {...register("title")}
-            label="Event Name"
-            placeholder="Enter event name"
+            label="Nome do Evento"
+            placeholder="Digite o nome do evento"
             variant="bordered"
             isInvalid={!!errors.title}
             errorMessage={errors.title?.message}
           />
           <Textarea
             {...register("description")}
-            label="Description"
-            placeholder="Enter event description"
+            label="Descrição do Evento"
+            placeholder="Digite a descrição do evento"
             variant="bordered"
           />
           <SelectDate data={data} setValue={setValue} />
@@ -186,10 +186,10 @@ export default function AddEventModal({
 
           <ModalFooter className="px-0">
             <Button color="danger" variant="light" onPress={onClose}>
-              Cancel
+              Cancelar
             </Button>
             <Button color="primary" type="submit">
-              Save Event
+              Salvar Evento
             </Button>
           </ModalFooter>
         </>
