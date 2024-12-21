@@ -240,7 +240,7 @@ function _ts_generator(thisArg, body) {
         };
     }
 }
-import React2, { createContext as createContext2, useContext as useContext2, useReducer } from "react";
+import React2, { createContext as createContext2, useContext as useContext2, useReducer, useEffect } from "react";
 // providers/modal-provider.tsx
 import React, { createContext, useContext, useState } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/modal";
@@ -340,171 +340,6 @@ var useModalContext = function() {
     return context;
 };
 // providers/schedular-provider.tsx
-var initialState = {
-    // events: [
-    //   {
-    //     id: "1d4c5c73-b5fa-4f67-bb6e-1d5d66cbd57d",
-    //     title: "Kickoff Meeting.",
-    //     description: "Initial project kickoff with stakeholders.",
-    //     startDate: new Date("2024-10-07T09:00:00"),
-    //     endDate: new Date("2024-10-07T10:00:00"),
-    //     variant: "primary",
-    //   },
-    //   {
-    //     id: "5e1b7b57-0c3e-4d61-bcd7-7fa77b2a58b1",
-    //     title: "Client Feedback Session.",
-    //     description: "Review client feedback on the recent project.",
-    //     startDate: new Date("2024-10-07T11:00:00"),
-    //     endDate: new Date("2024-10-07T12:30:00"),
-    //     variant: "success",
-    //   },
-    //   {
-    //     id: "e68a77f2-5891-4a6f-9a48-b14e2f9f8141",
-    //     title: "Marketing Strategy Meeting.",
-    //     description: "Plan the marketing strategy for Q4.",
-    //     startDate: new Date("2024-10-08T14:00:00"),
-    //     endDate: new Date("2024-10-08T15:30:00"),
-    //     variant: "warning",
-    //   },
-    //   {
-    //     id: "0e6e1437-249c-4c81-8c04-4f5a0b3d9a93",
-    //     title: "Risk Assessment Review.",
-    //     description: "Evaluate potential project risks.",
-    //     startDate: new Date("2024-10-09T10:00:00"),
-    //     endDate: new Date("2024-10-09T11:30:00"),
-    //     variant: "danger",
-    //   },
-    //   {
-    //     id: "8f93e1a7-b4ec-4b75-9f41-5261cd6d8d25",
-    //     title: "Weekly Standup.",
-    //     description: "Weekly team status update.",
-    //     startDate: new Date("2024-10-09T09:30:00"),
-    //     endDate: new Date("2024-10-09T10:00:00"),
-    //     variant: "default",
-    //   },
-    //   {
-    //     id: "d3e5c45a-ef1d-4bc9-b01d-9c7f3c8c7a5b",
-    //     title: "Design Review.",
-    //     description: "Review the latest design mockups.",
-    //     startDate: new Date("2024-10-10T13:00:00"),
-    //     endDate: new Date("2024-10-10T14:00:00"),
-    //     variant: "primary",
-    //   },
-    //   {
-    //     id: "d01ab0ec-5b5a-4f79-97ec-b64e62956c71",
-    //     title: "Budget Meeting.",
-    //     description: "Discuss the budget for the next fiscal year.",
-    //     startDate: new Date("2024-10-10T10:00:00"),
-    //     endDate: new Date("2024-10-10T11:30:00"),
-    //     variant: "success",
-    //   },
-    //   {
-    //     id: "0f8b843e-8f72-44ec-910f-4aa0f368b2c8",
-    //     title: "Team Building Activity.",
-    //     description: "Fun activities to strengthen team bonds.",
-    //     startDate: new Date("2024-10-11T16:00:00"),
-    //     endDate: new Date("2024-10-11T19:00:00"),
-    //     variant: "warning",
-    //   },
-    //   {
-    //     id: "5a0c74bc-c3d8-4c37-92e2-b4b9b73dbf2b",
-    //     title: "Vendor Negotiation.",
-    //     description: "Negotiate terms with potential vendors.",
-    //     startDate: new Date("2024-10-12T10:30:00"),
-    //     endDate: new Date("2024-10-12T12:00:00"),
-    //     variant: "danger",
-    //   },
-    //   {
-    //     id: "3f40cd3c-bc73-4eab-ae02-032f9610d0c4",
-    //     title: "Product Development Update.",
-    //     description: "Update on the product development status.",
-    //     startDate: new Date("2024-10-12T14:00:00"),
-    //     endDate: new Date("2024-10-12T15:00:00"),
-    //     variant: "default",
-    //   },
-    //   {
-    //     id: "3a1e6f45-91b0-4d88-bb34-6dbf17326c98",
-    //     title: "Conference Preparation.",
-    //     description: "Prepare for the upcoming industry conference.",
-    //     startDate: new Date("2024-10-13T08:00:00"),
-    //     endDate: new Date("2024-10-13T10:00:00"),
-    //     variant: "primary",
-    //   },
-    //   {
-    //     id: "4c1f4e5a-bb6d-43eb-846e-1f5c403203f2",
-    //     title: "Social Media Strategy.",
-    //     description: "Develop a strategy for social media marketing.",
-    //     startDate: new Date("2024-10-13T09:00:00"),
-    //     endDate: new Date("2024-10-13T10:30:00"),
-    //     variant: "success",
-    //   },
-    //   {
-    //     id: "6e18bc5f-5d4e-407c-8395-3b2ae2a3c65a",
-    //     title: "Sales Training.",
-    //     description: "Conduct training for the sales team.",
-    //     startDate: new Date("2024-10-13T13:00:00"),
-    //     endDate: new Date("2024-10-13T15:00:00"),
-    //     variant: "warning",
-    //   },
-    //   {
-    //     id: "d09e9e34-5c5f-44f7-8f8a-8cc9dcda7aa2",
-    //     title: "Emergency System Update.",
-    //     description: "Critical update to prevent system failures.",
-    //     startDate: new Date("2024-10-12T22:00:00"),
-    //     endDate: new Date("2024-10-13T02:00:00"),
-    //     variant: "danger",
-    //   },
-    //   {
-    //     id: "09b6e1d5-3ab6-4d99-93e5-e98b8b49d5f6",
-    //     title: "Quarterly Business Review.",
-    //     description: "Review business performance for the quarter.",
-    //     startDate: new Date("2024-10-07T10:00:00"),
-    //     endDate: new Date("2024-10-07T12:00:00"),
-    //     variant: "default",
-    //   },
-    //   {
-    //     id: "53c9fcd3-80ee-4c76-b2c3-2c65b73f9785",
-    //     title: "Feedback Collection.",
-    //     description: "Collect feedback from team members.",
-    //     startDate: new Date("2024-10-08T15:00:00"),
-    //     endDate: new Date("2024-10-08T16:00:00"),
-    //     variant: "primary",
-    //   },
-    //   {
-    //     id: "4cf73125-9477-4798-8f1f-3cd18a64b23a",
-    //     title: "Product Roadmap Discussion.",
-    //     description: "Discuss future product roadmap.",
-    //     startDate: new Date("2024-10-09T14:00:00"),
-    //     endDate: new Date("2024-10-09T15:30:00"),
-    //     variant: "success",
-    //   },
-    //   {
-    //     id: "9824cf9c-7d70-4209-b8b8-7092875c3038",
-    //     title: "Website Redesign Meeting.",
-    //     description: "Plan the redesign of the company website.",
-    //     startDate: new Date("2024-10-10T10:00:00"),
-    //     endDate: new Date("2024-10-10T11:00:00"),
-    //     variant: "warning",
-    //   },
-    //   {
-    //     id: "e8c64046-2097-41e5-8b86-d300d5710579",
-    //     title: "Data Security Workshop.",
-    //     description: "Workshop on data security best practices.",
-    //     startDate: new Date("2024-10-11T13:00:00"),
-    //     endDate: new Date("2024-10-11T15:00:00"),
-    //     variant: "danger",
-    //   },
-    //   {
-    //     id: "12d8b2c5-b13e-4c25-89e8-3d4df1ae3c41",
-    //     title: "Innovation Session.",
-    //     description: "Brainstorming session for innovative ideas.",
-    //     startDate: new Date("2024-10-12T11:00:00"),
-    //     endDate: new Date("2024-10-12T12:30:00"),
-    //     variant: "danger",
-    //   },
-    // ],
-    events: []
-};
 var schedulerReducer = function(state, action) {
     switch(action.type){
         case "ADD_EVENT":
@@ -525,13 +360,17 @@ var schedulerReducer = function(state, action) {
                     return event.id === action.payload.id ? action.payload : event;
                 })
             });
+        case "SET_EVENTS":
+            return _object_spread_props(_object_spread({}, state), {
+                events: action.payload
+            });
         default:
             return state;
     }
 };
 var SchedulerContext = createContext2(void 0);
 var SchedulerProvider = function(param) {
-    var children = param.children, onAddEvent = param.onAddEvent, onUpdateEvent = param.onUpdateEvent, onDeleteEvent = param.onDeleteEvent, _param_weekStartsOn = param.weekStartsOn, weekStartsOn = _param_weekStartsOn === void 0 ? "sunday" : _param_weekStartsOn;
+    var children = param.children, onAddEvent = param.onAddEvent, onUpdateEvent = param.onUpdateEvent, onDeleteEvent = param.onDeleteEvent, initialState = param.initialState, _param_weekStartsOn = param.weekStartsOn, weekStartsOn = _param_weekStartsOn === void 0 ? "sunday" : _param_weekStartsOn;
     var handleEventStyling = function handleEventStyling(event, dayEvents) {
         var eventsOnHour = dayEvents.filter(function(e) {
             return e.startDate < event.endDate && e.endDate > event.startDate;
@@ -594,7 +433,19 @@ var SchedulerProvider = function(param) {
             onDeleteEvent(id);
         }
     };
-    var _useReducer = _sliced_to_array(useReducer(schedulerReducer, initialState), 2), state = _useReducer[0], dispatch = _useReducer[1];
+    var _useReducer = _sliced_to_array(useReducer(schedulerReducer, {
+        events: initialState !== null && initialState !== void 0 ? initialState : []
+    }), 2), state = _useReducer[0], dispatch = _useReducer[1];
+    useEffect(function() {
+        if (initialState) {
+            dispatch({
+                type: "SET_EVENTS",
+                payload: initialState
+            });
+        }
+    }, [
+        initialState
+    ]);
     var getDaysInMonth = function(month, year) {
         return Array.from({
             length: new Date(year, month + 1, 0).getDate()
@@ -643,13 +494,13 @@ var SchedulerProvider = function(param) {
     };
     var getDayName = function(day) {
         var days = [
-            "Sun",
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thu",
-            "Fri",
-            "Sat"
+            "Dom",
+            "Seg",
+            "Ter",
+            "Qua",
+            "Qui",
+            "Sex",
+            "S\xE1b"
         ];
         return days[day];
     };
@@ -684,14 +535,14 @@ var useScheduler = function() {
     return context;
 };
 // components/schedule/_components/view/schedular-view-filteration.tsx
-import React10, { useEffect as useEffect3 } from "react";
+import React10, { useEffect as useEffect4 } from "react";
 import { motion as motion5 } from "framer-motion";
 import { Button as Button5 } from "@nextui-org/button";
 import { Tabs, Tab } from "@nextui-org/tabs";
 import { Calendar, CalendarDaysIcon } from "lucide-react";
 import { BsCalendarMonth, BsCalendarWeek } from "react-icons/bs";
 // components/schedule/_modals/add-event-modal.tsx
-import React4, { useEffect as useEffect2, useState as useState3 } from "react";
+import React4, { useEffect as useEffect3, useState as useState3 } from "react";
 import { ModalFooter as ModalFooter2 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import { Input, Textarea } from "@nextui-org/input";
@@ -700,7 +551,7 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-o
 import { parseDate, Time } from "@internationalized/date";
 import { DateRangePicker } from "@nextui-org/date-picker";
 import { TimeInput } from "@nextui-org/date-input";
-import React3, { useEffect, useState as useState2 } from "react";
+import React3, { useEffect as useEffect2, useState as useState2 } from "react";
 function getFormattedDate(date) {
     return "".concat(date.getFullYear(), "-").concat(String(date.getMonth() + 1).padStart(2, "0"), "-").concat(String(date.getDate()).padStart(2, "0"));
 }
@@ -717,7 +568,7 @@ function SelectDate(param) {
         startTime: new Time((data === null || data === void 0 ? void 0 : (_data_startDate = data.startDate) === null || _data_startDate === void 0 ? void 0 : _data_startDate.getHours()) || 0, (data === null || data === void 0 ? void 0 : (_data_startDate1 = data.startDate) === null || _data_startDate1 === void 0 ? void 0 : _data_startDate1.getMinutes()) || 0),
         endTime: new Time((data === null || data === void 0 ? void 0 : (_data_endDate = data.endDate) === null || _data_endDate === void 0 ? void 0 : _data_endDate.getHours()) || 0, (data === null || data === void 0 ? void 0 : (_data_endDate1 = data.endDate) === null || _data_endDate1 === void 0 ? void 0 : _data_endDate1.getMinutes()) || 0)
     }), 2), dateState = _useState2[0], setDateState = _useState2[1];
-    useEffect(function() {
+    useEffect2(function() {
         var _dateState_startTime, _dateState_startTime1, _dateState_endTime, _dateState_endTime1;
         if (!dateState) return;
         var jsStartDate = calendarDateToJSDate(dateState.startDate);
@@ -738,7 +589,7 @@ function SelectDate(param) {
     return /* @__PURE__ */ React3.createElement("div", null, /* @__PURE__ */ React3.createElement("div", {
         className: "w-full flex gap-4 max-w-full flex-wrap"
     }, /* @__PURE__ */ React3.createElement(DateRangePicker, {
-        label: "Stay duration",
+        label: "Dura\xE7\xE3o do Evento",
         isRequired: true,
         value: {
             start: dateState.startDate,
@@ -758,19 +609,19 @@ function SelectDate(param) {
     }), /* @__PURE__ */ React3.createElement("div", {
         className: "flex flex-wrap gap-4"
     }, /* @__PURE__ */ React3.createElement(TimeInput, {
-        label: "Start Time",
+        label: "Hora de In\xEDcio",
         defaultValue: dateState === null || dateState === void 0 ? void 0 : dateState.startTime,
         onChange: function(e) {
             setDateState(_object_spread_props(_object_spread({}, dateState), {
-                startTime: e
+                startTime: e || new Time(0, 0)
             }));
         }
     }), /* @__PURE__ */ React3.createElement(TimeInput, {
-        label: "End Time",
+        label: "Hora de T\xE9rmino",
         defaultValue: dateState === null || dateState === void 0 ? void 0 : dateState.endTime,
         onChange: function(e) {
             setDateState(_object_spread_props(_object_spread({}, dateState), {
-                endTime: e
+                endTime: e || new Time(0, 0)
             }));
         },
         isInvalid: (dateState === null || dateState === void 0 ? void 0 : dateState.startTime) && (dateState === null || dateState === void 0 ? void 0 : dateState.endTime) && dateState.endTime.hour * 60 + dateState.endTime.minute <= dateState.startTime.hour * 60 + dateState.startTime.minute
@@ -822,7 +673,7 @@ function AddEventModal(param) {
             color: (data === null || data === void 0 ? void 0 : data.color) || "blue"
         }
     }), register = _useForm.register, handleSubmit = _useForm.handleSubmit, reset = _useForm.reset, errors = _useForm.formState.errors, setValue = _useForm.setValue;
-    useEffect2(function() {
+    useEffect3(function() {
         if (data) {
             reset({
                 title: data.title,
@@ -840,19 +691,19 @@ function AddEventModal(param) {
     var colorOptions = [
         {
             key: "blue",
-            name: "Blue"
+            name: "Azul"
         },
         {
             key: "red",
-            name: "Red"
+            name: "Vermelho"
         },
         {
             key: "green",
-            name: "Green"
+            name: "Verde"
         },
         {
             key: "yellow",
-            name: "Yellow"
+            name: "Amarelo"
         }
     ];
     function getEventColor(variant) {
@@ -904,14 +755,14 @@ function AddEventModal(param) {
         register: register,
         errors: errors
     }) : /* @__PURE__ */ React4.createElement(React4.Fragment, null, /* @__PURE__ */ React4.createElement(Input, _object_spread_props(_object_spread({}, register("title")), {
-        label: "Event Name",
-        placeholder: "Enter event name",
+        label: "Nome do Evento",
+        placeholder: "Digite o nome do evento",
         variant: "bordered",
         isInvalid: !!errors.title,
         errorMessage: (_errors_title = errors.title) === null || _errors_title === void 0 ? void 0 : _errors_title.message
     })), /* @__PURE__ */ React4.createElement(Textarea, _object_spread_props(_object_spread({}, register("description")), {
-        label: "Description",
-        placeholder: "Enter event description",
+        label: "Descri\xE7\xE3o do Evento",
+        placeholder: "Digite a descri\xE7\xE3o do evento",
         variant: "bordered"
     })), /* @__PURE__ */ React4.createElement(SelectDate, {
         data: data,
@@ -953,10 +804,10 @@ function AddEventModal(param) {
         color: "danger",
         variant: "light",
         onPress: onClose
-    }, "Cancel"), /* @__PURE__ */ React4.createElement(Button, {
+    }, "Cancelar"), /* @__PURE__ */ React4.createElement(Button, {
         color: "primary",
         type: "submit"
-    }, "Save Event"))));
+    }, "Salvar Evento"))));
 }
 // components/schedule/_components/view/day/daily-view.tsx
 import React6, { useRef, useState as useState4 } from "react";
@@ -1128,13 +979,18 @@ function DailyView(param) {
         setTimelinePosition(y);
     };
     var getFormattedDayTitle = function() {
-        return currentDate.toDateString();
+        return currentDate.toLocaleDateString("pt-BR", {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        });
     };
     var dayEvents = getters.getEventsForDay((currentDate === null || currentDate === void 0 ? void 0 : currentDate.getDate()) || 0, currentDate);
     function handleAddEvent(event) {
         var _CustomEventModal_CustomAddEventModal, _CustomEventModal_CustomAddEventModal1;
         showModal({
-            title: (CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal.title) || "Add Event",
+            title: (CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal.title) || "Adicionar Evento",
             body: /* @__PURE__ */ React6.createElement(AddEventModal, {
                 CustomAddEventModal: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal1 = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal1.CustomForm
             }),
@@ -1192,20 +1048,20 @@ function DailyView(param) {
     }, /* @__PURE__ */ React6.createElement("h1", {
         className: "text-3xl font-semibold mb-4"
     }, getFormattedDayTitle()), /* @__PURE__ */ React6.createElement("div", {
-        className: "flex ml-auto gap-3"
+        className: "flex ml-auto  gap-3"
     }, prevButton ? /* @__PURE__ */ React6.createElement("div", {
         onClick: handlePrevDay
     }, prevButton) : /* @__PURE__ */ React6.createElement(Button2, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
         startContent: /* @__PURE__ */ React6.createElement(ArrowLeft, null),
         onClick: handlePrevDay
-    }, "Prev"), nextButton ? /* @__PURE__ */ React6.createElement("div", {
+    }, "Anterior"), nextButton ? /* @__PURE__ */ React6.createElement("div", {
         onClick: handleNextDay
     }, nextButton) : /* @__PURE__ */ React6.createElement(Button2, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextDay,
         endContent: /* @__PURE__ */ React6.createElement(ArrowRight, null)
-    }, "Next"))), /* @__PURE__ */ React6.createElement("div", {
+    }, "Pr\xF3ximo"))), /* @__PURE__ */ React6.createElement("div", {
         className: "flex flex-col gap-4"
     }, /* @__PURE__ */ React6.createElement("div", {
         className: "all-day-events"
@@ -1221,7 +1077,7 @@ function DailyView(param) {
             }),
             CustomEventModal: CustomEventModal
         }));
-    }) : "No events for today")), /* @__PURE__ */ React6.createElement("div", {
+    }) : "Nenhum evento para hoje")), /* @__PURE__ */ React6.createElement("div", {
         className: "relative rounded-md bg-default-50 hover:bg-default-100 transition duration-400"
     }, /* @__PURE__ */ React6.createElement(motion2.div, {
         className: "relative rounded-xl flex ease-in-out",
@@ -1254,7 +1110,7 @@ function DailyView(param) {
             className: "cursor-pointer w-full relative border-b  hover:bg-default-200/50  transition duration-300  p-4 h-[64px] text-left text-sm text-muted-foreground border-default-200"
         }, /* @__PURE__ */ React6.createElement("div", {
             className: "absolute bg-default-200 flex items-center justify-center text-xs opacity-0 transition left-0 top-0 duration-250 hover:opacity-100 w-full h-full"
-        }, "Add Event"));
+        }, "Adicionar Evento"));
     }), /* @__PURE__ */ React6.createElement(AnimatePresence, {
         mode: "wait"
     }, dayEvents && (dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.length) ? dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.map(function(event, eventIndex) {
@@ -1326,7 +1182,7 @@ function MonthView(param) {
     };
     function handleAddEvent(selectedDay) {
         showModal({
-            title: "Add Event",
+            title: "Adicionar Evento",
             body: /* @__PURE__ */ React8.createElement(AddEventModal, null),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 var startDate, endDate;
@@ -1386,21 +1242,21 @@ function MonthView(param) {
         }
     };
     var daysOfWeek = weekStartsOn === "monday" ? [
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat",
-        "Sun"
+        "Seg",
+        "Ter",
+        "Qua",
+        "Qui",
+        "Sex",
+        "S\xE1b",
+        "Dom"
     ] : [
-        "Sun",
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat"
+        "Dom",
+        "Seg",
+        "Ter",
+        "Qua",
+        "Qui",
+        "Sex",
+        "S\xE1b"
     ];
     var firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     var startOffset = (firstDayOfMonth.getDay() - (weekStartsOn === "monday" ? 1 : 0) + 7) % 7;
@@ -1496,7 +1352,7 @@ function MonthView(param) {
             className: "absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         }, /* @__PURE__ */ React8.createElement("span", {
             className: "text-white tracking-tighter text-lg font-semibold"
-        }, "Add Event"))));
+        }, "Adicionar Evento"))));
     }))));
 }
 // components/schedule/_components/view/week/week-view.tsx
@@ -1544,7 +1400,7 @@ function WeeklyView(param) {
     };
     function handleAddEvent(event) {
         showModal({
-            title: "Add Event",
+            title: "Adicionar Evento",
             body: /* @__PURE__ */ React9.createElement(AddEventModal, null),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 var startDate, endDate;
@@ -1622,7 +1478,7 @@ function WeeklyView(param) {
         className: "sticky top-0 left-0 z-30 bg-default-100 rounded-tl-lg h-full border-0  flex items-center justify-center"
     }, /* @__PURE__ */ React9.createElement("span", {
         className: "text-lg font-semibold text-muted-foreground"
-    }, "Week ", getters.getWeekNumber(currentDate))), /* @__PURE__ */ React9.createElement("div", {
+    }, "Semana ", getters.getWeekNumber(currentDate))), /* @__PURE__ */ React9.createElement("div", {
         className: "col-span-7 flex flex-col relative"
     }, /* @__PURE__ */ React9.createElement("div", {
         className: "grid grid-cols-7 gap-0 flex-grow"
@@ -1706,7 +1562,7 @@ function WeeklyView(param) {
                 className: "col-span-1 border-default-200 h-16 z-20 relative transition duration-300 cursor-pointer border-r border-b text-center text-sm text-muted-foreground"
             }, /* @__PURE__ */ React9.createElement("div", {
                 className: "absolute bg-default-100 flex items-center justify-center text-xs opacity-0 transition duration-250 hover:opacity-100 w-full h-full"
-            }, "Add Event"));
+            }, "Adicionar Evento"));
         }));
     })))));
 }
@@ -1745,11 +1601,11 @@ function SchedulerViewFilteration(param) {
     _CustomComponents_customButtons6, _classNames_buttons;
     var _useModalContext = useModalContext(), showAddEventModal = _useModalContext.showModal;
     var _React10_useState = _sliced_to_array(React10.useState(false), 2), clientSide = _React10_useState[0], setClientSide = _React10_useState[1];
-    useEffect3(function() {
+    useEffect4(function() {
         setClientSide(true);
     }, []);
     var _React10_useState1 = _sliced_to_array(React10.useState(clientSide ? window.innerWidth <= 768 : false), 2), isMobile = _React10_useState1[0], setIsMobile = _React10_useState1[1];
-    useEffect3(function() {
+    useEffect4(function() {
         var handleResize = function handleResize() {
             if (window && window.innerWidth <= 768) {
                 setIsMobile(true);
@@ -1769,7 +1625,7 @@ function SchedulerViewFilteration(param) {
     function handleAddEvent(selectedDay) {
         var _CustomComponents_CustomEventModal_CustomAddEventModal, _CustomComponents_CustomEventModal, _CustomComponents_CustomEventModal_CustomAddEventModal1, _CustomComponents_CustomEventModal1;
         showAddEventModal({
-            title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal = _CustomComponents_CustomEventModal.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal.title) || "Add Event",
+            title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal = _CustomComponents_CustomEventModal.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal.title) || "Adicionar Evento",
             body: /* @__PURE__ */ React10.createElement(AddEventModal, {
                 CustomAddEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal1 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal1 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal1 = _CustomComponents_CustomEventModal1.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal1.CustomForm
             }),
@@ -1809,7 +1665,7 @@ function SchedulerViewFilteration(param) {
             className: "flex items-center space-x-2"
         }, /* @__PURE__ */ React10.createElement(CalendarDaysIcon, {
             size: 15
-        }), /* @__PURE__ */ React10.createElement("span", null, "Day"))
+        }), /* @__PURE__ */ React10.createElement("span", null, "Dia"))
     }, /* @__PURE__ */ React10.createElement(motion5.div, _object_spread({}, animationConfig), /* @__PURE__ */ React10.createElement(DailyView, {
         classNames: classNames === null || classNames === void 0 ? void 0 : classNames.buttons,
         prevButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons = CustomComponents.customButtons) === null || _CustomComponents_customButtons === void 0 ? void 0 : _CustomComponents_customButtons.CustomPrevButton,
@@ -1820,7 +1676,7 @@ function SchedulerViewFilteration(param) {
         key: "week",
         title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs1 = CustomComponents.customTabs) === null || _CustomComponents_customTabs1 === void 0 ? void 0 : _CustomComponents_customTabs1.CustomWeekTab) ? CustomComponents.customTabs.CustomWeekTab : /* @__PURE__ */ React10.createElement("div", {
             className: "flex items-center space-x-2"
-        }, /* @__PURE__ */ React10.createElement(BsCalendarWeek, null), /* @__PURE__ */ React10.createElement("span", null, "Week"))
+        }, /* @__PURE__ */ React10.createElement(BsCalendarWeek, null), /* @__PURE__ */ React10.createElement("span", null, "Semana"))
     }, /* @__PURE__ */ React10.createElement(motion5.div, _object_spread({}, animationConfig), /* @__PURE__ */ React10.createElement(WeeklyView, {
         classNames: classNames === null || classNames === void 0 ? void 0 : classNames.buttons,
         prevButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons2 = CustomComponents.customButtons) === null || _CustomComponents_customButtons2 === void 0 ? void 0 : _CustomComponents_customButtons2.CustomPrevButton,
@@ -1831,7 +1687,7 @@ function SchedulerViewFilteration(param) {
         key: "month",
         title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs2 = CustomComponents.customTabs) === null || _CustomComponents_customTabs2 === void 0 ? void 0 : _CustomComponents_customTabs2.CustomMonthTab) ? CustomComponents.customTabs.CustomMonthTab : /* @__PURE__ */ React10.createElement("div", {
             className: "flex items-center space-x-2"
-        }, /* @__PURE__ */ React10.createElement(BsCalendarMonth, null), /* @__PURE__ */ React10.createElement("span", null, "Month"))
+        }, /* @__PURE__ */ React10.createElement(BsCalendarMonth, null), /* @__PURE__ */ React10.createElement("span", null, "M\xEAs"))
     }, /* @__PURE__ */ React10.createElement(motion5.div, _object_spread({}, animationConfig), /* @__PURE__ */ React10.createElement(MonthView, {
         classNames: classNames === null || classNames === void 0 ? void 0 : classNames.buttons,
         prevButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons4 = CustomComponents.customButtons) === null || _CustomComponents_customButtons4 === void 0 ? void 0 : _CustomComponents_customButtons4.CustomPrevButton,
@@ -1850,6 +1706,6 @@ function SchedulerViewFilteration(param) {
         className: "absolute top-0 right-0 " + (classNames === null || classNames === void 0 ? void 0 : (_classNames_buttons = classNames.buttons) === null || _classNames_buttons === void 0 ? void 0 : _classNames_buttons.addEvent),
         color: "primary",
         startContent: /* @__PURE__ */ React10.createElement(Calendar, null)
-    }, "Add Event"))));
+    }, "Adicionar Evento"))));
 }
 export { SchedulerViewFilteration as SchedularView, SchedulerProvider, eventSchema, useScheduler, variants };
