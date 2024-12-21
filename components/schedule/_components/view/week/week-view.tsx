@@ -221,7 +221,7 @@ export default function WeeklyView({
         className="grid use-automation-zoom-in grid-cols-8 gap-0"
       >
         <div className="sticky top-0 left-0 z-30 bg-default-100 rounded-tl-lg h-full border-0  flex items-center justify-center">
-          <span className="text-lg font-semibold text-muted-foreground">
+          <span className="text-lg font-semibold text-muted-foreground px-4">
             Semana {getters.getWeekNumber(currentDate)}
           </span>
         </div>

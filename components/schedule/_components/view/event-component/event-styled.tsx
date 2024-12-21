@@ -10,7 +10,7 @@ import { useScheduler } from "@/app";
 import { motion } from "framer-motion";
 // Function to format date
 const formatDate = (date: Date) => {
-  return date.toLocaleString("en-US", {
+  return date.toLocaleString("pt-BR", {
     weekday: "short",
     month: "short",
     day: "numeric",

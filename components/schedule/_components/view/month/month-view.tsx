@@ -141,7 +141,7 @@ export default function MonthView({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
-          className="text-3xl my-5 tracking-tighter font-bold"
+          className="text-lg my-5 tracking-tighter font-bold"
         >
           {currentDate.toLocaleString("default", { month: "long" })}{" "}
           {currentDate.getFullYear()}
@@ -182,7 +182,7 @@ export default function MonthView({
           {daysOfWeek.map((day, idx) => (
             <div
               key={idx}
-              className="text-left my-8 text-4xl tracking-tighter font-medium"
+              className="text-left my-8 text-2xl tracking-tighter font-medium"
             >
               {day}
             </div>
@@ -190,7 +190,7 @@ export default function MonthView({
 
           {Array.from({ length: startOffset }).map((_, idx) => (
             <div key={`offset-${idx}`} className="h-[150px] opacity-50">
-              <div className={clsx("font-semibold relative text-3xl mb-1")}>
+              <div className={clsx("font-semibold relative text-lg mb-1")}>
                 {lastDateOfPrevMonth - startOffset + idx + 1}
               </div>
             </div>
@@ -212,7 +212,7 @@ export default function MonthView({
                 >
                   <div
                     className={clsx(
-                      "font-semibold relative text-3xl mb-1",
+                      "font-semibold relative text-lg mb-1",
                       dayEvents.length > 0
                         ? "text-primary-600"
                         : "text-muted-foreground",

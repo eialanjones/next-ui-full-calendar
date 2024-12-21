@@ -821,7 +821,7 @@ import { Chip } from "@nextui-org/chip";
 import { TrashIcon } from "lucide-react";
 import { motion } from "framer-motion";
 var formatDate = function(date) {
-    return date.toLocaleString("en-US", {
+    return date.toLocaleString("pt-BR", {
         weekday: "short",
         month: "short",
         day: "numeric",
@@ -1278,7 +1278,7 @@ function MonthView(param) {
         transition: {
             duration: 1
         },
-        className: "text-3xl my-5 tracking-tighter font-bold"
+        className: "text-lg my-5 tracking-tighter font-bold"
     }, currentDate.toLocaleString("default", {
         month: "long"
     }), " ", currentDate.getFullYear()), /* @__PURE__ */ React8.createElement("div", {
@@ -1306,7 +1306,7 @@ function MonthView(param) {
     }, daysOfWeek.map(function(day, idx) {
         return /* @__PURE__ */ React8.createElement("div", {
             key: idx,
-            className: "text-left my-8 text-4xl tracking-tighter font-medium"
+            className: "text-left my-8 text-2xl tracking-tighter font-medium"
         }, day);
     }), Array.from({
         length: startOffset
@@ -1315,7 +1315,7 @@ function MonthView(param) {
             key: "offset-".concat(idx),
             className: "h-[150px] opacity-50"
         }, /* @__PURE__ */ React8.createElement("div", {
-            className: clsx("font-semibold relative text-3xl mb-1")
+            className: clsx("font-semibold relative text-lg mb-1")
         }, lastDateOfPrevMonth - startOffset + idx + 1));
     }), daysInMonth.map(function(dayObj) {
         var dayEvents = getters.getEventsForDay(dayObj.day, currentDate);
@@ -1330,7 +1330,7 @@ function MonthView(param) {
                 return handleAddEvent(dayObj.day);
             }
         }, /* @__PURE__ */ React8.createElement("div", {
-            className: clsx("font-semibold relative text-3xl mb-1", dayEvents.length > 0 ? "text-primary-600" : "text-muted-foreground", /* @__PURE__ */ new Date().getDate() === dayObj.day && /* @__PURE__ */ new Date().getMonth() === currentDate.getMonth() && /* @__PURE__ */ new Date().getFullYear() === currentDate.getFullYear() ? "text-secondary-500" : "")
+            className: clsx("font-semibold relative text-lg mb-1", dayEvents.length > 0 ? "text-primary-600" : "text-muted-foreground", /* @__PURE__ */ new Date().getDate() === dayObj.day && /* @__PURE__ */ new Date().getMonth() === currentDate.getMonth() && /* @__PURE__ */ new Date().getFullYear() === currentDate.getFullYear() ? "text-secondary-500" : "")
         }, dayObj.day), /* @__PURE__ */ React8.createElement("div", {
             className: "flex-grow flex flex-col gap-2 w-full overflow-hidden"
         }, /* @__PURE__ */ React8.createElement(AnimatePresence2, {
@@ -1477,7 +1477,7 @@ function WeeklyView(param) {
     }, /* @__PURE__ */ React9.createElement("div", {
         className: "sticky top-0 left-0 z-30 bg-default-100 rounded-tl-lg h-full border-0  flex items-center justify-center"
     }, /* @__PURE__ */ React9.createElement("span", {
-        className: "text-lg font-semibold text-muted-foreground"
+        className: "text-lg font-semibold text-muted-foreground px-4"
     }, "Semana ", getters.getWeekNumber(currentDate))), /* @__PURE__ */ React9.createElement("div", {
         className: "col-span-7 flex flex-col relative"
     }, /* @__PURE__ */ React9.createElement("div", {
