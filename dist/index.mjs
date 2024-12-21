@@ -1203,7 +1203,12 @@ function MonthView(param) {
     function handleShowMoreEvents(dayEvents) {
         var _dayEvents_;
         showModal({
-            title: dayEvents && ((_dayEvents_ = dayEvents[0]) === null || _dayEvents_ === void 0 ? void 0 : _dayEvents_.startDate.toDateString()),
+            title: dayEvents === null || dayEvents === void 0 ? void 0 : (_dayEvents_ = dayEvents[0]) === null || _dayEvents_ === void 0 ? void 0 : _dayEvents_.startDate.toLocaleDateString("pt-BR", {
+                weekday: "short",
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+            }),
             body: /* @__PURE__ */ React8.createElement(ShowMoreEventsModal, null),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 return _ts_generator(this, function(_state) {
@@ -1289,13 +1294,13 @@ function MonthView(param) {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
         startContent: /* @__PURE__ */ React8.createElement(ArrowLeft2, null),
         onClick: handlePrevMonth
-    }, "Prev"), nextButton ? /* @__PURE__ */ React8.createElement("div", {
+    }, "Anterior"), nextButton ? /* @__PURE__ */ React8.createElement("div", {
         onClick: handleNextMonth
     }, nextButton) : /* @__PURE__ */ React8.createElement(Button3, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextMonth,
         endContent: /* @__PURE__ */ React8.createElement(ArrowRight2, null)
-    }, "Next"))), /* @__PURE__ */ React8.createElement(AnimatePresence2, {
+    }, "Pr\xF3ximo"))), /* @__PURE__ */ React8.createElement(AnimatePresence2, {
         mode: "wait"
     }, /* @__PURE__ */ React8.createElement(motion3.div, {
         variants: containerVariants3,
@@ -1465,13 +1470,13 @@ function WeeklyView(param) {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
         startContent: /* @__PURE__ */ React9.createElement(ArrowLeft3, null),
         onClick: handlePrevWeek
-    }, "Prev"), nextButton ? /* @__PURE__ */ React9.createElement("div", {
+    }, "Anterior"), nextButton ? /* @__PURE__ */ React9.createElement("div", {
         onClick: handleNextWeek
     }, nextButton) : /* @__PURE__ */ React9.createElement(Button4, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextWeek,
         endContent: /* @__PURE__ */ React9.createElement(ArrowRight3, null)
-    }, "Next")), /* @__PURE__ */ React9.createElement("div", {
+    }, "Pr\xF3ximo")), /* @__PURE__ */ React9.createElement("div", {
         key: currentDate.toDateString(),
         className: "grid use-automation-zoom-in grid-cols-8 gap-0"
     }, /* @__PURE__ */ React9.createElement("div", {

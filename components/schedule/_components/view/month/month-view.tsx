@@ -86,7 +86,7 @@ export default function MonthView({
 
   function handleShowMoreEvents(dayEvents: Event[]) {
     showModal({
-      title: dayEvents && dayEvents[0]?.startDate.toDateString(),
+      title: dayEvents?.[0]?.startDate.toLocaleDateString('pt-BR', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }),
       body: <ShowMoreEventsModal />,
       getter: async () => ({ dayEvents }),
     });
@@ -155,7 +155,7 @@ export default function MonthView({
               startContent={<ArrowLeft />}
               onClick={handlePrevMonth}
             >
-              Prev
+              Anterior
             </Button>
           )}
           {nextButton ? (
@@ -166,7 +166,7 @@ export default function MonthView({
               onClick={handleNextMonth}
               endContent={<ArrowRight />}
             >
-              Next
+              Próximo
             </Button>
           )}
         </div>

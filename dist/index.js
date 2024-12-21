@@ -1286,7 +1286,12 @@ function MonthView(param) {
     function handleShowMoreEvents(dayEvents) {
         var _dayEvents_;
         showModal({
-            title: dayEvents && ((_dayEvents_ = dayEvents[0]) === null || _dayEvents_ === void 0 ? void 0 : _dayEvents_.startDate.toDateString()),
+            title: dayEvents === null || dayEvents === void 0 ? void 0 : (_dayEvents_ = dayEvents[0]) === null || _dayEvents_ === void 0 ? void 0 : _dayEvents_.startDate.toLocaleDateString("pt-BR", {
+                weekday: "short",
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+            }),
             body: /* @__PURE__ */ import_react8.default.createElement(ShowMoreEventsModal, null),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 return _ts_generator(this, function(_state) {
@@ -1372,13 +1377,13 @@ function MonthView(param) {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
         startContent: /* @__PURE__ */ import_react8.default.createElement(import_lucide_react3.ArrowLeft, null),
         onClick: handlePrevMonth
-    }, "Prev"), nextButton ? /* @__PURE__ */ import_react8.default.createElement("div", {
+    }, "Anterior"), nextButton ? /* @__PURE__ */ import_react8.default.createElement("div", {
         onClick: handleNextMonth
     }, nextButton) : /* @__PURE__ */ import_react8.default.createElement(import_button3.Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextMonth,
         endContent: /* @__PURE__ */ import_react8.default.createElement(import_lucide_react3.ArrowRight, null)
-    }, "Next"))), /* @__PURE__ */ import_react8.default.createElement(import_framer_motion3.AnimatePresence, {
+    }, "Pr\xF3ximo"))), /* @__PURE__ */ import_react8.default.createElement(import_framer_motion3.AnimatePresence, {
         mode: "wait"
     }, /* @__PURE__ */ import_react8.default.createElement(import_framer_motion3.motion.div, {
         variants: containerVariants3,
@@ -1548,13 +1553,13 @@ function WeeklyView(param) {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
         startContent: /* @__PURE__ */ import_react9.default.createElement(import_lucide_react4.ArrowLeft, null),
         onClick: handlePrevWeek
-    }, "Prev"), nextButton ? /* @__PURE__ */ import_react9.default.createElement("div", {
+    }, "Anterior"), nextButton ? /* @__PURE__ */ import_react9.default.createElement("div", {
         onClick: handleNextWeek
     }, nextButton) : /* @__PURE__ */ import_react9.default.createElement(import_button4.Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextWeek,
         endContent: /* @__PURE__ */ import_react9.default.createElement(import_lucide_react4.ArrowRight, null)
-    }, "Next")), /* @__PURE__ */ import_react9.default.createElement("div", {
+    }, "Pr\xF3ximo")), /* @__PURE__ */ import_react9.default.createElement("div", {
         key: currentDate.toDateString(),
         className: "grid use-automation-zoom-in grid-cols-8 gap-0"
     }, /* @__PURE__ */ import_react9.default.createElement("div", {

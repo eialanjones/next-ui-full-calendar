@@ -201,7 +201,7 @@ export default function WeeklyView({
             startContent={<ArrowLeft />}
             onClick={handlePrevWeek}
           >
-            Prev
+            Anterior
           </Button>
         )}
         {nextButton ? (
@@ -212,7 +212,7 @@ export default function WeeklyView({
             onClick={handleNextWeek}
             endContent={<ArrowRight />}
           >
-            Next
+            Próximo
           </Button>
         )}
       </div>
