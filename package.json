@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
-    "bundle": "tsup app/index.ts"
+    "bundle": "tsup app/index.ts --dts --format esm,cjs"
   },
   "peerDependencies": {
     "@nextui-org/system": "^2.2.6",
@@ -94,5 +94,14 @@
     "scheduling shadcn",
     "scheduling next"
   ],
-  "main": "dist/index.js"
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  }
 }

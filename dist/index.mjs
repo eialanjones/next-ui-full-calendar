@@ -1,4 +1,3 @@
-// providers/schedular-provider.tsx
 function _array_like_to_array(arr, len) {
     if (len == null || len > arr.length) len = arr.length;
     for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
@@ -240,10 +239,27 @@ function _ts_generator(thisArg, body) {
         };
     }
 }
-import React2, { createContext as createContext2, useContext as useContext2, useReducer, useEffect } from "react";
-// providers/modal-provider.tsx
-import React, { createContext, useContext, useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/modal";
+import React9, { createContext, useReducer, useEffect, useContext, useState, useRef } from 'react';
+import { useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@nextui-org/modal';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@nextui-org/button';
+import { Tabs, Tab } from '@nextui-org/tabs';
+import { CalendarDaysIcon, Calendar, ArrowLeft, ArrowRight, TrashIcon } from 'lucide-react';
+import { BsCalendarWeek, BsCalendarMonth } from 'react-icons/bs';
+import { Input, Textarea } from '@nextui-org/input';
+import { Select, SelectItem } from '@nextui-org/select';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/dropdown';
+import { parseDate, Time } from '@internationalized/date';
+import { DateRangePicker } from '@nextui-org/date-picker';
+import { TimeInput } from '@nextui-org/date-input';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { v4 } from 'uuid';
+import { Chip } from '@nextui-org/chip';
+import { Card } from '@nextui-org/card';
+import clsx from 'clsx';
+// providers/schedular-provider.tsx
 var ModalContext = createContext(void 0);
 var ModalProvider = function(param) {
     var children = param.children;
@@ -314,13 +330,13 @@ var ModalProvider = function(param) {
             return _ref.apply(this, arguments);
         };
     }();
-    return /* @__PURE__ */ React.createElement(ModalContext.Provider, {
+    return /* @__PURE__ */ React9.createElement(ModalContext.Provider, {
         value: {
             showModal: showModal,
             onClose: onClose,
             data: data
         }
-    }, children, /* @__PURE__ */ React.createElement(Modal, {
+    }, children, /* @__PURE__ */ React9.createElement(Modal, {
         backdrop: "blur",
         classNames: {
             backdrop: "max-h-screen overflow-hidden",
@@ -328,9 +344,9 @@ var ModalProvider = function(param) {
         },
         isOpen: isOpen,
         onOpenChange: onClose
-    }, /* @__PURE__ */ React.createElement(ModalContent, {
+    }, /* @__PURE__ */ React9.createElement(ModalContent, {
         className: (modalContent === null || modalContent === void 0 ? void 0 : modalContent.modalClassName) || ""
-    }, modalContent && /* @__PURE__ */ React.createElement(React.Fragment, null, modalContent.title && /* @__PURE__ */ React.createElement(ModalHeader, null, modalContent.title), modalContent.body && /* @__PURE__ */ React.createElement(ModalBody, null, modalContent.body), modalContent.footer && /* @__PURE__ */ React.createElement(ModalFooter, null, modalContent.footer)))));
+    }, modalContent && /* @__PURE__ */ React9.createElement(React9.Fragment, null, modalContent.title && /* @__PURE__ */ React9.createElement(ModalHeader, null, modalContent.title), modalContent.body && /* @__PURE__ */ React9.createElement(ModalBody, null, modalContent.body), modalContent.footer && /* @__PURE__ */ React9.createElement(ModalFooter, null, modalContent.footer)))));
 };
 var useModalContext = function() {
     var context = useContext(ModalContext);
@@ -368,7 +384,7 @@ var schedulerReducer = function(state, action) {
             return state;
     }
 };
-var SchedulerContext = createContext2(void 0);
+var SchedulerContext = createContext(void 0);
 var SchedulerProvider = function(param) {
     var children = param.children, onAddEvent = param.onAddEvent, onUpdateEvent = param.onUpdateEvent, onDeleteEvent = param.onDeleteEvent, initialState = param.initialState, _param_weekStartsOn = param.weekStartsOn, weekStartsOn = _param_weekStartsOn === void 0 ? "sunday" : _param_weekStartsOn;
     var handleEventStyling = function handleEventStyling(event, dayEvents) {
@@ -517,7 +533,7 @@ var SchedulerProvider = function(param) {
         handleUpdateEvent: handleUpdateEvent,
         handleDeleteEvent: handleDeleteEvent
     };
-    return /* @__PURE__ */ React2.createElement(SchedulerContext.Provider, {
+    return /* @__PURE__ */ React9.createElement(SchedulerContext.Provider, {
         value: {
             events: state,
             dispatch: dispatch,
@@ -525,34 +541,15 @@ var SchedulerProvider = function(param) {
             handlers: handlers,
             weekStartsOn: weekStartsOn
         }
-    }, /* @__PURE__ */ React2.createElement(ModalProvider, null, children));
+    }, /* @__PURE__ */ React9.createElement(ModalProvider, null, children));
 };
 var useScheduler = function() {
-    var context = useContext2(SchedulerContext);
+    var context = useContext(SchedulerContext);
     if (!context) {
         throw new Error("useScheduler must be used within a SchedulerProvider");
     }
     return context;
 };
-// components/schedule/_components/view/schedular-view-filteration.tsx
-import React10, { useEffect as useEffect4 } from "react";
-import { motion as motion5 } from "framer-motion";
-import { Button as Button5 } from "@nextui-org/button";
-import { Tabs, Tab } from "@nextui-org/tabs";
-import { Calendar, CalendarDaysIcon } from "lucide-react";
-import { BsCalendarMonth, BsCalendarWeek } from "react-icons/bs";
-// components/schedule/_modals/add-event-modal.tsx
-import React4, { useEffect as useEffect3, useState as useState3 } from "react";
-import { ModalFooter as ModalFooter2 } from "@nextui-org/modal";
-import { Button } from "@nextui-org/button";
-import { Input, Textarea } from "@nextui-org/input";
-import { Select, SelectItem } from "@nextui-org/select";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/dropdown";
-// components/schedule/_components/add-event-components/select-date.tsx
-import { parseDate, Time } from "@internationalized/date";
-import { DateRangePicker } from "@nextui-org/date-picker";
-import { TimeInput } from "@nextui-org/date-input";
-import React3, { useEffect as useEffect2, useState as useState2 } from "react";
 function getFormattedDate(date) {
     return "".concat(date.getFullYear(), "-").concat(String(date.getMonth() + 1).padStart(2, "0"), "-").concat(String(date.getDate()).padStart(2, "0"));
 }
@@ -563,13 +560,13 @@ function calendarDateToJSDate(calendarDate) {
 function SelectDate(param) {
     var data = param.data, setValue = param.setValue;
     var _data_startDate, _data_startDate1, _data_endDate, _data_endDate1;
-    var _useState2 = _sliced_to_array(useState2({
+    var _useState = _sliced_to_array(useState({
         startDate: data ? parseDate(getFormattedDate(data === null || data === void 0 ? void 0 : data.startDate)) : parseDate("2024-04-06"),
         endDate: data ? parseDate(getFormattedDate(data === null || data === void 0 ? void 0 : data.endDate)) : parseDate("2024-04-10"),
         startTime: new Time((data === null || data === void 0 ? void 0 : (_data_startDate = data.startDate) === null || _data_startDate === void 0 ? void 0 : _data_startDate.getHours()) || 0, (data === null || data === void 0 ? void 0 : (_data_startDate1 = data.startDate) === null || _data_startDate1 === void 0 ? void 0 : _data_startDate1.getMinutes()) || 0),
         endTime: new Time((data === null || data === void 0 ? void 0 : (_data_endDate = data.endDate) === null || _data_endDate === void 0 ? void 0 : _data_endDate.getHours()) || 0, (data === null || data === void 0 ? void 0 : (_data_endDate1 = data.endDate) === null || _data_endDate1 === void 0 ? void 0 : _data_endDate1.getMinutes()) || 0)
-    }), 2), dateState = _useState2[0], setDateState = _useState2[1];
-    useEffect2(function() {
+    }), 2), dateState = _useState[0], setDateState = _useState[1];
+    useEffect(function() {
         var _dateState_startTime, _dateState_startTime1, _dateState_endTime, _dateState_endTime1;
         if (!dateState) return;
         var jsStartDate = calendarDateToJSDate(dateState.startDate);
@@ -587,9 +584,9 @@ function SelectDate(param) {
         dateState,
         setValue
     ]);
-    return /* @__PURE__ */ React3.createElement("div", null, /* @__PURE__ */ React3.createElement("div", {
+    return /* @__PURE__ */ React9.createElement("div", null, /* @__PURE__ */ React9.createElement("div", {
         className: "w-full flex gap-4 max-w-full flex-wrap"
-    }, /* @__PURE__ */ React3.createElement(DateRangePicker, {
+    }, /* @__PURE__ */ React9.createElement(DateRangePicker, {
         label: "Dura\xE7\xE3o do Evento",
         isRequired: true,
         value: {
@@ -607,9 +604,9 @@ function SelectDate(param) {
                 endDate: parseDate(getFormattedDate(endDate))
             }));
         }
-    }), /* @__PURE__ */ React3.createElement("div", {
+    }), /* @__PURE__ */ React9.createElement("div", {
         className: "flex flex-wrap gap-4"
-    }, /* @__PURE__ */ React3.createElement(TimeInput, {
+    }, /* @__PURE__ */ React9.createElement(TimeInput, {
         label: "Hora de In\xEDcio",
         defaultValue: dateState === null || dateState === void 0 ? void 0 : dateState.startTime,
         onChange: function(e) {
@@ -617,7 +614,7 @@ function SelectDate(param) {
                 startTime: e || new Time(0, 0)
             }));
         }
-    }), /* @__PURE__ */ React3.createElement(TimeInput, {
+    }), /* @__PURE__ */ React9.createElement(TimeInput, {
         label: "Hora de T\xE9rmino",
         defaultValue: dateState === null || dateState === void 0 ? void 0 : dateState.endTime,
         onChange: function(e) {
@@ -628,11 +625,6 @@ function SelectDate(param) {
         isInvalid: (dateState === null || dateState === void 0 ? void 0 : dateState.startTime) && (dateState === null || dateState === void 0 ? void 0 : dateState.endTime) && dateState.endTime.hour * 60 + dateState.endTime.minute <= dateState.startTime.hour * 60 + dateState.startTime.minute
     }))));
 }
-// components/schedule/_modals/add-event-modal.tsx
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-// types/index.ts
-import { z } from "zod";
 var variants = [
     "success",
     "primary",
@@ -654,16 +646,14 @@ var eventSchema = z.object({
     ]),
     color: z.string().nonempty("Color selection is required")
 });
-// components/schedule/_modals/add-event-modal.tsx
-import { v4 as uuidv4 } from "uuid";
 function AddEventModal(param) {
     var CustomAddEventModal = param.CustomAddEventModal, productData = param.productData;
     var _errors_title, _colorOptions_find;
     var _useModalContext = useModalContext(), onClose = _useModalContext.onClose, data = _useModalContext.data;
-    var _useState3 = _sliced_to_array(useState3(getEventColor((data === null || data === void 0 ? void 0 : data.variant) || "primary")), 2), selectedColor = _useState3[0], setSelectedColor = _useState3[1];
-    var _useState31 = _sliced_to_array(useState3(""), 2), selectedProduct = _useState31[0], setSelectedProduct = _useState31[1];
-    var _useState32 = _sliced_to_array(useState3(""), 2), selectedPath = _useState32[0], setSelectedPath = _useState32[1];
-    var _useState33 = _sliced_to_array(useState3(""), 2), selectedModule = _useState33[0], setSelectedModule = _useState33[1];
+    var _useState = _sliced_to_array(useState(getEventColor((data === null || data === void 0 ? void 0 : data.variant) || "primary")), 2), selectedColor = _useState[0], setSelectedColor = _useState[1];
+    var _useState1 = _sliced_to_array(useState(""), 2), selectedProduct = _useState1[0], setSelectedProduct = _useState1[1];
+    var _useState2 = _sliced_to_array(useState(""), 2), selectedPath = _useState2[0], setSelectedPath = _useState2[1];
+    var _useState3 = _sliced_to_array(useState(""), 2), selectedModule = _useState3[0], setSelectedModule = _useState3[1];
     var filteredPaths = productData === null || productData === void 0 ? void 0 : productData.filter(function(item) {
         return item.product_id === selectedProduct;
     }).map(function(item) {
@@ -706,7 +696,7 @@ function AddEventModal(param) {
             color: (data === null || data === void 0 ? void 0 : data.color) || "blue"
         }
     }), register = _useForm.register, handleSubmit = _useForm.handleSubmit, reset = _useForm.reset, errors = _useForm.formState.errors, setValue = _useForm.setValue;
-    useEffect3(function() {
+    useEffect(function() {
         if (data) {
             reset({
                 title: data.title,
@@ -772,7 +762,7 @@ function AddEventModal(param) {
             return item.product_id === selectedProduct && (!selectedPath || item.learning_path_title === selectedPath) && item.module_id === selectedModule;
         });
         var newEvent = {
-            id: uuidv4(),
+            id: v4(),
             title: formData.title,
             startDate: formData.startDate,
             endDate: formData.endDate,
@@ -790,28 +780,28 @@ function AddEventModal(param) {
         else handlers.handleUpdateEvent(newEvent, typedData.id);
         onClose();
     };
-    return /* @__PURE__ */ React4.createElement("form", {
+    return /* @__PURE__ */ React9.createElement("form", {
         className: "flex flex-col gap-3 max-h-[80vh] overflow-y-auto pr-2",
         onSubmit: handleSubmit(onSubmit)
     }, CustomAddEventModal ? CustomAddEventModal({
         register: register,
         errors: errors
-    }) : /* @__PURE__ */ React4.createElement(React4.Fragment, null, /* @__PURE__ */ React4.createElement(Input, _object_spread_props(_object_spread({}, register("title")), {
+    }) : /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement(Input, _object_spread_props(_object_spread({}, register("title")), {
         label: "Nome do Evento",
         placeholder: "Digite o nome do evento",
         variant: "bordered",
         isInvalid: !!errors.title,
         errorMessage: (_errors_title = errors.title) === null || _errors_title === void 0 ? void 0 : _errors_title.message
-    })), /* @__PURE__ */ React4.createElement(Textarea, _object_spread_props(_object_spread({}, register("description")), {
+    })), /* @__PURE__ */ React9.createElement(Textarea, _object_spread_props(_object_spread({}, register("description")), {
         label: "Descri\xE7\xE3o do Evento",
         placeholder: "Digite a descri\xE7\xE3o do evento",
         variant: "bordered"
-    })), /* @__PURE__ */ React4.createElement(SelectDate, {
+    })), /* @__PURE__ */ React9.createElement(SelectDate, {
         data: data,
         setValue: setValue
-    }), productData && productData.length > 0 && /* @__PURE__ */ React4.createElement("div", {
+    }), productData && productData.length > 0 && /* @__PURE__ */ React9.createElement("div", {
         className: "flex flex-col gap-3"
-    }, /* @__PURE__ */ React4.createElement(Select, {
+    }, /* @__PURE__ */ React9.createElement(Select, {
         label: "Conte\xFAdo",
         placeholder: "Selecione um conte\xFAdo",
         value: selectedProduct,
@@ -821,11 +811,11 @@ function AddEventModal(param) {
             setSelectedModule("");
         }
     }, uniqueProducts === null || uniqueProducts === void 0 ? void 0 : uniqueProducts.map(function(product) {
-        return /* @__PURE__ */ React4.createElement(SelectItem, {
+        return /* @__PURE__ */ React9.createElement(SelectItem, {
             key: product.id,
             value: product.id
         }, product.title);
-    })), filteredPaths && filteredPaths.length > 0 && /* @__PURE__ */ React4.createElement(Select, {
+    })), filteredPaths && filteredPaths.length > 0 && /* @__PURE__ */ React9.createElement(Select, {
         label: "Trilha",
         placeholder: "Selecione uma trilha (opcional)",
         value: selectedPath,
@@ -834,11 +824,11 @@ function AddEventModal(param) {
             setSelectedModule("");
         }
     }, filteredPaths.map(function(path) {
-        return /* @__PURE__ */ React4.createElement(SelectItem, {
+        return /* @__PURE__ */ React9.createElement(SelectItem, {
             key: path,
             value: path
         }, path);
-    })), filteredModules && filteredModules.length > 0 && /* @__PURE__ */ React4.createElement(Select, {
+    })), filteredModules && filteredModules.length > 0 && /* @__PURE__ */ React9.createElement(Select, {
         label: "M\xF3dulo",
         placeholder: "Selecione um m\xF3dulo",
         value: selectedModule,
@@ -846,19 +836,19 @@ function AddEventModal(param) {
             return setSelectedModule(e.target.value);
         }
     }, filteredModules.map(function(module) {
-        return /* @__PURE__ */ React4.createElement(SelectItem, {
+        return /* @__PURE__ */ React9.createElement(SelectItem, {
             key: module.id,
             value: module.id
         }, module.title);
-    }))), /* @__PURE__ */ React4.createElement(Dropdown, {
+    }))), /* @__PURE__ */ React9.createElement(Dropdown, {
         backdrop: "blur"
-    }, /* @__PURE__ */ React4.createElement(DropdownTrigger, null, /* @__PURE__ */ React4.createElement(Button, {
+    }, /* @__PURE__ */ React9.createElement(DropdownTrigger, null, /* @__PURE__ */ React9.createElement(Button, {
         variant: "flat",
         className: "justify-between w-fit my-4",
         color: getEventStatus(selectedColor)
     }, (_colorOptions_find = colorOptions.find(function(color) {
         return color.key === selectedColor;
-    })) === null || _colorOptions_find === void 0 ? void 0 : _colorOptions_find.name)), /* @__PURE__ */ React4.createElement(DropdownMenu, {
+    })) === null || _colorOptions_find === void 0 ? void 0 : _colorOptions_find.name)), /* @__PURE__ */ React9.createElement(DropdownMenu, {
         "aria-label": "Color selection",
         variant: "flat",
         selectionMode: "single",
@@ -875,34 +865,23 @@ function AddEventModal(param) {
             });
         }
     }, colorOptions.map(function(color) {
-        return /* @__PURE__ */ React4.createElement(DropdownItem, {
+        return /* @__PURE__ */ React9.createElement(DropdownItem, {
             key: color.key,
-            startContent: /* @__PURE__ */ React4.createElement("div", {
+            startContent: /* @__PURE__ */ React9.createElement("div", {
                 className: "w-4 h-4 rounded-full bg-".concat(color.key, "-500")
             })
         }, color.name);
-    }))), /* @__PURE__ */ React4.createElement(ModalFooter2, {
+    }))), /* @__PURE__ */ React9.createElement(ModalFooter, {
         className: "px-0"
-    }, /* @__PURE__ */ React4.createElement(Button, {
+    }, /* @__PURE__ */ React9.createElement(Button, {
         color: "danger",
         variant: "light",
         onPress: onClose
-    }, "Cancelar"), /* @__PURE__ */ React4.createElement(Button, {
+    }, "Cancelar"), /* @__PURE__ */ React9.createElement(Button, {
         color: "primary",
         type: "submit"
     }, "Salvar Evento"))));
 }
-// components/schedule/_components/view/day/daily-view.tsx
-import React6, { useRef, useState as useState4 } from "react";
-import { AnimatePresence, motion as motion2 } from "framer-motion";
-import { Button as Button2 } from "@nextui-org/button";
-import { Chip as Chip2 } from "@nextui-org/chip";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-// components/schedule/_components/view/event-component/event-styled.tsx
-import React5 from "react";
-import { Chip } from "@nextui-org/chip";
-import { TrashIcon } from "lucide-react";
-import { motion } from "framer-motion";
 var formatDate = function(date) {
     return date.toLocaleString("pt-BR", {
         weekday: "short",
@@ -921,7 +900,7 @@ function EventStyled(param) {
         var _CustomEventModal_CustomAddEventModal;
         showEventModal({
             title: event2 === null || event2 === void 0 ? void 0 : event2.title,
-            body: /* @__PURE__ */ React5.createElement(AddEventModal, {
+            body: /* @__PURE__ */ React9.createElement(AddEventModal, {
                 CustomAddEventModal: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal.CustomForm
             }),
             getter: /*#__PURE__*/ _async_to_generator(function() {
@@ -934,7 +913,7 @@ function EventStyled(param) {
             })
         });
     }
-    return /* @__PURE__ */ React5.createElement(motion.div, {
+    return /* @__PURE__ */ React9.createElement(motion.div, {
         initial: {
             opacity: 0,
             scale: 0.9
@@ -953,7 +932,7 @@ function EventStyled(param) {
         },
         key: event === null || event === void 0 ? void 0 : event.id,
         className: "w-full relative use-automation-zoom-in cursor-pointer border border-default-400/60 rounded-lg  flex flex-col flex-grow "
-    }, /* @__PURE__ */ React5.createElement(Chip, {
+    }, /* @__PURE__ */ React9.createElement(Chip, {
         onClickCapture: function(e) {
             e.stopPropagation();
             handlers.handleDeleteEvent(event === null || event === void 0 ? void 0 : event.id);
@@ -964,9 +943,9 @@ function EventStyled(param) {
             content: "max-w-fit min-w-0 p-1"
         },
         className: "absolute z-50 right-0 top-[-5px]"
-    }, /* @__PURE__ */ React5.createElement(TrashIcon, {
+    }, /* @__PURE__ */ React9.createElement(TrashIcon, {
         size: 12
-    })), event.CustomEventComponent ? /* @__PURE__ */ React5.createElement("div", {
+    })), event.CustomEventComponent ? /* @__PURE__ */ React9.createElement("div", {
         onClickCapture: function(e) {
             e.stopPropagation();
             handleEditEvent({
@@ -978,7 +957,7 @@ function EventStyled(param) {
                 variant: event === null || event === void 0 ? void 0 : event.variant
             });
         }
-    }, /* @__PURE__ */ React5.createElement(event.CustomEventComponent, _object_spread({}, event))) : /* @__PURE__ */ React5.createElement(Chip, {
+    }, /* @__PURE__ */ React9.createElement(event.CustomEventComponent, _object_spread({}, event))) : /* @__PURE__ */ React9.createElement(Chip, {
         onClickCapture: function(e) {
             e.stopPropagation();
             handleEditEvent({
@@ -996,19 +975,19 @@ function EventStyled(param) {
             content: "p-0"
         },
         className: "min-w-full items-start p-0 flex-grow flex-col flex ".concat((event === null || event === void 0 ? void 0 : event.minmized) ? "h-full" : "min-h-fit p-1", " rounded-md")
-    }, /* @__PURE__ */ React5.createElement("div", {
+    }, /* @__PURE__ */ React9.createElement("div", {
         className: "flex ".concat((event === null || event === void 0 ? void 0 : event.minmized) ? "p-0" : "p-1", " flex-col flex-grow px-1 rounded-md  items-start w-full")
-    }, /* @__PURE__ */ React5.createElement("h1", {
+    }, /* @__PURE__ */ React9.createElement("h1", {
         className: "".concat((event === null || event === void 0 ? void 0 : event.minmized) && "text-[0.7rem] p-0 px-1", " font-semibold line-clamp-1")
-    }, event === null || event === void 0 ? void 0 : event.title), /* @__PURE__ */ React5.createElement("p", {
+    }, event === null || event === void 0 ? void 0 : event.title), /* @__PURE__ */ React9.createElement("p", {
         className: "text-[0.65rem]"
-    }, event === null || event === void 0 ? void 0 : event.description), !(event === null || event === void 0 ? void 0 : event.minmized) && /* @__PURE__ */ React5.createElement("div", {
+    }, event === null || event === void 0 ? void 0 : event.description), !(event === null || event === void 0 ? void 0 : event.minmized) && /* @__PURE__ */ React9.createElement("div", {
         className: "flex justify-between w-full"
-    }, /* @__PURE__ */ React5.createElement("p", {
+    }, /* @__PURE__ */ React9.createElement("p", {
         className: "text-sm"
-    }, formatDate(event === null || event === void 0 ? void 0 : event.startDate)), /* @__PURE__ */ React5.createElement("p", {
+    }, formatDate(event === null || event === void 0 ? void 0 : event.startDate)), /* @__PURE__ */ React9.createElement("p", {
         className: "text-sm"
-    }, "-"), /* @__PURE__ */ React5.createElement("p", {
+    }, "-"), /* @__PURE__ */ React9.createElement("p", {
         className: "text-sm"
     }, formatDate(event === null || event === void 0 ? void 0 : event.endDate))))));
 }
@@ -1045,9 +1024,9 @@ var itemVariants = {
 function DailyView(param) {
     var prevButton = param.prevButton, nextButton = param.nextButton, CustomEventComponent = param.CustomEventComponent, CustomEventModal = param.CustomEventModal, classNames = param.classNames;
     var hoursColumnRef = useRef(null);
-    var _useState4 = _sliced_to_array(useState4(null), 2), detailedHour = _useState4[0], setDetailedHour = _useState4[1];
-    var _useState41 = _sliced_to_array(useState4(0), 2), timelinePosition = _useState41[0], setTimelinePosition = _useState41[1];
-    var _useState42 = _sliced_to_array(useState4(/* @__PURE__ */ new Date()), 2), currentDate = _useState42[0], setCurrentDate = _useState42[1];
+    var _useState = _sliced_to_array(useState(null), 2), detailedHour = _useState[0], setDetailedHour = _useState[1];
+    var _useState1 = _sliced_to_array(useState(0), 2), timelinePosition = _useState1[0], setTimelinePosition = _useState1[1];
+    var _useState2 = _sliced_to_array(useState(/* @__PURE__ */ new Date()), 2), currentDate = _useState2[0], setCurrentDate = _useState2[1];
     var showModal = useModalContext().showModal;
     var _useScheduler = useScheduler(), getters = _useScheduler.getters, handlers = _useScheduler.handlers;
     var handleMouseMove = function(e) {
@@ -1074,7 +1053,7 @@ function DailyView(param) {
         var _CustomEventModal_CustomAddEventModal, _CustomEventModal_CustomAddEventModal1;
         showModal({
             title: (CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal.title) || "Adicionar Evento",
-            body: /* @__PURE__ */ React6.createElement(AddEventModal, {
+            body: /* @__PURE__ */ React9.createElement(AddEventModal, {
                 CustomAddEventModal: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal1 = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal1.CustomForm
             }),
             getter: /*#__PURE__*/ _async_to_generator(function() {
@@ -1124,45 +1103,45 @@ function DailyView(param) {
         prevDay.setDate(currentDate.getDate() - 1);
         setCurrentDate(prevDay);
     };
-    return /* @__PURE__ */ React6.createElement("div", {
+    return /* @__PURE__ */ React9.createElement("div", {
         className: ""
-    }, /* @__PURE__ */ React6.createElement("div", {
+    }, /* @__PURE__ */ React9.createElement("div", {
         className: "flex justify-between gap-3 flex-wrap mb-5"
-    }, /* @__PURE__ */ React6.createElement("h1", {
+    }, /* @__PURE__ */ React9.createElement("h1", {
         className: "text-3xl font-semibold mb-4"
-    }, getFormattedDayTitle()), /* @__PURE__ */ React6.createElement("div", {
+    }, getFormattedDayTitle()), /* @__PURE__ */ React9.createElement("div", {
         className: "flex ml-auto  gap-3"
-    }, prevButton ? /* @__PURE__ */ React6.createElement("div", {
+    }, prevButton ? /* @__PURE__ */ React9.createElement("div", {
         onClick: handlePrevDay
-    }, prevButton) : /* @__PURE__ */ React6.createElement(Button2, {
+    }, prevButton) : /* @__PURE__ */ React9.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
-        startContent: /* @__PURE__ */ React6.createElement(ArrowLeft, null),
+        startContent: /* @__PURE__ */ React9.createElement(ArrowLeft, null),
         onClick: handlePrevDay
-    }, "Anterior"), nextButton ? /* @__PURE__ */ React6.createElement("div", {
+    }, "Anterior"), nextButton ? /* @__PURE__ */ React9.createElement("div", {
         onClick: handleNextDay
-    }, nextButton) : /* @__PURE__ */ React6.createElement(Button2, {
+    }, nextButton) : /* @__PURE__ */ React9.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextDay,
-        endContent: /* @__PURE__ */ React6.createElement(ArrowRight, null)
-    }, "Pr\xF3ximo"))), /* @__PURE__ */ React6.createElement("div", {
+        endContent: /* @__PURE__ */ React9.createElement(ArrowRight, null)
+    }, "Pr\xF3ximo"))), /* @__PURE__ */ React9.createElement("div", {
         className: "flex flex-col gap-4"
-    }, /* @__PURE__ */ React6.createElement("div", {
+    }, /* @__PURE__ */ React9.createElement("div", {
         className: "all-day-events"
-    }, /* @__PURE__ */ React6.createElement(AnimatePresence, {
+    }, /* @__PURE__ */ React9.createElement(AnimatePresence, {
         mode: "wait"
     }, dayEvents && (dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.length) ? dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.map(function(event, eventIndex) {
-        return /* @__PURE__ */ React6.createElement("div", {
+        return /* @__PURE__ */ React9.createElement("div", {
             key: "event-".concat(event.id, "-").concat(eventIndex)
-        }, /* @__PURE__ */ React6.createElement(EventStyled, {
+        }, /* @__PURE__ */ React9.createElement(EventStyled, {
             event: _object_spread_props(_object_spread({}, event), {
                 CustomEventComponent: CustomEventComponent,
                 minmized: false
             }),
             CustomEventModal: CustomEventModal
         }));
-    }) : "Nenhum evento para hoje")), /* @__PURE__ */ React6.createElement("div", {
+    }) : "Nenhum evento para hoje")), /* @__PURE__ */ React9.createElement("div", {
         className: "relative rounded-md bg-default-50 hover:bg-default-100 transition duration-400"
-    }, /* @__PURE__ */ React6.createElement(motion2.div, {
+    }, /* @__PURE__ */ React9.createElement(motion.div, {
         className: "relative rounded-xl flex ease-in-out",
         ref: hoursColumnRef,
         variants: containerVariants,
@@ -1172,33 +1151,33 @@ function DailyView(param) {
         onMouseLeave: function() {
             return setDetailedHour(null);
         }
-    }, /* @__PURE__ */ React6.createElement("div", {
+    }, /* @__PURE__ */ React9.createElement("div", {
         className: "flex  flex-col"
     }, hours.map(function(hour, index) {
-        return /* @__PURE__ */ React6.createElement(motion2.div, {
+        return /* @__PURE__ */ React9.createElement(motion.div, {
             key: "hour-".concat(index),
             variants: itemVariants,
             className: "cursor-pointer   transition duration-300  p-4 h-[64px] text-left text-sm text-muted-foreground border-default-200"
         }, hour);
-    })), /* @__PURE__ */ React6.createElement("div", {
+    })), /* @__PURE__ */ React9.createElement("div", {
         className: "flex relative flex-grow flex-col "
     }, Array.from({
         length: 24
     }).map(function(_, index) {
-        return /* @__PURE__ */ React6.createElement("div", {
+        return /* @__PURE__ */ React9.createElement("div", {
             onClick: function() {
                 handleAddEventDay(detailedHour);
             },
             key: "hour-".concat(index),
             className: "cursor-pointer w-full relative border-b  hover:bg-default-200/50  transition duration-300  p-4 h-[64px] text-left text-sm text-muted-foreground border-default-200"
-        }, /* @__PURE__ */ React6.createElement("div", {
+        }, /* @__PURE__ */ React9.createElement("div", {
             className: "absolute bg-default-200 flex items-center justify-center text-xs opacity-0 transition left-0 top-0 duration-250 hover:opacity-100 w-full h-full"
         }, "Adicionar Evento"));
-    }), /* @__PURE__ */ React6.createElement(AnimatePresence, {
+    }), /* @__PURE__ */ React9.createElement(AnimatePresence, {
         mode: "wait"
     }, dayEvents && (dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.length) ? dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.map(function(event, eventIndex) {
         var _handlers_handleEventStyling = handlers.handleEventStyling(event, dayEvents), height = _handlers_handleEventStyling.height, left = _handlers_handleEventStyling.left, maxWidth = _handlers_handleEventStyling.maxWidth, minWidth = _handlers_handleEventStyling.minWidth, top = _handlers_handleEventStyling.top, zIndex = _handlers_handleEventStyling.zIndex;
-        return /* @__PURE__ */ React6.createElement("div", {
+        return /* @__PURE__ */ React9.createElement("div", {
             key: "event-".concat(event.id, "-").concat(eventIndex),
             style: {
                 minHeight: height,
@@ -1208,41 +1187,31 @@ function DailyView(param) {
                 minWidth: minWidth
             },
             className: "flex transition-all duration-1000 flex-grow flex-col z-50 absolute"
-        }, /* @__PURE__ */ React6.createElement(EventStyled, {
+        }, /* @__PURE__ */ React9.createElement(EventStyled, {
             event: _object_spread_props(_object_spread({}, event), {
                 CustomEventComponent: CustomEventComponent,
                 minmized: true
             }),
             CustomEventModal: CustomEventModal
         }));
-    }) : ""))), detailedHour && /* @__PURE__ */ React6.createElement("div", {
+    }) : ""))), detailedHour && /* @__PURE__ */ React9.createElement("div", {
         className: "absolute left-[50px] w-[calc(100%-53px)] h-[3px]  bg-primary-300 dark:bg-primary/30 rounded-full pointer-events-none",
         style: {
             top: "".concat(timelinePosition, "px")
         }
-    }, /* @__PURE__ */ React6.createElement(Chip2, {
+    }, /* @__PURE__ */ React9.createElement(Chip, {
         color: "success",
         variant: "flat",
         className: "absolute vertical-abs-center z-50 left-[-55px] text-xs uppercase"
     }, detailedHour)))));
 }
-// components/schedule/_components/view/month/month-view.tsx
-import React8, { useState as useState5 } from "react";
-import { AnimatePresence as AnimatePresence2, motion as motion3 } from "framer-motion";
-import { Button as Button3 } from "@nextui-org/button";
-import { Card } from "@nextui-org/card";
-import { Chip as Chip3 } from "@nextui-org/chip";
-import { ArrowLeft as ArrowLeft2, ArrowRight as ArrowRight2 } from "lucide-react";
-import clsx from "clsx";
-// components/schedule/_modals/show-more-events-modal.tsx
-import React7 from "react";
 function ShowMoreEventsModal() {
     var data = useModalContext().data;
     var dayEvents = (data === null || data === void 0 ? void 0 : data.dayEvents) || [];
-    return /* @__PURE__ */ React7.createElement("div", {
+    return /* @__PURE__ */ React9.createElement("div", {
         className: "flex flex-col gap-2"
     }, dayEvents.map(function(event) {
-        return /* @__PURE__ */ React7.createElement(EventStyled, {
+        return /* @__PURE__ */ React9.createElement(EventStyled, {
             key: event.id,
             event: _object_spread({}, event)
         });
@@ -1253,7 +1222,7 @@ function MonthView(param) {
     var prevButton = param.prevButton, nextButton = param.nextButton, CustomEventComponent = param.CustomEventComponent, CustomEventModal = param.CustomEventModal, classNames = param.classNames;
     var _useScheduler = useScheduler(), getters = _useScheduler.getters, weekStartsOn = _useScheduler.weekStartsOn;
     var showModal = useModalContext().showModal;
-    var _useState5 = _sliced_to_array(useState5(/* @__PURE__ */ new Date()), 2), currentDate = _useState5[0], setCurrentDate = _useState5[1];
+    var _useState = _sliced_to_array(useState(/* @__PURE__ */ new Date()), 2), currentDate = _useState[0], setCurrentDate = _useState[1];
     var daysInMonth = getters.getDaysInMonth(currentDate.getMonth(), currentDate.getFullYear());
     var handlePrevMonth = function() {
         var newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
@@ -1266,7 +1235,7 @@ function MonthView(param) {
     function handleAddEvent(selectedDay) {
         showModal({
             title: "Adicionar Evento",
-            body: /* @__PURE__ */ React8.createElement(AddEventModal, null),
+            body: /* @__PURE__ */ React9.createElement(AddEventModal, null),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 var startDate, endDate;
                 return _ts_generator(this, function(_state) {
@@ -1292,7 +1261,7 @@ function MonthView(param) {
                 month: "short",
                 year: "numeric"
             }),
-            body: /* @__PURE__ */ React8.createElement(ShowMoreEventsModal, null),
+            body: /* @__PURE__ */ React9.createElement(ShowMoreEventsModal, null),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 return _ts_generator(this, function(_state) {
                     return [
@@ -1350,9 +1319,9 @@ function MonthView(param) {
     var startOffset = (firstDayOfMonth.getDay() - (weekStartsOn === "monday" ? 1 : 0) + 7) % 7;
     var prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
     var lastDateOfPrevMonth = new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 0).getDate();
-    return /* @__PURE__ */ React8.createElement("div", null, /* @__PURE__ */ React8.createElement("div", {
+    return /* @__PURE__ */ React9.createElement("div", null, /* @__PURE__ */ React9.createElement("div", {
         className: "flex flex-col mb-4"
-    }, /* @__PURE__ */ React8.createElement(motion3.h2, {
+    }, /* @__PURE__ */ React9.createElement(motion.h2, {
         key: currentDate.getMonth(),
         initial: {
             opacity: 0
@@ -1369,87 +1338,80 @@ function MonthView(param) {
         className: "text-lg my-5 tracking-tighter font-bold"
     }, currentDate.toLocaleString("default", {
         month: "long"
-    }), " ", currentDate.getFullYear()), /* @__PURE__ */ React8.createElement("div", {
+    }), " ", currentDate.getFullYear()), /* @__PURE__ */ React9.createElement("div", {
         className: "flex gap-3"
-    }, prevButton ? /* @__PURE__ */ React8.createElement("div", {
+    }, prevButton ? /* @__PURE__ */ React9.createElement("div", {
         onClick: handlePrevMonth
-    }, prevButton) : /* @__PURE__ */ React8.createElement(Button3, {
+    }, prevButton) : /* @__PURE__ */ React9.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
-        startContent: /* @__PURE__ */ React8.createElement(ArrowLeft2, null),
+        startContent: /* @__PURE__ */ React9.createElement(ArrowLeft, null),
         onClick: handlePrevMonth
-    }, "Anterior"), nextButton ? /* @__PURE__ */ React8.createElement("div", {
+    }, "Anterior"), nextButton ? /* @__PURE__ */ React9.createElement("div", {
         onClick: handleNextMonth
-    }, nextButton) : /* @__PURE__ */ React8.createElement(Button3, {
+    }, nextButton) : /* @__PURE__ */ React9.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextMonth,
-        endContent: /* @__PURE__ */ React8.createElement(ArrowRight2, null)
-    }, "Pr\xF3ximo"))), /* @__PURE__ */ React8.createElement(AnimatePresence2, {
+        endContent: /* @__PURE__ */ React9.createElement(ArrowRight, null)
+    }, "Pr\xF3ximo"))), /* @__PURE__ */ React9.createElement(AnimatePresence, {
         mode: "wait"
-    }, /* @__PURE__ */ React8.createElement(motion3.div, {
+    }, /* @__PURE__ */ React9.createElement(motion.div, {
         variants: containerVariants3,
         initial: "hidden",
         animate: "visible",
         key: currentDate.getMonth(),
         className: "grid grid-cols-7 gap-1 sm:gap-2"
     }, daysOfWeek.map(function(day, idx) {
-        return /* @__PURE__ */ React8.createElement("div", {
+        return /* @__PURE__ */ React9.createElement("div", {
             key: idx,
             className: "text-left my-8 text-2xl tracking-tighter font-medium"
         }, day);
     }), Array.from({
         length: startOffset
     }).map(function(_, idx) {
-        return /* @__PURE__ */ React8.createElement("div", {
+        return /* @__PURE__ */ React9.createElement("div", {
             key: "offset-".concat(idx),
             className: "h-[150px] opacity-50"
-        }, /* @__PURE__ */ React8.createElement("div", {
+        }, /* @__PURE__ */ React9.createElement("div", {
             className: clsx("font-semibold relative text-lg mb-1")
         }, lastDateOfPrevMonth - startOffset + idx + 1));
     }), daysInMonth.map(function(dayObj) {
         var dayEvents = getters.getEventsForDay(dayObj.day, currentDate);
-        return /* @__PURE__ */ React8.createElement(motion3.div, {
+        return /* @__PURE__ */ React9.createElement(motion.div, {
             className: "hover:z-50 border-none h-[150px] rounded group flex flex-col",
             key: dayObj.day,
             variants: itemVariants2
-        }, /* @__PURE__ */ React8.createElement(Card, {
+        }, /* @__PURE__ */ React9.createElement(Card, {
             isPressable: true,
             className: "shadow-md  relative flex p-4 border border-default-100 h-full",
             onClick: function() {
                 return handleAddEvent(dayObj.day);
             }
-        }, /* @__PURE__ */ React8.createElement("div", {
+        }, /* @__PURE__ */ React9.createElement("div", {
             className: clsx("font-semibold relative text-lg mb-1", dayEvents.length > 0 ? "text-primary-600" : "text-muted-foreground", /* @__PURE__ */ new Date().getDate() === dayObj.day && /* @__PURE__ */ new Date().getMonth() === currentDate.getMonth() && /* @__PURE__ */ new Date().getFullYear() === currentDate.getFullYear() ? "text-secondary-500" : "")
-        }, dayObj.day), /* @__PURE__ */ React8.createElement("div", {
+        }, dayObj.day), /* @__PURE__ */ React9.createElement("div", {
             className: "flex-grow flex flex-col gap-2 w-full overflow-hidden"
-        }, /* @__PURE__ */ React8.createElement(AnimatePresence2, {
+        }, /* @__PURE__ */ React9.createElement(AnimatePresence, {
             mode: "wait"
-        }, (dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.length) > 0 && /* @__PURE__ */ React8.createElement(EventStyled, {
+        }, (dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.length) > 0 && /* @__PURE__ */ React9.createElement(EventStyled, {
             event: _object_spread_props(_object_spread({}, dayEvents[0]), {
                 CustomEventComponent: CustomEventComponent,
                 minmized: true
             }),
             CustomEventModal: CustomEventModal
-        })), dayEvents.length > 1 && /* @__PURE__ */ React8.createElement(Chip3, {
+        })), dayEvents.length > 1 && /* @__PURE__ */ React9.createElement(Chip, {
             onClick: function(e) {
                 e.stopPropagation();
                 handleShowMoreEvents(dayEvents);
             },
             variant: "flat",
             className: "hover:bg-default-200 absolute right-2 text-xs top-2 transition duration-300"
-        }, dayEvents.length > 1 ? "+".concat(dayEvents.length - 1) : " ")), dayEvents.length === 0 && /* @__PURE__ */ React8.createElement("div", {
+        }, dayEvents.length > 1 ? "+".concat(dayEvents.length - 1) : " ")), dayEvents.length === 0 && /* @__PURE__ */ React9.createElement("div", {
             className: "absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        }, /* @__PURE__ */ React8.createElement("span", {
+        }, /* @__PURE__ */ React9.createElement("span", {
             className: "text-white tracking-tighter text-lg font-semibold"
         }, "Adicionar Evento"))));
     }))));
 }
-// components/schedule/_components/view/week/week-view.tsx
-import React9, { useRef as useRef2, useState as useState6 } from "react";
-import { Chip as Chip4 } from "@nextui-org/chip";
-import { AnimatePresence as AnimatePresence3, motion as motion4 } from "framer-motion";
-import { Button as Button4 } from "@nextui-org/button";
-import { ArrowLeft as ArrowLeft3, ArrowRight as ArrowRight3 } from "lucide-react";
-import clsx2 from "clsx";
 var hours2 = Array.from({
     length: 24
 }, function(_, i) {
@@ -1469,10 +1431,10 @@ var containerVariants2 = {
 function WeeklyView(param) {
     var prevButton = param.prevButton, nextButton = param.nextButton, CustomEventComponent = param.CustomEventComponent, CustomEventModal = param.CustomEventModal, classNames = param.classNames;
     var _useScheduler = useScheduler(), getters = _useScheduler.getters, handlers = _useScheduler.handlers;
-    var hoursColumnRef = useRef2(null);
-    var _useState6 = _sliced_to_array(useState6(null), 2), detailedHour = _useState6[0], setDetailedHour = _useState6[1];
-    var _useState61 = _sliced_to_array(useState6(0), 2), timelinePosition = _useState61[0], setTimelinePosition = _useState61[1];
-    var _useState62 = _sliced_to_array(useState6(/* @__PURE__ */ new Date()), 2), currentDate = _useState62[0], setCurrentDate = _useState62[1];
+    var hoursColumnRef = useRef(null);
+    var _useState = _sliced_to_array(useState(null), 2), detailedHour = _useState[0], setDetailedHour = _useState[1];
+    var _useState1 = _sliced_to_array(useState(0), 2), timelinePosition = _useState1[0], setTimelinePosition = _useState1[1];
+    var _useState2 = _sliced_to_array(useState(/* @__PURE__ */ new Date()), 2), currentDate = _useState2[0], setCurrentDate = _useState2[1];
     var showModal = useModalContext().showModal;
     var daysOfWeek = getters === null || getters === void 0 ? void 0 : getters.getDaysInWeek(getters === null || getters === void 0 ? void 0 : getters.getWeekNumber(currentDate), currentDate.getFullYear());
     var handleMouseMove = function(e) {
@@ -1539,7 +1501,7 @@ function WeeklyView(param) {
     }
     return /* @__PURE__ */ React9.createElement("div", {
         className: "flex flex-col gap-4"
-    }, /* @__PURE__ */ React9.createElement(motion4.div, {
+    }, /* @__PURE__ */ React9.createElement(motion.div, {
         key: currentDate.toDateString() + "parent",
         className: "all-week-events flex flex-col gap-2",
         variants: containerVariants2,
@@ -1549,16 +1511,16 @@ function WeeklyView(param) {
         className: "flex ml-auto gap-3"
     }, prevButton ? /* @__PURE__ */ React9.createElement("div", {
         onClick: handlePrevWeek
-    }, prevButton) : /* @__PURE__ */ React9.createElement(Button4, {
+    }, prevButton) : /* @__PURE__ */ React9.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
-        startContent: /* @__PURE__ */ React9.createElement(ArrowLeft3, null),
+        startContent: /* @__PURE__ */ React9.createElement(ArrowLeft, null),
         onClick: handlePrevWeek
     }, "Anterior"), nextButton ? /* @__PURE__ */ React9.createElement("div", {
         onClick: handleNextWeek
-    }, nextButton) : /* @__PURE__ */ React9.createElement(Button4, {
+    }, nextButton) : /* @__PURE__ */ React9.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextWeek,
-        endContent: /* @__PURE__ */ React9.createElement(ArrowRight3, null)
+        endContent: /* @__PURE__ */ React9.createElement(ArrowRight, null)
     }, "Pr\xF3ximo")), /* @__PURE__ */ React9.createElement("div", {
         key: currentDate.toDateString(),
         className: "grid use-automation-zoom-in grid-cols-8 gap-0"
@@ -1581,7 +1543,7 @@ function WeeklyView(param) {
         }, /* @__PURE__ */ React9.createElement("div", {
             className: "text-lg font-semibold"
         }, getters.getDayName(day.getDay())), /* @__PURE__ */ React9.createElement("div", {
-            className: clsx2("text-lg font-semibold", /* @__PURE__ */ new Date().getDate() === day.getDate() && /* @__PURE__ */ new Date().getMonth() === currentDate.getMonth() && /* @__PURE__ */ new Date().getFullYear() === currentDate.getFullYear() ? "text-secondary-500" : "")
+            className: clsx("text-lg font-semibold", /* @__PURE__ */ new Date().getDate() === day.getDate() && /* @__PURE__ */ new Date().getMonth() === currentDate.getMonth() && /* @__PURE__ */ new Date().getFullYear() === currentDate.getFullYear() ? "text-secondary-500" : "")
         }, day.getDate()))), /* @__PURE__ */ React9.createElement("div", {
             className: "absolute top-12 right-0 w-px h-[calc(100%-3rem)]"
         }));
@@ -1590,7 +1552,7 @@ function WeeklyView(param) {
         style: {
             top: "".concat(timelinePosition, "px")
         }
-    }, /* @__PURE__ */ React9.createElement(Chip4, {
+    }, /* @__PURE__ */ React9.createElement(Chip, {
         color: "success",
         variant: "flat",
         className: "absolute vertical-abs-center z-50 left-[-55px] text-xs uppercase"
@@ -1620,7 +1582,7 @@ function WeeklyView(param) {
             onClick: function() {
                 handleAddEventWeek(dayIndex, detailedHour);
             }
-        }, /* @__PURE__ */ React9.createElement(AnimatePresence3, {
+        }, /* @__PURE__ */ React9.createElement(AnimatePresence, {
             mode: "wait"
         }, dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.map(function(event, eventIndex) {
             var _handlers_handleEventStyling = handlers.handleEventStyling(event, dayEvents), height = _handlers_handleEventStyling.height, left = _handlers_handleEventStyling.left, maxWidth = _handlers_handleEventStyling.maxWidth, minWidth = _handlers_handleEventStyling.minWidth, top = _handlers_handleEventStyling.top, zIndex = _handlers_handleEventStyling.zIndex;
@@ -1688,12 +1650,12 @@ function SchedulerViewFilteration(param) {
     var _CustomComponents_customTabs, _CustomComponents_customButtons, _CustomComponents_customButtons1, _CustomComponents_customTabs1, _CustomComponents_customButtons2, _CustomComponents_customButtons3, _CustomComponents_customTabs2, _CustomComponents_customButtons4, _CustomComponents_customButtons5, // Add custom button
     _CustomComponents_customButtons6, _classNames_buttons;
     var _useModalContext = useModalContext(), showAddEventModal = _useModalContext.showModal;
-    var _React10_useState = _sliced_to_array(React10.useState(false), 2), clientSide = _React10_useState[0], setClientSide = _React10_useState[1];
-    useEffect4(function() {
+    var _React9_useState = _sliced_to_array(React9.useState(false), 2), clientSide = _React9_useState[0], setClientSide = _React9_useState[1];
+    useEffect(function() {
         setClientSide(true);
     }, []);
-    var _React10_useState1 = _sliced_to_array(React10.useState(clientSide ? window.innerWidth <= 768 : false), 2), isMobile = _React10_useState1[0], setIsMobile = _React10_useState1[1];
-    useEffect4(function() {
+    var _React9_useState1 = _sliced_to_array(React9.useState(clientSide ? window.innerWidth <= 768 : false), 2), isMobile = _React9_useState1[0], setIsMobile = _React9_useState1[1];
+    useEffect(function() {
         var handleResize = function handleResize() {
             if (window && window.innerWidth <= 768) {
                 setIsMobile(true);
@@ -1714,16 +1676,16 @@ function SchedulerViewFilteration(param) {
         var _CustomComponents_CustomEventModal_CustomAddEventModal, _CustomComponents_CustomEventModal, _CustomComponents_CustomEventModal_CustomAddEventModal1, _CustomComponents_CustomEventModal1, _CustomComponents_CustomEventModal_CustomAddEventModal2, _CustomComponents_CustomEventModal2;
         showAddEventModal({
             title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal = _CustomComponents_CustomEventModal.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal.title) || "Adicionar Evento",
-            body: /* @__PURE__ */ React10.createElement(AddEventModal, {
+            body: /* @__PURE__ */ React9.createElement(AddEventModal, {
                 CustomAddEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal1 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal1 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal1 = _CustomComponents_CustomEventModal1.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal1.CustomForm,
                 productData: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal2 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal2 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal2 = _CustomComponents_CustomEventModal2.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal2 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal2.ProductData
             }),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 var startDate, endDate;
                 return _ts_generator(this, function(_state) {
-                    startDate = new Date(/* @__PURE__ */ new Date().getFullYear(), /* @__PURE__ */ new Date().getMonth(), selectedDay !== null && selectedDay !== void 0 ? selectedDay : // current day
+                    startDate = new Date(/* @__PURE__ */ new Date().getFullYear(), /* @__PURE__ */ new Date().getMonth(), // current day
                     /* @__PURE__ */ new Date().getDate(), 0, 0, 0, 0);
-                    endDate = new Date(/* @__PURE__ */ new Date().getFullYear(), /* @__PURE__ */ new Date().getMonth(), selectedDay !== null && selectedDay !== void 0 ? selectedDay : // current day
+                    endDate = new Date(/* @__PURE__ */ new Date().getFullYear(), /* @__PURE__ */ new Date().getMonth(), // current day
                     /* @__PURE__ */ new Date().getDate(), 23, 59, 59, 999);
                     return [
                         2,
@@ -1737,64 +1699,65 @@ function SchedulerViewFilteration(param) {
         });
     }
     var viewsSelector = isMobile ? views === null || views === void 0 ? void 0 : views.mobileViews : views === null || views === void 0 ? void 0 : views.views;
-    return /* @__PURE__ */ React10.createElement("div", {
+    return /* @__PURE__ */ React9.createElement("div", {
         className: "flex w-full flex-col"
-    }, /* @__PURE__ */ React10.createElement("div", {
+    }, /* @__PURE__ */ React9.createElement("div", {
         className: "flex w-full"
-    }, /* @__PURE__ */ React10.createElement("div", {
+    }, /* @__PURE__ */ React9.createElement("div", {
         className: "dayly-weekly-monthly-selection relative w-full"
-    }, /* @__PURE__ */ React10.createElement(Tabs, {
+    }, /* @__PURE__ */ React9.createElement(Tabs, {
         classNames: _object_spread({}, classNames === null || classNames === void 0 ? void 0 : classNames.tabs),
         "aria-label": "Options",
         color: "primary",
         variant: "solid"
-    }, (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("day")) && /* @__PURE__ */ React10.createElement(Tab, {
+    }, (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("day")) && /* @__PURE__ */ React9.createElement(Tab, {
         key: "day",
-        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs = CustomComponents.customTabs) === null || _CustomComponents_customTabs === void 0 ? void 0 : _CustomComponents_customTabs.CustomDayTab) ? CustomComponents.customTabs.CustomDayTab : /* @__PURE__ */ React10.createElement("div", {
+        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs = CustomComponents.customTabs) === null || _CustomComponents_customTabs === void 0 ? void 0 : _CustomComponents_customTabs.CustomDayTab) ? CustomComponents.customTabs.CustomDayTab : /* @__PURE__ */ React9.createElement("div", {
             className: "flex items-center space-x-2"
-        }, /* @__PURE__ */ React10.createElement(CalendarDaysIcon, {
+        }, /* @__PURE__ */ React9.createElement(CalendarDaysIcon, {
             size: 15
-        }), /* @__PURE__ */ React10.createElement("span", null, "Dia"))
-    }, /* @__PURE__ */ React10.createElement(motion5.div, _object_spread({}, animationConfig), /* @__PURE__ */ React10.createElement(DailyView, {
+        }), /* @__PURE__ */ React9.createElement("span", null, "Dia"))
+    }, /* @__PURE__ */ React9.createElement(motion.div, _object_spread({}, animationConfig), /* @__PURE__ */ React9.createElement(DailyView, {
         classNames: classNames === null || classNames === void 0 ? void 0 : classNames.buttons,
         prevButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons = CustomComponents.customButtons) === null || _CustomComponents_customButtons === void 0 ? void 0 : _CustomComponents_customButtons.CustomPrevButton,
         nextButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons1 = CustomComponents.customButtons) === null || _CustomComponents_customButtons1 === void 0 ? void 0 : _CustomComponents_customButtons1.CustomNextButton,
         CustomEventComponent: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventComponent,
         CustomEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventModal
-    }))), (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("week")) && /* @__PURE__ */ React10.createElement(Tab, {
+    }))), (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("week")) && /* @__PURE__ */ React9.createElement(Tab, {
         key: "week",
-        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs1 = CustomComponents.customTabs) === null || _CustomComponents_customTabs1 === void 0 ? void 0 : _CustomComponents_customTabs1.CustomWeekTab) ? CustomComponents.customTabs.CustomWeekTab : /* @__PURE__ */ React10.createElement("div", {
+        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs1 = CustomComponents.customTabs) === null || _CustomComponents_customTabs1 === void 0 ? void 0 : _CustomComponents_customTabs1.CustomWeekTab) ? CustomComponents.customTabs.CustomWeekTab : /* @__PURE__ */ React9.createElement("div", {
             className: "flex items-center space-x-2"
-        }, /* @__PURE__ */ React10.createElement(BsCalendarWeek, null), /* @__PURE__ */ React10.createElement("span", null, "Semana"))
-    }, /* @__PURE__ */ React10.createElement(motion5.div, _object_spread({}, animationConfig), /* @__PURE__ */ React10.createElement(WeeklyView, {
+        }, /* @__PURE__ */ React9.createElement(BsCalendarWeek, null), /* @__PURE__ */ React9.createElement("span", null, "Semana"))
+    }, /* @__PURE__ */ React9.createElement(motion.div, _object_spread({}, animationConfig), /* @__PURE__ */ React9.createElement(WeeklyView, {
         classNames: classNames === null || classNames === void 0 ? void 0 : classNames.buttons,
         prevButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons2 = CustomComponents.customButtons) === null || _CustomComponents_customButtons2 === void 0 ? void 0 : _CustomComponents_customButtons2.CustomPrevButton,
         nextButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons3 = CustomComponents.customButtons) === null || _CustomComponents_customButtons3 === void 0 ? void 0 : _CustomComponents_customButtons3.CustomNextButton,
         CustomEventComponent: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventComponent,
         CustomEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventModal
-    }))), (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("month")) && /* @__PURE__ */ React10.createElement(Tab, {
+    }))), (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("month")) && /* @__PURE__ */ React9.createElement(Tab, {
         key: "month",
-        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs2 = CustomComponents.customTabs) === null || _CustomComponents_customTabs2 === void 0 ? void 0 : _CustomComponents_customTabs2.CustomMonthTab) ? CustomComponents.customTabs.CustomMonthTab : /* @__PURE__ */ React10.createElement("div", {
+        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs2 = CustomComponents.customTabs) === null || _CustomComponents_customTabs2 === void 0 ? void 0 : _CustomComponents_customTabs2.CustomMonthTab) ? CustomComponents.customTabs.CustomMonthTab : /* @__PURE__ */ React9.createElement("div", {
             className: "flex items-center space-x-2"
-        }, /* @__PURE__ */ React10.createElement(BsCalendarMonth, null), /* @__PURE__ */ React10.createElement("span", null, "M\xEAs"))
-    }, /* @__PURE__ */ React10.createElement(motion5.div, _object_spread({}, animationConfig), /* @__PURE__ */ React10.createElement(MonthView, {
+        }, /* @__PURE__ */ React9.createElement(BsCalendarMonth, null), /* @__PURE__ */ React9.createElement("span", null, "M\xEAs"))
+    }, /* @__PURE__ */ React9.createElement(motion.div, _object_spread({}, animationConfig), /* @__PURE__ */ React9.createElement(MonthView, {
         classNames: classNames === null || classNames === void 0 ? void 0 : classNames.buttons,
         prevButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons4 = CustomComponents.customButtons) === null || _CustomComponents_customButtons4 === void 0 ? void 0 : _CustomComponents_customButtons4.CustomPrevButton,
         nextButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons5 = CustomComponents.customButtons) === null || _CustomComponents_customButtons5 === void 0 ? void 0 : _CustomComponents_customButtons5.CustomNextButton,
         CustomEventComponent: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventComponent,
         CustomEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventModal
-    })))), (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons6 = CustomComponents.customButtons) === null || _CustomComponents_customButtons6 === void 0 ? void 0 : _CustomComponents_customButtons6.CustomAddEventButton) ? /* @__PURE__ */ React10.createElement("div", {
+    })))), (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons6 = CustomComponents.customButtons) === null || _CustomComponents_customButtons6 === void 0 ? void 0 : _CustomComponents_customButtons6.CustomAddEventButton) ? /* @__PURE__ */ React9.createElement("div", {
         onClick: function() {
             return handleAddEvent();
         },
         className: "absolute top-0 right-0"
-    }, CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.customButtons.CustomAddEventButton) : /* @__PURE__ */ React10.createElement(Button5, {
+    }, CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.customButtons.CustomAddEventButton) : /* @__PURE__ */ React9.createElement(Button, {
         onClick: function() {
             return handleAddEvent();
         },
         className: "absolute top-0 right-0 " + (classNames === null || classNames === void 0 ? void 0 : (_classNames_buttons = classNames.buttons) === null || _classNames_buttons === void 0 ? void 0 : _classNames_buttons.addEvent),
         color: "primary",
-        startContent: /* @__PURE__ */ React10.createElement(Calendar, null)
+        startContent: /* @__PURE__ */ React9.createElement(Calendar, null)
     }, "Adicionar Evento"))));
 }
-export { SchedulerViewFilteration as SchedularView, SchedulerProvider, eventSchema, useScheduler, variants };
+export { SchedulerViewFilteration as SchedularView, SchedulerProvider, eventSchema, useScheduler, variants }; //# sourceMappingURL=index.mjs.map
+//# sourceMappingURL=index.mjs.map
