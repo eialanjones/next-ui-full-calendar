@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ModalFooter } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 import { Input, Textarea } from "@nextui-org/input";
+import { Select, SelectItem } from "@nextui-org/select";
 
 import {
   Dropdown,
@@ -20,16 +21,56 @@ import { EventFormData, eventSchema, Variant, Event } from "@/types/index";
 import { useScheduler } from "@/providers/schedular-provider";
 import { v4 as uuidv4 } from "uuid"; // Use UUID to generate event IDs
 
+interface ProductData {
+  product_id: string;
+  product_title: string;
+  learning_path_title?: string;
+  module_id: string;
+  module_title: string;
+}
+
 export default function AddEventModal({
   CustomAddEventModal,
+  productData,
 }: {
   CustomAddEventModal?: React.FC<{ register: any; errors: any }>;
+  productData?: ProductData[];
 }) {
   const { onClose, data } = useModalContext();
-
   const [selectedColor, setSelectedColor] = useState<string>(
     getEventColor(data?.variant || "primary")
   );
+  const [selectedProduct, setSelectedProduct] = useState<string>("");
+  const [selectedPath, setSelectedPath] = useState<string>("");
+  const [selectedModule, setSelectedModule] = useState<string>("");
+
+  const filteredPaths = productData
+    ?.filter((item) => item.product_id === selectedProduct)
+    .map((item) => item.learning_path_title)
+    .filter((value, index, self) => value && self.indexOf(value) === index);
+
+  const filteredModules = productData
+    ?.filter(
+      (item) =>
+        item.product_id === selectedProduct &&
+        (!selectedPath || item.learning_path_title === selectedPath)
+    )
+    .map((item) => ({
+      id: item.module_id,
+      title: item.module_title,
+    }))
+    .filter((value, index, self) => 
+      self.findIndex(m => m.id === value.id) === index
+    );
+
+  const uniqueProducts = productData
+    ?.map((item) => ({
+      id: item.product_id,
+      title: item.product_title,
+    }))
+    .filter((value, index, self) => 
+      self.findIndex(p => p.id === value.id) === index
+    );
 
   const typedData = data as Event;
 
@@ -68,7 +109,7 @@ export default function AddEventModal({
   }, [data, reset]);
 
   const colorOptions = [
-    { key: "blue", name: "Azul" },
+    { key: "blue", name: "Marrom" },
     { key: "red", name: "Vermelho" },
     { key: "green", name: "Verde" },
     { key: "yellow", name: "Amarelo" },
@@ -105,22 +146,39 @@ export default function AddEventModal({
   }
 
   const onSubmit: SubmitHandler<EventFormData> = (formData) => {
+    const selectedProductData = productData?.find(
+      (item) =>
+        item.product_id === selectedProduct &&
+        (!selectedPath || item.learning_path_title === selectedPath) &&
+        item.module_id === selectedModule
+    );
+
     const newEvent: Event = {
-      id: uuidv4(), // Generate a unique ID
+      id: uuidv4(),
       title: formData.title,
       startDate: formData.startDate,
       endDate: formData.endDate,
       variant: formData.variant,
       description: formData.description,
+      productData: selectedProductData ? {
+        product_id: selectedProductData.product_id,
+        product_title: selectedProductData.product_title,
+        learning_path_title: selectedProductData.learning_path_title,
+        module_id: selectedProductData.module_id,
+        module_title: selectedProductData.module_title,
+      } : undefined,
     };
 
     if (!typedData?.id) handlers.handleAddEvent(newEvent);
     else handlers.handleUpdateEvent(newEvent, typedData.id);
-    onClose(); // Close the modal after submission
+    onClose();
   };
 
   return (
-    <form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
+    <form 
+      className="flex flex-col gap-3 max-h-[80vh] overflow-y-auto pr-2" 
+      onSubmit={handleSubmit(onSubmit)}
+    >
       {CustomAddEventModal ? (
         CustomAddEventModal({ register, errors })
       ) : (
@@ -140,6 +198,60 @@ export default function AddEventModal({
             variant="bordered"
           />
           <SelectDate data={data} setValue={setValue} />
+
+          {productData && productData.length > 0 && (
+            <div className="flex flex-col gap-3">
+              <Select
+                label="Conteúdo"
+                placeholder="Selecione um conteúdo"
+                value={selectedProduct}
+                onChange={(e) => {
+                  setSelectedProduct(e.target.value);
+                  setSelectedPath("");
+                  setSelectedModule("");
+                }}
+              >
+                {uniqueProducts?.map((product) => (
+                  <SelectItem key={product.id} value={product.id}>
+                    {product.title}
+                  </SelectItem>
+                ))}
+              </Select>
+
+              {filteredPaths && filteredPaths.length > 0 && (
+                <Select
+                  label="Trilha"
+                  placeholder="Selecione uma trilha (opcional)"
+                  value={selectedPath}
+                  onChange={(e) => {
+                    setSelectedPath(e.target.value);
+                    setSelectedModule("");
+                  }}
+                >
+                  {filteredPaths.map((path) => (
+                    <SelectItem key={path} value={path}>
+                      {path}
+                    </SelectItem>
+                  ))}
+                </Select>
+              )}
+
+              {filteredModules && filteredModules.length > 0 && (
+                <Select
+                  label="Módulo"
+                  placeholder="Selecione um módulo"
+                  value={selectedModule}
+                  onChange={(e) => setSelectedModule(e.target.value)}
+                >
+                  {filteredModules.map((module) => (
+                    <SelectItem key={module.id} value={module.id}>
+                      {module.title}
+                    </SelectItem>
+                  ))}
+                </Select>
+              )}
+            </div>
+          )}
 
           <Dropdown backdrop="blur">
             <DropdownTrigger>

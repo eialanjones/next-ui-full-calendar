@@ -31,6 +31,7 @@
     "@nextui-org/navbar": "2.0.37",
     "@nextui-org/switch": "^2.0.34",
     "@nextui-org/tabs": "^2.0.37",
+    "@nextui-org/select": "^2.0.37",
     "@react-aria/ssr": "3.9.4",
     "@react-aria/visually-hidden": "3.8.12",
     "clsx": "2.1.1",

@@ -15,6 +15,13 @@ export interface Event {
   startDate: Date;
   endDate: Date;
   variant?: Variant;
+  productData?: {
+    product_id: string;
+    product_title: string;
+    learning_path_title?: string;
+    module_id: string;
+    module_title: string;
+  };
 }
 
 // Define the state interface for the scheduler
@@ -105,6 +112,13 @@ export interface CustomEventModal {
   CustomAddEventModal?: {
     title?: string;
     CustomForm?: React.FC<{ register: any; errors: any }>;
+    ProductData?: {
+      product_id: string;
+      product_title: string;
+      learning_path_title?: string;
+      module_id: string;
+      module_title: string;
+    }[];
   };
 }
 

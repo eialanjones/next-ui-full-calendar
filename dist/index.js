@@ -629,6 +629,7 @@ var import_react4 = __toESM(require("react"));
 var import_modal2 = require("@nextui-org/modal");
 var import_button = require("@nextui-org/button");
 var import_input = require("@nextui-org/input");
+var import_select = require("@nextui-org/select");
 var import_dropdown = require("@nextui-org/dropdown");
 // components/schedule/_components/add-event-components/select-date.tsx
 var import_date = require("@internationalized/date");
@@ -739,13 +740,45 @@ var eventSchema = import_zod.z.object({
 // components/schedule/_modals/add-event-modal.tsx
 var import_uuid = require("uuid");
 function AddEventModal(param) {
-    var CustomAddEventModal = param.CustomAddEventModal;
+    var CustomAddEventModal = param.CustomAddEventModal, productData = param.productData;
     var _errors_title, _colorOptions_find;
     var _useModalContext = useModalContext(), onClose = _useModalContext.onClose, data = _useModalContext.data;
     var _ref = _sliced_to_array((0, import_react4.useState)(getEventColor((data === null || data === void 0 ? void 0 : data.variant) || "primary")), 2), selectedColor = _ref[0], setSelectedColor = _ref[1];
+    var _ref1 = _sliced_to_array((0, import_react4.useState)(""), 2), selectedProduct = _ref1[0], setSelectedProduct = _ref1[1];
+    var _ref2 = _sliced_to_array((0, import_react4.useState)(""), 2), selectedPath = _ref2[0], setSelectedPath = _ref2[1];
+    var _ref3 = _sliced_to_array((0, import_react4.useState)(""), 2), selectedModule = _ref3[0], setSelectedModule = _ref3[1];
+    var filteredPaths = productData === null || productData === void 0 ? void 0 : productData.filter(function(item) {
+        return item.product_id === selectedProduct;
+    }).map(function(item) {
+        return item.learning_path_title;
+    }).filter(function(value, index, self) {
+        return value && self.indexOf(value) === index;
+    });
+    var filteredModules = productData === null || productData === void 0 ? void 0 : productData.filter(function(item) {
+        return item.product_id === selectedProduct && (!selectedPath || item.learning_path_title === selectedPath);
+    }).map(function(item) {
+        return {
+            id: item.module_id,
+            title: item.module_title
+        };
+    }).filter(function(value, index, self) {
+        return self.findIndex(function(m) {
+            return m.id === value.id;
+        }) === index;
+    });
+    var uniqueProducts = productData === null || productData === void 0 ? void 0 : productData.map(function(item) {
+        return {
+            id: item.product_id,
+            title: item.product_title
+        };
+    }).filter(function(value, index, self) {
+        return self.findIndex(function(p) {
+            return p.id === value.id;
+        }) === index;
+    });
     var typedData = data;
     var handlers = useScheduler().handlers;
-    var _ref1 = (0, import_react_hook_form.useForm)({
+    var _ref4 = (0, import_react_hook_form.useForm)({
         resolver: (0, import_zod2.zodResolver)(eventSchema),
         defaultValues: {
             title: "",
@@ -755,7 +788,7 @@ function AddEventModal(param) {
             variant: (data === null || data === void 0 ? void 0 : data.variant) || "primary",
             color: (data === null || data === void 0 ? void 0 : data.color) || "blue"
         }
-    }), register = _ref1.register, handleSubmit = _ref1.handleSubmit, reset = _ref1.reset, errors = _ref1.formState.errors, setValue = _ref1.setValue;
+    }), register = _ref4.register, handleSubmit = _ref4.handleSubmit, reset = _ref4.reset, errors = _ref4.formState.errors, setValue = _ref4.setValue;
     (0, import_react4.useEffect)(function() {
         if (data) {
             reset({
@@ -774,7 +807,7 @@ function AddEventModal(param) {
     var colorOptions = [
         {
             key: "blue",
-            name: "Azul"
+            name: "Marrom"
         },
         {
             key: "red",
@@ -818,21 +851,30 @@ function AddEventModal(param) {
         }
     }
     var onSubmit = function(formData) {
+        var selectedProductData = productData === null || productData === void 0 ? void 0 : productData.find(function(item) {
+            return item.product_id === selectedProduct && (!selectedPath || item.learning_path_title === selectedPath) && item.module_id === selectedModule;
+        });
         var newEvent = {
             id: (0, import_uuid.v4)(),
-            // Generate a unique ID
             title: formData.title,
             startDate: formData.startDate,
             endDate: formData.endDate,
             variant: formData.variant,
-            description: formData.description
+            description: formData.description,
+            productData: selectedProductData ? {
+                product_id: selectedProductData.product_id,
+                product_title: selectedProductData.product_title,
+                learning_path_title: selectedProductData.learning_path_title,
+                module_id: selectedProductData.module_id,
+                module_title: selectedProductData.module_title
+            } : void 0
         };
         if (!(typedData === null || typedData === void 0 ? void 0 : typedData.id)) handlers.handleAddEvent(newEvent);
         else handlers.handleUpdateEvent(newEvent, typedData.id);
         onClose();
     };
     return /* @__PURE__ */ import_react4.default.createElement("form", {
-        className: "flex flex-col gap-3",
+        className: "flex flex-col gap-3 max-h-[80vh] overflow-y-auto pr-2",
         onSubmit: handleSubmit(onSubmit)
     }, CustomAddEventModal ? CustomAddEventModal({
         register: register,
@@ -850,7 +892,48 @@ function AddEventModal(param) {
     })), /* @__PURE__ */ import_react4.default.createElement(SelectDate, {
         data: data,
         setValue: setValue
-    }), /* @__PURE__ */ import_react4.default.createElement(import_dropdown.Dropdown, {
+    }), productData && productData.length > 0 && /* @__PURE__ */ import_react4.default.createElement("div", {
+        className: "flex flex-col gap-3"
+    }, /* @__PURE__ */ import_react4.default.createElement(import_select.Select, {
+        label: "Conte\xFAdo",
+        placeholder: "Selecione um conte\xFAdo",
+        value: selectedProduct,
+        onChange: function(e) {
+            setSelectedProduct(e.target.value);
+            setSelectedPath("");
+            setSelectedModule("");
+        }
+    }, uniqueProducts === null || uniqueProducts === void 0 ? void 0 : uniqueProducts.map(function(product) {
+        return /* @__PURE__ */ import_react4.default.createElement(import_select.SelectItem, {
+            key: product.id,
+            value: product.id
+        }, product.title);
+    })), filteredPaths && filteredPaths.length > 0 && /* @__PURE__ */ import_react4.default.createElement(import_select.Select, {
+        label: "Trilha",
+        placeholder: "Selecione uma trilha (opcional)",
+        value: selectedPath,
+        onChange: function(e) {
+            setSelectedPath(e.target.value);
+            setSelectedModule("");
+        }
+    }, filteredPaths.map(function(path) {
+        return /* @__PURE__ */ import_react4.default.createElement(import_select.SelectItem, {
+            key: path,
+            value: path
+        }, path);
+    })), filteredModules && filteredModules.length > 0 && /* @__PURE__ */ import_react4.default.createElement(import_select.Select, {
+        label: "M\xF3dulo",
+        placeholder: "Selecione um m\xF3dulo",
+        value: selectedModule,
+        onChange: function(e) {
+            return setSelectedModule(e.target.value);
+        }
+    }, filteredModules.map(function(module2) {
+        return /* @__PURE__ */ import_react4.default.createElement(import_select.SelectItem, {
+            key: module2.id,
+            value: module2.id
+        }, module2.title);
+    }))), /* @__PURE__ */ import_react4.default.createElement(import_dropdown.Dropdown, {
         backdrop: "blur"
     }, /* @__PURE__ */ import_react4.default.createElement(import_dropdown.DropdownTrigger, null, /* @__PURE__ */ import_react4.default.createElement(import_button.Button, {
         variant: "flat",
@@ -1711,11 +1794,21 @@ function SchedulerViewFilteration(param) {
         clientSide
     ]);
     function handleAddEvent(selectedDay) {
-        var _CustomComponents_CustomEventModal_CustomAddEventModal, _CustomComponents_CustomEventModal, _CustomComponents_CustomEventModal_CustomAddEventModal1, _CustomComponents_CustomEventModal1;
+        var _CustomComponents_CustomEventModal_CustomAddEventModal, _CustomComponents_CustomEventModal, _CustomComponents_CustomEventModal_CustomAddEventModal1, _CustomComponents_CustomEventModal1, _CustomComponents_CustomEventModal_CustomAddEventModal2, _CustomComponents_CustomEventModal2;
         showAddEventModal({
             title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal = _CustomComponents_CustomEventModal.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal.title) || "Adicionar Evento",
             body: /* @__PURE__ */ import_react10.default.createElement(AddEventModal, {
-                CustomAddEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal1 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal1 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal1 = _CustomComponents_CustomEventModal1.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal1.CustomForm
+                CustomAddEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal1 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal1 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal1 = _CustomComponents_CustomEventModal1.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal1.CustomForm,
+                productData: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal2 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal2 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal2 = _CustomComponents_CustomEventModal2.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal2 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal2.ProductData) || [
+                    {
+                        //sample data
+                        product_id: "1",
+                        product_title: "Product 1",
+                        module_id: "1",
+                        module_title: "Module 1",
+                        learning_path_title: "Learning Path 1"
+                    }
+                ]
             }),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 var startDate, endDate;
