@@ -1716,16 +1716,7 @@ function SchedulerViewFilteration(param) {
             title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal = _CustomComponents_CustomEventModal.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal.title) || "Adicionar Evento",
             body: /* @__PURE__ */ React10.createElement(AddEventModal, {
                 CustomAddEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal1 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal1 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal1 = _CustomComponents_CustomEventModal1.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal1.CustomForm,
-                productData: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal2 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal2 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal2 = _CustomComponents_CustomEventModal2.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal2 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal2.ProductData) || [
-                    {
-                        //sample data
-                        product_id: "1",
-                        product_title: "Product 1",
-                        module_id: "1",
-                        module_title: "Module 1",
-                        learning_path_title: "Learning Path 1"
-                    }
-                ]
+                productData: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal2 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal2 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal2 = _CustomComponents_CustomEventModal2.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal2 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal2.ProductData
             }),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 var startDate, endDate;
