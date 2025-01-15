@@ -108,7 +108,7 @@ export default function EventStyled({
           variant="flat"
           color={event?.variant}
           classNames={{ content: "p-0" }}
-          className={`min-w-full items-start p-0 flex-grow flex-col flex ${event?.minmized ? "h-full" : "min-h-fit p-1"} rounded-md`}
+          className={`mb-2 min-w-full items-start p-0 flex-grow flex-col flex ${event?.minmized ? "h-full" : "min-h-fit p-1"} rounded-md`}
         >
           <div
             className={`flex ${event?.minmized ? "p-0" : "p-1"} flex-col flex-grow px-1 rounded-md  items-start w-full`}

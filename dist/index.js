@@ -983,7 +983,7 @@ function EventStyled(param) {
         classNames: {
             content: "p-0"
         },
-        className: "min-w-full items-start p-0 flex-grow flex-col flex ".concat((event === null || event === void 0 ? void 0 : event.minmized) ? "h-full" : "min-h-fit p-1", " rounded-md")
+        className: "mb-2 min-w-full items-start p-0 flex-grow flex-col flex ".concat((event === null || event === void 0 ? void 0 : event.minmized) ? "h-full" : "min-h-fit p-1", " rounded-md")
     }, /* @__PURE__ */ React9__default.default.createElement("div", {
         className: "flex ".concat((event === null || event === void 0 ? void 0 : event.minmized) ? "p-0" : "p-1", " flex-col flex-grow px-1 rounded-md  items-start w-full")
     }, /* @__PURE__ */ React9__default.default.createElement("h1", {
