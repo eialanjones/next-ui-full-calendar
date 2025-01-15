@@ -905,11 +905,12 @@ function EventStyled(param) {
     var _useModalContext = useModalContext(), showEventModal = _useModalContext.showModal;
     var handlers = useScheduler().handlers;
     function handleEditEvent(event2) {
-        var _CustomEventModal_CustomAddEventModal;
+        var _CustomEventModal_CustomAddEventModal, _CustomEventModal_CustomAddEventModal1;
         showEventModal({
             title: event2 === null || event2 === void 0 ? void 0 : event2.title,
             body: /* @__PURE__ */ React9__default.default.createElement(AddEventModal, {
-                CustomAddEventModal: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal.CustomForm
+                CustomAddEventModal: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal.CustomForm,
+                productData: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal1 = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal1.ProductData
             }),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 return _ts_generator(this, function(_state) {
@@ -988,8 +989,11 @@ function EventStyled(param) {
     }, /* @__PURE__ */ React9__default.default.createElement("h1", {
         className: "".concat((event === null || event === void 0 ? void 0 : event.minmized) && "text-[0.7rem] p-0 px-1", " font-semibold line-clamp-1")
     }, event === null || event === void 0 ? void 0 : event.title), /* @__PURE__ */ React9__default.default.createElement("p", {
-        className: "text-[0.65rem]"
-    }, event === null || event === void 0 ? void 0 : event.description), !(event === null || event === void 0 ? void 0 : event.minmized) && /* @__PURE__ */ React9__default.default.createElement("div", {
+        className: "text-[0.65rem]",
+        dangerouslySetInnerHTML: {
+            __html: (event === null || event === void 0 ? void 0 : event.description) || ""
+        }
+    }), !(event === null || event === void 0 ? void 0 : event.minmized) && /* @__PURE__ */ React9__default.default.createElement("div", {
         className: "flex justify-between w-full"
     }, /* @__PURE__ */ React9__default.default.createElement("p", {
         className: "text-sm"
@@ -1058,11 +1062,12 @@ function DailyView(param) {
     };
     var dayEvents = getters.getEventsForDay((currentDate === null || currentDate === void 0 ? void 0 : currentDate.getDate()) || 0, currentDate);
     function handleAddEvent(event) {
-        var _CustomEventModal_CustomAddEventModal, _CustomEventModal_CustomAddEventModal1;
+        var _CustomEventModal_CustomAddEventModal, _CustomEventModal_CustomAddEventModal1, _CustomEventModal_CustomAddEventModal2;
         showModal({
             title: (CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal.title) || "Adicionar Evento",
             body: /* @__PURE__ */ React9__default.default.createElement(AddEventModal, {
-                CustomAddEventModal: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal1 = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal1.CustomForm
+                CustomAddEventModal: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal1 = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal1.CustomForm,
+                productData: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal2 = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal2 === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal2.ProductData
             }),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 var startDate, endDate;

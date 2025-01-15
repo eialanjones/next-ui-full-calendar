@@ -46,6 +46,7 @@ export default function EventStyled({
           CustomAddEventModal={
             CustomEventModal?.CustomAddEventModal?.CustomForm
           }
+          productData={CustomEventModal?.CustomAddEventModal?.ProductData}
         />
       ),
       getter: async () => {
@@ -118,7 +119,7 @@ export default function EventStyled({
               {event?.title}
             </h1>
 
-            <p className="text-[0.65rem]">{event?.description}</p>
+            <p className="text-[0.65rem]" dangerouslySetInnerHTML={{ __html: event?.description || "" }}/>
             {!event?.minmized && (
               <div className="flex justify-between w-full">
                 <p className="text-sm">{formatDate(event?.startDate)}</p>

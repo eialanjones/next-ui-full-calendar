@@ -82,6 +82,7 @@ export default function DailyView({
           CustomAddEventModal={
             CustomEventModal?.CustomAddEventModal?.CustomForm
           }
+          productData={CustomEventModal?.CustomAddEventModal?.ProductData}
         />
       ),
       getter: async () => {
