@@ -23,9 +23,11 @@ function calendarDateToJSDate(calendarDate: CalendarDate): Date {
 export default function SelectDate({
   data,
   setValue,
+  readOnly = false,
 }: {
   data?: { startDate: Date; endDate: Date; time: Time };
   setValue: UseFormSetValue<EventFormData>;
+  readOnly?: boolean;
 }) {
   const [dateState, setDateState] = useState({
     startDate: data
@@ -68,11 +70,12 @@ export default function SelectDate({
   }, [dateState, setValue]);
 
   return (
-    <div>
+    <div style={{ pointerEvents: readOnly ? "none" : "auto" }}>
       <div className="w-full flex gap-4 max-w-full flex-wrap">
         <DateRangePicker
           label="Duração do Evento"
           isRequired
+          isReadOnly={readOnly}
           value={{ start: dateState.startDate, end: dateState.endDate }}
           className="w-full"
           onChange={(value) => {
@@ -103,6 +106,7 @@ export default function SelectDate({
           <TimeInput
             label="Hora de Início"
             defaultValue={dateState?.startTime}
+            isReadOnly={readOnly}
             onChange={(e: Time | null) => {
               setDateState({
                 ...dateState,
@@ -114,6 +118,7 @@ export default function SelectDate({
           <TimeInput
             label="Hora de Término"
             defaultValue={dateState?.endTime}
+            isReadOnly={readOnly}
             onChange={(e: Time | null) => {
               setDateState({
                 ...dateState,

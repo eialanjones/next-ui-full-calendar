@@ -32,9 +32,11 @@ interface ProductData {
 export default function AddEventModal({
   CustomAddEventModal,
   productData,
+  readOnly = true,
 }: {
   CustomAddEventModal?: React.FC<{ register: any; errors: any }>;
   productData?: ProductData[];
+  readOnly?: boolean;
 }) {
   const { onClose, data } = useModalContext();
   const [selectedColor, setSelectedColor] = useState<string>(
@@ -153,13 +155,17 @@ export default function AddEventModal({
         item.module_id === selectedModule
     );
 
+    const removeHtmlTags = (str: string): string => {
+      return str?.replace(/<[^>]*>/g, "");
+    };
+
     const newEvent: Event = {
       id: uuidv4(),
       title: formData.title,
       startDate: formData.startDate,
       endDate: formData.endDate,
       variant: formData.variant,
-      description: formData.description,
+      description: removeHtmlTags(formData.description || ""),
       productData: selectedProductData ? {
         product_id: selectedProductData.product_id,
         product_title: selectedProductData.product_title,
@@ -183,77 +189,121 @@ export default function AddEventModal({
         CustomAddEventModal({ register, errors })
       ) : (
         <>
-          <Input
-            {...register("title")}
-            label="Nome do Evento"
-            placeholder="Digite o nome do evento"
-            variant="bordered"
-            isInvalid={!!errors.title}
-            errorMessage={errors.title?.message}
-          />
-          <Textarea
-            {...register("description")}
-            label="Descrição do Evento"
-            placeholder="Digite a descrição do evento"
-            variant="bordered"
-          />
-          <SelectDate data={data} setValue={setValue} />
+          {readOnly ? (
+            <div className="w-full p-3 rounded-medium bg-default-100" dangerouslySetInnerHTML={{ __html: data?.title || '' }} />
+          ) : (
+            <Input
+              {...register("title")}
+              label="Nome do Evento"
+              placeholder="Digite o nome do evento"
+              variant="flat"
+              isReadOnly={readOnly}
+              isInvalid={!!errors.title}
+              errorMessage={errors.title?.message}
+            />
+          )}
+          {readOnly ? (
+            <div 
+              className="w-full min-h-fit overflow-y-auto p-3 rounded-medium bg-default-100"
+              dangerouslySetInnerHTML={{ 
+                __html: data?.description || ''
+              }} 
+            />
+          ) : (
+            <Textarea
+              {...register("description")}
+              label="Descrição do Evento"
+              placeholder="Digite a descrição do evento"
+              variant="flat"
+            />
+          )}
+          <SelectDate data={data} setValue={setValue} readOnly={readOnly}/>
 
           {productData && productData.length > 0 && (
             <div className="flex flex-col gap-3">
-              <Select
-                label="Conteúdo"
-                placeholder="Selecione um conteúdo"
-                value={selectedProduct}
-                onChange={(e) => {
-                  setSelectedProduct(e.target.value);
-                  setSelectedPath("");
-                  setSelectedModule("");
-                }}
-              >
-                {uniqueProducts?.map((product) => (
-                  <SelectItem key={product.id} value={product.id}>
-                    {product.title}
-                  </SelectItem>
-                ))}
-              </Select>
-
-              {filteredPaths && filteredPaths.length > 0 && (
+              {readOnly ? (
+                <div className="flex flex-col gap-1">
+                  <span className="text-sm text-default-700">Conteúdo</span>
+                  <div className="w-full p-3 rounded-medium bg-default-100">
+                    {uniqueProducts?.find(p => p.id === selectedProduct)?.title || ''}
+                  </div>
+                </div>
+              ) : (
                 <Select
-                  label="Trilha"
-                  placeholder="Selecione uma trilha (opcional)"
-                  value={selectedPath}
+                  label="Conteúdo"
+                  placeholder="Selecione um conteúdo"
+                  value={selectedProduct}
+                  variant="flat"
                   onChange={(e) => {
-                    setSelectedPath(e.target.value);
+                    setSelectedProduct(e.target.value);
+                    setSelectedPath("");
                     setSelectedModule("");
                   }}
                 >
-                  {filteredPaths.map((path) => (
-                    <SelectItem key={path} value={path}>
-                      {path}
+                  {(uniqueProducts || []).map((product) => (
+                    <SelectItem key={product.id} value={product.id}>
+                      {product.title}
                     </SelectItem>
                   ))}
                 </Select>
               )}
 
+              {filteredPaths && filteredPaths.length > 0 && (
+                readOnly ? (
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm text-default-700">Trilha</span>
+                    <div className="w-full p-3 rounded-medium bg-default-100">
+                      {selectedPath || ''}
+                    </div>
+                  </div>
+                ) : (
+                  <Select
+                    label="Trilha"
+                    placeholder="Selecione uma trilha (opcional)"
+                    value={selectedPath}
+                    variant="flat"
+                    onChange={(e) => {
+                      setSelectedPath(e.target.value);
+                      setSelectedModule("");
+                    }}
+                  >
+                    {filteredPaths.map((path) => (
+                      <SelectItem key={path} value={path}>
+                        {path}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                )
+              )}
+
               {filteredModules && filteredModules.length > 0 && (
-                <Select
-                  label="Módulo"
-                  placeholder="Selecione um módulo"
-                  value={selectedModule}
-                  onChange={(e) => setSelectedModule(e.target.value)}
-                >
-                  {filteredModules.map((module) => (
-                    <SelectItem key={module.id} value={module.id}>
-                      {module.title}
-                    </SelectItem>
-                  ))}
-                </Select>
+                readOnly ? (
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm text-default-700">Módulo</span>
+                    <div className="w-full p-3 rounded-medium bg-default-100">
+                      {filteredModules.find(m => m.id === selectedModule)?.title || ''}
+                    </div>
+                  </div>
+                ) : (
+                  <Select
+                    label="Módulo"
+                    placeholder="Selecione um módulo"
+                    value={selectedModule}
+                    variant="flat"
+                    onChange={(e) => setSelectedModule(e.target.value)}
+                  >
+                    {filteredModules.map((module) => (
+                      <SelectItem key={module.id} value={module.id}>
+                        {module.title}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                )
               )}
             </div>
           )}
 
-          <Dropdown backdrop="blur">
+          {!readOnly && <Dropdown backdrop="blur">
             <DropdownTrigger>
               <Button
                 variant="flat"
@@ -294,16 +344,21 @@ export default function AddEventModal({
                 </DropdownItem>
               ))}
             </DropdownMenu>
-          </Dropdown>
+          </Dropdown>}
 
-          <ModalFooter className="px-0">
+            {readOnly && <ModalFooter className="px-0">
+              <Button color="primary" variant="flat" onPress={onClose}>
+                Fechar
+              </Button>
+            </ModalFooter>}
+          {!readOnly && <ModalFooter className="px-0">
             <Button color="danger" variant="light" onPress={onClose}>
               Cancelar
             </Button>
             <Button color="primary" type="submit">
               Salvar Evento
             </Button>
-          </ModalFooter>
+          </ModalFooter>}
         </>
       )}
     </form>

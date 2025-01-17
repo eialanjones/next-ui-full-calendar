@@ -55,6 +55,10 @@ export default function EventStyled({
     });
   }
 
+  const removeHtmlTags = (str: string): string => {
+    return str?.replace(/<[^>]*>/g, "");
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -114,12 +118,12 @@ export default function EventStyled({
             className={`flex ${event?.minmized ? "p-0" : "p-1"} flex-col flex-grow px-1 rounded-md  items-start w-full`}
           >
             <h1
-              className={`${event?.minmized && "text-[0.7rem] p-0 px-1"} font-semibold line-clamp-1`}
+              className={`${event?.minmized && "text-[0.7rem] p-0 px-1"} font-semibold line-clamp-1 break-words whitespace-pre-wrap`}
             >
-              {event?.title}
+              {removeHtmlTags(event?.title)}
             </h1>
 
-            <p className="text-[0.65rem]" dangerouslySetInnerHTML={{ __html: event?.description || "" }}/>
+            <p className="text-[0.65rem] break-words whitespace-pre-wrap line-clamp-3">{removeHtmlTags(event?.description || "")}</p>
             {!event?.minmized && (
               <div className="flex justify-between w-full">
                 <p className="text-sm">{formatDate(event?.startDate)}</p>

@@ -239,7 +239,7 @@ function _ts_generator(thisArg, body) {
         };
     }
 }
-import React9, { createContext, useReducer, useEffect, useContext, useState, useRef } from 'react';
+import React4, { createContext, useReducer, useEffect, useContext, useState, useRef } from 'react';
 import { useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@nextui-org/modal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@nextui-org/button';
@@ -330,13 +330,13 @@ var ModalProvider = function(param) {
             return _ref.apply(this, arguments);
         };
     }();
-    return /* @__PURE__ */ React9.createElement(ModalContext.Provider, {
+    return /* @__PURE__ */ React4.createElement(ModalContext.Provider, {
         value: {
             showModal: showModal,
             onClose: onClose,
             data: data
         }
-    }, children, /* @__PURE__ */ React9.createElement(Modal, {
+    }, children, /* @__PURE__ */ React4.createElement(Modal, {
         backdrop: "blur",
         classNames: {
             backdrop: "max-h-screen overflow-hidden",
@@ -344,9 +344,9 @@ var ModalProvider = function(param) {
         },
         isOpen: isOpen,
         onOpenChange: onClose
-    }, /* @__PURE__ */ React9.createElement(ModalContent, {
+    }, /* @__PURE__ */ React4.createElement(ModalContent, {
         className: (modalContent === null || modalContent === void 0 ? void 0 : modalContent.modalClassName) || ""
-    }, modalContent && /* @__PURE__ */ React9.createElement(React9.Fragment, null, modalContent.title && /* @__PURE__ */ React9.createElement(ModalHeader, null, modalContent.title), modalContent.body && /* @__PURE__ */ React9.createElement(ModalBody, null, modalContent.body), modalContent.footer && /* @__PURE__ */ React9.createElement(ModalFooter, null, modalContent.footer)))));
+    }, modalContent && /* @__PURE__ */ React4.createElement(React4.Fragment, null, modalContent.title && /* @__PURE__ */ React4.createElement(ModalHeader, null, modalContent.title), modalContent.body && /* @__PURE__ */ React4.createElement(ModalBody, null, modalContent.body), modalContent.footer && /* @__PURE__ */ React4.createElement(ModalFooter, null, modalContent.footer)))));
 };
 var useModalContext = function() {
     var context = useContext(ModalContext);
@@ -533,7 +533,7 @@ var SchedulerProvider = function(param) {
         handleUpdateEvent: handleUpdateEvent,
         handleDeleteEvent: handleDeleteEvent
     };
-    return /* @__PURE__ */ React9.createElement(SchedulerContext.Provider, {
+    return /* @__PURE__ */ React4.createElement(SchedulerContext.Provider, {
         value: {
             events: state,
             dispatch: dispatch,
@@ -541,7 +541,7 @@ var SchedulerProvider = function(param) {
             handlers: handlers,
             weekStartsOn: weekStartsOn
         }
-    }, /* @__PURE__ */ React9.createElement(ModalProvider, null, children));
+    }, /* @__PURE__ */ React4.createElement(ModalProvider, null, children));
 };
 var useScheduler = function() {
     var context = useContext(SchedulerContext);
@@ -558,7 +558,7 @@ function calendarDateToJSDate(calendarDate) {
     return new Date(year, month - 1, day);
 }
 function SelectDate(param) {
-    var data = param.data, setValue = param.setValue;
+    var data = param.data, setValue = param.setValue, _param_readOnly = param.readOnly, readOnly = _param_readOnly === void 0 ? false : _param_readOnly;
     var _data_startDate, _data_startDate1, _data_endDate, _data_endDate1;
     var _useState = _sliced_to_array(useState({
         startDate: data ? parseDate(getFormattedDate(data === null || data === void 0 ? void 0 : data.startDate)) : parseDate("2024-04-06"),
@@ -584,11 +584,16 @@ function SelectDate(param) {
         dateState,
         setValue
     ]);
-    return /* @__PURE__ */ React9.createElement("div", null, /* @__PURE__ */ React9.createElement("div", {
+    return /* @__PURE__ */ React4.createElement("div", {
+        style: {
+            pointerEvents: readOnly ? "none" : "auto"
+        }
+    }, /* @__PURE__ */ React4.createElement("div", {
         className: "w-full flex gap-4 max-w-full flex-wrap"
-    }, /* @__PURE__ */ React9.createElement(DateRangePicker, {
+    }, /* @__PURE__ */ React4.createElement(DateRangePicker, {
         label: "Dura\xE7\xE3o do Evento",
         isRequired: true,
+        isReadOnly: readOnly,
         value: {
             start: dateState.startDate,
             end: dateState.endDate
@@ -604,19 +609,21 @@ function SelectDate(param) {
                 endDate: parseDate(getFormattedDate(endDate))
             }));
         }
-    }), /* @__PURE__ */ React9.createElement("div", {
+    }), /* @__PURE__ */ React4.createElement("div", {
         className: "flex flex-wrap gap-4"
-    }, /* @__PURE__ */ React9.createElement(TimeInput, {
+    }, /* @__PURE__ */ React4.createElement(TimeInput, {
         label: "Hora de In\xEDcio",
         defaultValue: dateState === null || dateState === void 0 ? void 0 : dateState.startTime,
+        isReadOnly: readOnly,
         onChange: function(e) {
             setDateState(_object_spread_props(_object_spread({}, dateState), {
                 startTime: e || new Time(0, 0)
             }));
         }
-    }), /* @__PURE__ */ React9.createElement(TimeInput, {
+    }), /* @__PURE__ */ React4.createElement(TimeInput, {
         label: "Hora de T\xE9rmino",
         defaultValue: dateState === null || dateState === void 0 ? void 0 : dateState.endTime,
+        isReadOnly: readOnly,
         onChange: function(e) {
             setDateState(_object_spread_props(_object_spread({}, dateState), {
                 endTime: e || new Time(0, 0)
@@ -647,8 +654,8 @@ var eventSchema = z.object({
     color: z.string().nonempty("Color selection is required")
 });
 function AddEventModal(param) {
-    var CustomAddEventModal = param.CustomAddEventModal, productData = param.productData;
-    var _errors_title, _colorOptions_find;
+    var CustomAddEventModal = param.CustomAddEventModal, productData = param.productData, _param_readOnly = param.readOnly, readOnly = _param_readOnly === void 0 ? true : _param_readOnly;
+    var _errors_title, _uniqueProducts_find, _filteredModules_find, _colorOptions_find;
     var _useModalContext = useModalContext(), onClose = _useModalContext.onClose, data = _useModalContext.data;
     var _useState = _sliced_to_array(useState(getEventColor((data === null || data === void 0 ? void 0 : data.variant) || "primary")), 2), selectedColor = _useState[0], setSelectedColor = _useState[1];
     var _useState1 = _sliced_to_array(useState(""), 2), selectedProduct = _useState1[0], setSelectedProduct = _useState1[1];
@@ -761,13 +768,16 @@ function AddEventModal(param) {
         var selectedProductData = productData === null || productData === void 0 ? void 0 : productData.find(function(item) {
             return item.product_id === selectedProduct && (!selectedPath || item.learning_path_title === selectedPath) && item.module_id === selectedModule;
         });
+        var removeHtmlTags = function(str) {
+            return str === null || str === void 0 ? void 0 : str.replace(/<[^>]*>/g, "");
+        };
         var newEvent = {
             id: v4(),
             title: formData.title,
             startDate: formData.startDate,
             endDate: formData.endDate,
             variant: formData.variant,
-            description: formData.description,
+            description: removeHtmlTags(formData.description || ""),
             productData: selectedProductData ? {
                 product_id: selectedProductData.product_id,
                 product_title: selectedProductData.product_title,
@@ -780,75 +790,112 @@ function AddEventModal(param) {
         else handlers.handleUpdateEvent(newEvent, typedData.id);
         onClose();
     };
-    return /* @__PURE__ */ React9.createElement("form", {
+    return /* @__PURE__ */ React4.createElement("form", {
         className: "flex flex-col gap-3 max-h-[80vh] overflow-y-auto pr-2",
         onSubmit: handleSubmit(onSubmit)
     }, CustomAddEventModal ? CustomAddEventModal({
         register: register,
         errors: errors
-    }) : /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement(Input, _object_spread_props(_object_spread({}, register("title")), {
+    }) : /* @__PURE__ */ React4.createElement(React4.Fragment, null, readOnly ? /* @__PURE__ */ React4.createElement("div", {
+        className: "w-full p-3 rounded-medium bg-default-100",
+        dangerouslySetInnerHTML: {
+            __html: (data === null || data === void 0 ? void 0 : data.title) || ""
+        }
+    }) : /* @__PURE__ */ React4.createElement(Input, _object_spread_props(_object_spread({}, register("title")), {
         label: "Nome do Evento",
         placeholder: "Digite o nome do evento",
-        variant: "bordered",
+        variant: "flat",
+        isReadOnly: readOnly,
         isInvalid: !!errors.title,
         errorMessage: (_errors_title = errors.title) === null || _errors_title === void 0 ? void 0 : _errors_title.message
-    })), /* @__PURE__ */ React9.createElement(Textarea, _object_spread_props(_object_spread({}, register("description")), {
+    })), readOnly ? /* @__PURE__ */ React4.createElement("div", {
+        className: "w-full min-h-fit overflow-y-auto p-3 rounded-medium bg-default-100",
+        dangerouslySetInnerHTML: {
+            __html: (data === null || data === void 0 ? void 0 : data.description) || ""
+        }
+    }) : /* @__PURE__ */ React4.createElement(Textarea, _object_spread_props(_object_spread({}, register("description")), {
         label: "Descri\xE7\xE3o do Evento",
         placeholder: "Digite a descri\xE7\xE3o do evento",
-        variant: "bordered"
-    })), /* @__PURE__ */ React9.createElement(SelectDate, {
+        variant: "flat"
+    })), /* @__PURE__ */ React4.createElement(SelectDate, {
         data: data,
-        setValue: setValue
-    }), productData && productData.length > 0 && /* @__PURE__ */ React9.createElement("div", {
+        setValue: setValue,
+        readOnly: readOnly
+    }), productData && productData.length > 0 && /* @__PURE__ */ React4.createElement("div", {
         className: "flex flex-col gap-3"
-    }, /* @__PURE__ */ React9.createElement(Select, {
+    }, readOnly ? /* @__PURE__ */ React4.createElement("div", {
+        className: "flex flex-col gap-1"
+    }, /* @__PURE__ */ React4.createElement("span", {
+        className: "text-sm text-default-700"
+    }, "Conte\xFAdo"), /* @__PURE__ */ React4.createElement("div", {
+        className: "w-full p-3 rounded-medium bg-default-100"
+    }, (uniqueProducts === null || uniqueProducts === void 0 ? void 0 : (_uniqueProducts_find = uniqueProducts.find(function(p) {
+        return p.id === selectedProduct;
+    })) === null || _uniqueProducts_find === void 0 ? void 0 : _uniqueProducts_find.title) || "")) : /* @__PURE__ */ React4.createElement(Select, {
         label: "Conte\xFAdo",
         placeholder: "Selecione um conte\xFAdo",
         value: selectedProduct,
+        variant: "flat",
         onChange: function(e) {
             setSelectedProduct(e.target.value);
             setSelectedPath("");
             setSelectedModule("");
         }
-    }, uniqueProducts === null || uniqueProducts === void 0 ? void 0 : uniqueProducts.map(function(product) {
-        return /* @__PURE__ */ React9.createElement(SelectItem, {
+    }, (uniqueProducts || []).map(function(product) {
+        return /* @__PURE__ */ React4.createElement(SelectItem, {
             key: product.id,
             value: product.id
         }, product.title);
-    })), filteredPaths && filteredPaths.length > 0 && /* @__PURE__ */ React9.createElement(Select, {
+    })), filteredPaths && filteredPaths.length > 0 && (readOnly ? /* @__PURE__ */ React4.createElement("div", {
+        className: "flex flex-col gap-1"
+    }, /* @__PURE__ */ React4.createElement("span", {
+        className: "text-sm text-default-700"
+    }, "Trilha"), /* @__PURE__ */ React4.createElement("div", {
+        className: "w-full p-3 rounded-medium bg-default-100"
+    }, selectedPath || "")) : /* @__PURE__ */ React4.createElement(Select, {
         label: "Trilha",
         placeholder: "Selecione uma trilha (opcional)",
         value: selectedPath,
+        variant: "flat",
         onChange: function(e) {
             setSelectedPath(e.target.value);
             setSelectedModule("");
         }
     }, filteredPaths.map(function(path) {
-        return /* @__PURE__ */ React9.createElement(SelectItem, {
+        return /* @__PURE__ */ React4.createElement(SelectItem, {
             key: path,
             value: path
         }, path);
-    })), filteredModules && filteredModules.length > 0 && /* @__PURE__ */ React9.createElement(Select, {
+    }))), filteredModules && filteredModules.length > 0 && (readOnly ? /* @__PURE__ */ React4.createElement("div", {
+        className: "flex flex-col gap-1"
+    }, /* @__PURE__ */ React4.createElement("span", {
+        className: "text-sm text-default-700"
+    }, "M\xF3dulo"), /* @__PURE__ */ React4.createElement("div", {
+        className: "w-full p-3 rounded-medium bg-default-100"
+    }, ((_filteredModules_find = filteredModules.find(function(m) {
+        return m.id === selectedModule;
+    })) === null || _filteredModules_find === void 0 ? void 0 : _filteredModules_find.title) || "")) : /* @__PURE__ */ React4.createElement(Select, {
         label: "M\xF3dulo",
         placeholder: "Selecione um m\xF3dulo",
         value: selectedModule,
+        variant: "flat",
         onChange: function(e) {
             return setSelectedModule(e.target.value);
         }
     }, filteredModules.map(function(module) {
-        return /* @__PURE__ */ React9.createElement(SelectItem, {
+        return /* @__PURE__ */ React4.createElement(SelectItem, {
             key: module.id,
             value: module.id
         }, module.title);
-    }))), /* @__PURE__ */ React9.createElement(Dropdown, {
+    })))), !readOnly && /* @__PURE__ */ React4.createElement(Dropdown, {
         backdrop: "blur"
-    }, /* @__PURE__ */ React9.createElement(DropdownTrigger, null, /* @__PURE__ */ React9.createElement(Button, {
+    }, /* @__PURE__ */ React4.createElement(DropdownTrigger, null, /* @__PURE__ */ React4.createElement(Button, {
         variant: "flat",
         className: "justify-between w-fit my-4",
         color: getEventStatus(selectedColor)
     }, (_colorOptions_find = colorOptions.find(function(color) {
         return color.key === selectedColor;
-    })) === null || _colorOptions_find === void 0 ? void 0 : _colorOptions_find.name)), /* @__PURE__ */ React9.createElement(DropdownMenu, {
+    })) === null || _colorOptions_find === void 0 ? void 0 : _colorOptions_find.name)), /* @__PURE__ */ React4.createElement(DropdownMenu, {
         "aria-label": "Color selection",
         variant: "flat",
         selectionMode: "single",
@@ -865,19 +912,25 @@ function AddEventModal(param) {
             });
         }
     }, colorOptions.map(function(color) {
-        return /* @__PURE__ */ React9.createElement(DropdownItem, {
+        return /* @__PURE__ */ React4.createElement(DropdownItem, {
             key: color.key,
-            startContent: /* @__PURE__ */ React9.createElement("div", {
+            startContent: /* @__PURE__ */ React4.createElement("div", {
                 className: "w-4 h-4 rounded-full bg-".concat(color.key, "-500")
             })
         }, color.name);
-    }))), /* @__PURE__ */ React9.createElement(ModalFooter, {
+    }))), readOnly && /* @__PURE__ */ React4.createElement(ModalFooter, {
         className: "px-0"
-    }, /* @__PURE__ */ React9.createElement(Button, {
+    }, /* @__PURE__ */ React4.createElement(Button, {
+        color: "primary",
+        variant: "flat",
+        onPress: onClose
+    }, "Fechar")), !readOnly && /* @__PURE__ */ React4.createElement(ModalFooter, {
+        className: "px-0"
+    }, /* @__PURE__ */ React4.createElement(Button, {
         color: "danger",
         variant: "light",
         onPress: onClose
-    }, "Cancelar"), /* @__PURE__ */ React9.createElement(Button, {
+    }, "Cancelar"), /* @__PURE__ */ React4.createElement(Button, {
         color: "primary",
         type: "submit"
     }, "Salvar Evento"))));
@@ -900,7 +953,7 @@ function EventStyled(param) {
         var _CustomEventModal_CustomAddEventModal, _CustomEventModal_CustomAddEventModal1;
         showEventModal({
             title: event2 === null || event2 === void 0 ? void 0 : event2.title,
-            body: /* @__PURE__ */ React9.createElement(AddEventModal, {
+            body: /* @__PURE__ */ React4.createElement(AddEventModal, {
                 CustomAddEventModal: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal.CustomForm,
                 productData: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal1 = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal1.ProductData
             }),
@@ -914,7 +967,10 @@ function EventStyled(param) {
             })
         });
     }
-    return /* @__PURE__ */ React9.createElement(motion.div, {
+    var removeHtmlTags = function(str) {
+        return str === null || str === void 0 ? void 0 : str.replace(/<[^>]*>/g, "");
+    };
+    return /* @__PURE__ */ React4.createElement(motion.div, {
         initial: {
             opacity: 0,
             scale: 0.9
@@ -933,7 +989,7 @@ function EventStyled(param) {
         },
         key: event === null || event === void 0 ? void 0 : event.id,
         className: "w-full relative use-automation-zoom-in cursor-pointer border border-default-400/60 rounded-lg  flex flex-col flex-grow "
-    }, /* @__PURE__ */ React9.createElement(Chip, {
+    }, /* @__PURE__ */ React4.createElement(Chip, {
         onClickCapture: function(e) {
             e.stopPropagation();
             handlers.handleDeleteEvent(event === null || event === void 0 ? void 0 : event.id);
@@ -944,9 +1000,9 @@ function EventStyled(param) {
             content: "max-w-fit min-w-0 p-1"
         },
         className: "absolute z-50 right-0 top-[-5px]"
-    }, /* @__PURE__ */ React9.createElement(TrashIcon, {
+    }, /* @__PURE__ */ React4.createElement(TrashIcon, {
         size: 12
-    })), event.CustomEventComponent ? /* @__PURE__ */ React9.createElement("div", {
+    })), event.CustomEventComponent ? /* @__PURE__ */ React4.createElement("div", {
         onClickCapture: function(e) {
             e.stopPropagation();
             handleEditEvent({
@@ -958,7 +1014,7 @@ function EventStyled(param) {
                 variant: event === null || event === void 0 ? void 0 : event.variant
             });
         }
-    }, /* @__PURE__ */ React9.createElement(event.CustomEventComponent, _object_spread({}, event))) : /* @__PURE__ */ React9.createElement(Chip, {
+    }, /* @__PURE__ */ React4.createElement(event.CustomEventComponent, _object_spread({}, event))) : /* @__PURE__ */ React4.createElement(Chip, {
         onClickCapture: function(e) {
             e.stopPropagation();
             handleEditEvent({
@@ -976,22 +1032,19 @@ function EventStyled(param) {
             content: "p-0"
         },
         className: "mb-2 min-w-full items-start p-0 flex-grow flex-col flex ".concat((event === null || event === void 0 ? void 0 : event.minmized) ? "h-full" : "min-h-fit p-1", " rounded-md")
-    }, /* @__PURE__ */ React9.createElement("div", {
+    }, /* @__PURE__ */ React4.createElement("div", {
         className: "flex ".concat((event === null || event === void 0 ? void 0 : event.minmized) ? "p-0" : "p-1", " flex-col flex-grow px-1 rounded-md  items-start w-full")
-    }, /* @__PURE__ */ React9.createElement("h1", {
-        className: "".concat((event === null || event === void 0 ? void 0 : event.minmized) && "text-[0.7rem] p-0 px-1", " font-semibold line-clamp-1")
-    }, event === null || event === void 0 ? void 0 : event.title), /* @__PURE__ */ React9.createElement("p", {
-        className: "text-[0.65rem]",
-        dangerouslySetInnerHTML: {
-            __html: (event === null || event === void 0 ? void 0 : event.description) || ""
-        }
-    }), !(event === null || event === void 0 ? void 0 : event.minmized) && /* @__PURE__ */ React9.createElement("div", {
+    }, /* @__PURE__ */ React4.createElement("h1", {
+        className: "".concat((event === null || event === void 0 ? void 0 : event.minmized) && "text-[0.7rem] p-0 px-1", " font-semibold line-clamp-1 break-words whitespace-pre-wrap")
+    }, removeHtmlTags(event === null || event === void 0 ? void 0 : event.title)), /* @__PURE__ */ React4.createElement("p", {
+        className: "text-[0.65rem] break-words whitespace-pre-wrap line-clamp-3"
+    }, removeHtmlTags((event === null || event === void 0 ? void 0 : event.description) || "")), !(event === null || event === void 0 ? void 0 : event.minmized) && /* @__PURE__ */ React4.createElement("div", {
         className: "flex justify-between w-full"
-    }, /* @__PURE__ */ React9.createElement("p", {
+    }, /* @__PURE__ */ React4.createElement("p", {
         className: "text-sm"
-    }, formatDate(event === null || event === void 0 ? void 0 : event.startDate)), /* @__PURE__ */ React9.createElement("p", {
+    }, formatDate(event === null || event === void 0 ? void 0 : event.startDate)), /* @__PURE__ */ React4.createElement("p", {
         className: "text-sm"
-    }, "-"), /* @__PURE__ */ React9.createElement("p", {
+    }, "-"), /* @__PURE__ */ React4.createElement("p", {
         className: "text-sm"
     }, formatDate(event === null || event === void 0 ? void 0 : event.endDate))))));
 }
@@ -1057,7 +1110,7 @@ function DailyView(param) {
         var _CustomEventModal_CustomAddEventModal, _CustomEventModal_CustomAddEventModal1, _CustomEventModal_CustomAddEventModal2;
         showModal({
             title: (CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal.title) || "Adicionar Evento",
-            body: /* @__PURE__ */ React9.createElement(AddEventModal, {
+            body: /* @__PURE__ */ React4.createElement(AddEventModal, {
                 CustomAddEventModal: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal1 = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal1.CustomForm,
                 productData: CustomEventModal === null || CustomEventModal === void 0 ? void 0 : (_CustomEventModal_CustomAddEventModal2 = CustomEventModal.CustomAddEventModal) === null || _CustomEventModal_CustomAddEventModal2 === void 0 ? void 0 : _CustomEventModal_CustomAddEventModal2.ProductData
             }),
@@ -1108,45 +1161,45 @@ function DailyView(param) {
         prevDay.setDate(currentDate.getDate() - 1);
         setCurrentDate(prevDay);
     };
-    return /* @__PURE__ */ React9.createElement("div", {
+    return /* @__PURE__ */ React4.createElement("div", {
         className: ""
-    }, /* @__PURE__ */ React9.createElement("div", {
+    }, /* @__PURE__ */ React4.createElement("div", {
         className: "flex justify-between gap-3 flex-wrap mb-5"
-    }, /* @__PURE__ */ React9.createElement("h1", {
+    }, /* @__PURE__ */ React4.createElement("h1", {
         className: "text-3xl font-semibold mb-4"
-    }, getFormattedDayTitle()), /* @__PURE__ */ React9.createElement("div", {
+    }, getFormattedDayTitle()), /* @__PURE__ */ React4.createElement("div", {
         className: "flex ml-auto  gap-3"
-    }, prevButton ? /* @__PURE__ */ React9.createElement("div", {
+    }, prevButton ? /* @__PURE__ */ React4.createElement("div", {
         onClick: handlePrevDay
-    }, prevButton) : /* @__PURE__ */ React9.createElement(Button, {
+    }, prevButton) : /* @__PURE__ */ React4.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
-        startContent: /* @__PURE__ */ React9.createElement(ArrowLeft, null),
+        startContent: /* @__PURE__ */ React4.createElement(ArrowLeft, null),
         onClick: handlePrevDay
-    }, "Anterior"), nextButton ? /* @__PURE__ */ React9.createElement("div", {
+    }, "Anterior"), nextButton ? /* @__PURE__ */ React4.createElement("div", {
         onClick: handleNextDay
-    }, nextButton) : /* @__PURE__ */ React9.createElement(Button, {
+    }, nextButton) : /* @__PURE__ */ React4.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextDay,
-        endContent: /* @__PURE__ */ React9.createElement(ArrowRight, null)
-    }, "Pr\xF3ximo"))), /* @__PURE__ */ React9.createElement("div", {
+        endContent: /* @__PURE__ */ React4.createElement(ArrowRight, null)
+    }, "Pr\xF3ximo"))), /* @__PURE__ */ React4.createElement("div", {
         className: "flex flex-col gap-4"
-    }, /* @__PURE__ */ React9.createElement("div", {
+    }, /* @__PURE__ */ React4.createElement("div", {
         className: "all-day-events"
-    }, /* @__PURE__ */ React9.createElement(AnimatePresence, {
+    }, /* @__PURE__ */ React4.createElement(AnimatePresence, {
         mode: "wait"
     }, dayEvents && (dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.length) ? dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.map(function(event, eventIndex) {
-        return /* @__PURE__ */ React9.createElement("div", {
+        return /* @__PURE__ */ React4.createElement("div", {
             key: "event-".concat(event.id, "-").concat(eventIndex)
-        }, /* @__PURE__ */ React9.createElement(EventStyled, {
+        }, /* @__PURE__ */ React4.createElement(EventStyled, {
             event: _object_spread_props(_object_spread({}, event), {
                 CustomEventComponent: CustomEventComponent,
                 minmized: false
             }),
             CustomEventModal: CustomEventModal
         }));
-    }) : "Nenhum evento para hoje")), /* @__PURE__ */ React9.createElement("div", {
+    }) : "Nenhum evento para hoje")), /* @__PURE__ */ React4.createElement("div", {
         className: "relative rounded-md bg-default-50 hover:bg-default-100 transition duration-400"
-    }, /* @__PURE__ */ React9.createElement(motion.div, {
+    }, /* @__PURE__ */ React4.createElement(motion.div, {
         className: "relative rounded-xl flex ease-in-out",
         ref: hoursColumnRef,
         variants: containerVariants,
@@ -1156,33 +1209,33 @@ function DailyView(param) {
         onMouseLeave: function() {
             return setDetailedHour(null);
         }
-    }, /* @__PURE__ */ React9.createElement("div", {
+    }, /* @__PURE__ */ React4.createElement("div", {
         className: "flex  flex-col"
     }, hours.map(function(hour, index) {
-        return /* @__PURE__ */ React9.createElement(motion.div, {
+        return /* @__PURE__ */ React4.createElement(motion.div, {
             key: "hour-".concat(index),
             variants: itemVariants,
             className: "cursor-pointer   transition duration-300  p-4 h-[64px] text-left text-sm text-muted-foreground border-default-200"
         }, hour);
-    })), /* @__PURE__ */ React9.createElement("div", {
+    })), /* @__PURE__ */ React4.createElement("div", {
         className: "flex relative flex-grow flex-col "
     }, Array.from({
         length: 24
     }).map(function(_, index) {
-        return /* @__PURE__ */ React9.createElement("div", {
+        return /* @__PURE__ */ React4.createElement("div", {
             onClick: function() {
                 handleAddEventDay(detailedHour);
             },
             key: "hour-".concat(index),
             className: "cursor-pointer w-full relative border-b  hover:bg-default-200/50  transition duration-300  p-4 h-[64px] text-left text-sm text-muted-foreground border-default-200"
-        }, /* @__PURE__ */ React9.createElement("div", {
+        }, /* @__PURE__ */ React4.createElement("div", {
             className: "absolute bg-default-200 flex items-center justify-center text-xs opacity-0 transition left-0 top-0 duration-250 hover:opacity-100 w-full h-full"
         }, "Adicionar Evento"));
-    }), /* @__PURE__ */ React9.createElement(AnimatePresence, {
+    }), /* @__PURE__ */ React4.createElement(AnimatePresence, {
         mode: "wait"
     }, dayEvents && (dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.length) ? dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.map(function(event, eventIndex) {
         var _handlers_handleEventStyling = handlers.handleEventStyling(event, dayEvents), height = _handlers_handleEventStyling.height, left = _handlers_handleEventStyling.left, maxWidth = _handlers_handleEventStyling.maxWidth, minWidth = _handlers_handleEventStyling.minWidth, top = _handlers_handleEventStyling.top, zIndex = _handlers_handleEventStyling.zIndex;
-        return /* @__PURE__ */ React9.createElement("div", {
+        return /* @__PURE__ */ React4.createElement("div", {
             key: "event-".concat(event.id, "-").concat(eventIndex),
             style: {
                 minHeight: height,
@@ -1192,19 +1245,19 @@ function DailyView(param) {
                 minWidth: minWidth
             },
             className: "flex transition-all duration-1000 flex-grow flex-col z-50 absolute"
-        }, /* @__PURE__ */ React9.createElement(EventStyled, {
+        }, /* @__PURE__ */ React4.createElement(EventStyled, {
             event: _object_spread_props(_object_spread({}, event), {
                 CustomEventComponent: CustomEventComponent,
                 minmized: true
             }),
             CustomEventModal: CustomEventModal
         }));
-    }) : ""))), detailedHour && /* @__PURE__ */ React9.createElement("div", {
+    }) : ""))), detailedHour && /* @__PURE__ */ React4.createElement("div", {
         className: "absolute left-[50px] w-[calc(100%-53px)] h-[3px]  bg-primary-300 dark:bg-primary/30 rounded-full pointer-events-none",
         style: {
             top: "".concat(timelinePosition, "px")
         }
-    }, /* @__PURE__ */ React9.createElement(Chip, {
+    }, /* @__PURE__ */ React4.createElement(Chip, {
         color: "success",
         variant: "flat",
         className: "absolute vertical-abs-center z-50 left-[-55px] text-xs uppercase"
@@ -1213,10 +1266,10 @@ function DailyView(param) {
 function ShowMoreEventsModal() {
     var data = useModalContext().data;
     var dayEvents = (data === null || data === void 0 ? void 0 : data.dayEvents) || [];
-    return /* @__PURE__ */ React9.createElement("div", {
+    return /* @__PURE__ */ React4.createElement("div", {
         className: "flex flex-col gap-2"
     }, dayEvents.map(function(event) {
-        return /* @__PURE__ */ React9.createElement(EventStyled, {
+        return /* @__PURE__ */ React4.createElement(EventStyled, {
             key: event.id,
             event: _object_spread({}, event)
         });
@@ -1240,7 +1293,7 @@ function MonthView(param) {
     function handleAddEvent(selectedDay) {
         showModal({
             title: "Adicionar Evento",
-            body: /* @__PURE__ */ React9.createElement(AddEventModal, null),
+            body: /* @__PURE__ */ React4.createElement(AddEventModal, null),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 var startDate, endDate;
                 return _ts_generator(this, function(_state) {
@@ -1266,7 +1319,7 @@ function MonthView(param) {
                 month: "short",
                 year: "numeric"
             }),
-            body: /* @__PURE__ */ React9.createElement(ShowMoreEventsModal, null),
+            body: /* @__PURE__ */ React4.createElement(ShowMoreEventsModal, null),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 return _ts_generator(this, function(_state) {
                     return [
@@ -1324,9 +1377,9 @@ function MonthView(param) {
     var startOffset = (firstDayOfMonth.getDay() - (weekStartsOn === "monday" ? 1 : 0) + 7) % 7;
     var prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
     var lastDateOfPrevMonth = new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 0).getDate();
-    return /* @__PURE__ */ React9.createElement("div", null, /* @__PURE__ */ React9.createElement("div", {
+    return /* @__PURE__ */ React4.createElement("div", null, /* @__PURE__ */ React4.createElement("div", {
         className: "flex flex-col mb-4"
-    }, /* @__PURE__ */ React9.createElement(motion.h2, {
+    }, /* @__PURE__ */ React4.createElement(motion.h2, {
         key: currentDate.getMonth(),
         initial: {
             opacity: 0
@@ -1343,76 +1396,76 @@ function MonthView(param) {
         className: "text-lg my-5 tracking-tighter font-bold"
     }, currentDate.toLocaleString("default", {
         month: "long"
-    }), " ", currentDate.getFullYear()), /* @__PURE__ */ React9.createElement("div", {
+    }), " ", currentDate.getFullYear()), /* @__PURE__ */ React4.createElement("div", {
         className: "flex gap-3"
-    }, prevButton ? /* @__PURE__ */ React9.createElement("div", {
+    }, prevButton ? /* @__PURE__ */ React4.createElement("div", {
         onClick: handlePrevMonth
-    }, prevButton) : /* @__PURE__ */ React9.createElement(Button, {
+    }, prevButton) : /* @__PURE__ */ React4.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
-        startContent: /* @__PURE__ */ React9.createElement(ArrowLeft, null),
+        startContent: /* @__PURE__ */ React4.createElement(ArrowLeft, null),
         onClick: handlePrevMonth
-    }, "Anterior"), nextButton ? /* @__PURE__ */ React9.createElement("div", {
+    }, "Anterior"), nextButton ? /* @__PURE__ */ React4.createElement("div", {
         onClick: handleNextMonth
-    }, nextButton) : /* @__PURE__ */ React9.createElement(Button, {
+    }, nextButton) : /* @__PURE__ */ React4.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextMonth,
-        endContent: /* @__PURE__ */ React9.createElement(ArrowRight, null)
-    }, "Pr\xF3ximo"))), /* @__PURE__ */ React9.createElement(AnimatePresence, {
+        endContent: /* @__PURE__ */ React4.createElement(ArrowRight, null)
+    }, "Pr\xF3ximo"))), /* @__PURE__ */ React4.createElement(AnimatePresence, {
         mode: "wait"
-    }, /* @__PURE__ */ React9.createElement(motion.div, {
+    }, /* @__PURE__ */ React4.createElement(motion.div, {
         variants: containerVariants3,
         initial: "hidden",
         animate: "visible",
         key: currentDate.getMonth(),
         className: "grid grid-cols-7 gap-1 sm:gap-2"
     }, daysOfWeek.map(function(day, idx) {
-        return /* @__PURE__ */ React9.createElement("div", {
+        return /* @__PURE__ */ React4.createElement("div", {
             key: idx,
             className: "text-left my-8 text-2xl tracking-tighter font-medium"
         }, day);
     }), Array.from({
         length: startOffset
     }).map(function(_, idx) {
-        return /* @__PURE__ */ React9.createElement("div", {
+        return /* @__PURE__ */ React4.createElement("div", {
             key: "offset-".concat(idx),
             className: "h-[150px] opacity-50"
-        }, /* @__PURE__ */ React9.createElement("div", {
+        }, /* @__PURE__ */ React4.createElement("div", {
             className: clsx("font-semibold relative text-lg mb-1")
         }, lastDateOfPrevMonth - startOffset + idx + 1));
     }), daysInMonth.map(function(dayObj) {
         var dayEvents = getters.getEventsForDay(dayObj.day, currentDate);
-        return /* @__PURE__ */ React9.createElement(motion.div, {
+        return /* @__PURE__ */ React4.createElement(motion.div, {
             className: "hover:z-50 border-none h-[150px] rounded group flex flex-col",
             key: dayObj.day,
             variants: itemVariants2
-        }, /* @__PURE__ */ React9.createElement(Card, {
+        }, /* @__PURE__ */ React4.createElement(Card, {
             isPressable: true,
             className: "shadow-md  relative flex p-4 border border-default-100 h-full",
             onClick: function() {
                 return handleAddEvent(dayObj.day);
             }
-        }, /* @__PURE__ */ React9.createElement("div", {
+        }, /* @__PURE__ */ React4.createElement("div", {
             className: clsx("font-semibold relative text-lg mb-1", dayEvents.length > 0 ? "text-primary-600" : "text-muted-foreground", /* @__PURE__ */ new Date().getDate() === dayObj.day && /* @__PURE__ */ new Date().getMonth() === currentDate.getMonth() && /* @__PURE__ */ new Date().getFullYear() === currentDate.getFullYear() ? "text-secondary-500" : "")
-        }, dayObj.day), /* @__PURE__ */ React9.createElement("div", {
+        }, dayObj.day), /* @__PURE__ */ React4.createElement("div", {
             className: "flex-grow flex flex-col gap-2 w-full overflow-hidden"
-        }, /* @__PURE__ */ React9.createElement(AnimatePresence, {
+        }, /* @__PURE__ */ React4.createElement(AnimatePresence, {
             mode: "wait"
-        }, (dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.length) > 0 && /* @__PURE__ */ React9.createElement(EventStyled, {
+        }, (dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.length) > 0 && /* @__PURE__ */ React4.createElement(EventStyled, {
             event: _object_spread_props(_object_spread({}, dayEvents[0]), {
                 CustomEventComponent: CustomEventComponent,
                 minmized: true
             }),
             CustomEventModal: CustomEventModal
-        })), dayEvents.length > 1 && /* @__PURE__ */ React9.createElement(Chip, {
+        })), dayEvents.length > 1 && /* @__PURE__ */ React4.createElement(Chip, {
             onClick: function(e) {
                 e.stopPropagation();
                 handleShowMoreEvents(dayEvents);
             },
             variant: "flat",
             className: "hover:bg-default-200 absolute right-2 text-xs top-2 transition duration-300"
-        }, dayEvents.length > 1 ? "+".concat(dayEvents.length - 1) : " ")), dayEvents.length === 0 && /* @__PURE__ */ React9.createElement("div", {
+        }, dayEvents.length > 1 ? "+".concat(dayEvents.length - 1) : " ")), dayEvents.length === 0 && /* @__PURE__ */ React4.createElement("div", {
             className: "absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        }, /* @__PURE__ */ React9.createElement("span", {
+        }, /* @__PURE__ */ React4.createElement("span", {
             className: "text-white tracking-tighter text-lg font-semibold"
         }, "Adicionar Evento"))));
     }))));
@@ -1456,7 +1509,7 @@ function WeeklyView(param) {
     function handleAddEvent(event) {
         showModal({
             title: "Adicionar Evento",
-            body: /* @__PURE__ */ React9.createElement(AddEventModal, null),
+            body: /* @__PURE__ */ React4.createElement(AddEventModal, null),
             getter: /*#__PURE__*/ _async_to_generator(function() {
                 var startDate, endDate;
                 return _ts_generator(this, function(_state) {
@@ -1504,94 +1557,94 @@ function WeeklyView(param) {
             variant: "primary"
         });
     }
-    return /* @__PURE__ */ React9.createElement("div", {
+    return /* @__PURE__ */ React4.createElement("div", {
         className: "flex flex-col gap-4"
-    }, /* @__PURE__ */ React9.createElement(motion.div, {
+    }, /* @__PURE__ */ React4.createElement(motion.div, {
         key: currentDate.toDateString() + "parent",
         className: "all-week-events flex flex-col gap-2",
         variants: containerVariants2,
         initial: "hidden",
         animate: "visible"
-    }), /* @__PURE__ */ React9.createElement("div", {
+    }), /* @__PURE__ */ React4.createElement("div", {
         className: "flex ml-auto gap-3"
-    }, prevButton ? /* @__PURE__ */ React9.createElement("div", {
+    }, prevButton ? /* @__PURE__ */ React4.createElement("div", {
         onClick: handlePrevWeek
-    }, prevButton) : /* @__PURE__ */ React9.createElement(Button, {
+    }, prevButton) : /* @__PURE__ */ React4.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.prev,
-        startContent: /* @__PURE__ */ React9.createElement(ArrowLeft, null),
+        startContent: /* @__PURE__ */ React4.createElement(ArrowLeft, null),
         onClick: handlePrevWeek
-    }, "Anterior"), nextButton ? /* @__PURE__ */ React9.createElement("div", {
+    }, "Anterior"), nextButton ? /* @__PURE__ */ React4.createElement("div", {
         onClick: handleNextWeek
-    }, nextButton) : /* @__PURE__ */ React9.createElement(Button, {
+    }, nextButton) : /* @__PURE__ */ React4.createElement(Button, {
         className: classNames === null || classNames === void 0 ? void 0 : classNames.next,
         onClick: handleNextWeek,
-        endContent: /* @__PURE__ */ React9.createElement(ArrowRight, null)
-    }, "Pr\xF3ximo")), /* @__PURE__ */ React9.createElement("div", {
+        endContent: /* @__PURE__ */ React4.createElement(ArrowRight, null)
+    }, "Pr\xF3ximo")), /* @__PURE__ */ React4.createElement("div", {
         key: currentDate.toDateString(),
         className: "grid use-automation-zoom-in grid-cols-8 gap-0"
-    }, /* @__PURE__ */ React9.createElement("div", {
+    }, /* @__PURE__ */ React4.createElement("div", {
         className: "sticky top-0 left-0 z-30 bg-default-100 rounded-tl-lg h-full border-0  flex items-center justify-center"
-    }, /* @__PURE__ */ React9.createElement("span", {
+    }, /* @__PURE__ */ React4.createElement("span", {
         className: "text-lg font-semibold text-muted-foreground px-4"
-    }, "Semana ", getters.getWeekNumber(currentDate))), /* @__PURE__ */ React9.createElement("div", {
+    }, "Semana ", getters.getWeekNumber(currentDate))), /* @__PURE__ */ React4.createElement("div", {
         className: "col-span-7 flex flex-col relative"
-    }, /* @__PURE__ */ React9.createElement("div", {
+    }, /* @__PURE__ */ React4.createElement("div", {
         className: "grid grid-cols-7 gap-0 flex-grow"
     }, daysOfWeek.map(function(day, idx) {
-        return /* @__PURE__ */ React9.createElement("div", {
+        return /* @__PURE__ */ React4.createElement("div", {
             key: idx,
             className: "relative flex flex-col"
-        }, /* @__PURE__ */ React9.createElement("div", {
+        }, /* @__PURE__ */ React4.createElement("div", {
             className: "sticky bg-default-100 top-0 z-20 flex-grow flex items-center justify-center"
-        }, /* @__PURE__ */ React9.createElement("div", {
+        }, /* @__PURE__ */ React4.createElement("div", {
             className: "text-center p-4"
-        }, /* @__PURE__ */ React9.createElement("div", {
+        }, /* @__PURE__ */ React4.createElement("div", {
             className: "text-lg font-semibold"
-        }, getters.getDayName(day.getDay())), /* @__PURE__ */ React9.createElement("div", {
+        }, getters.getDayName(day.getDay())), /* @__PURE__ */ React4.createElement("div", {
             className: clsx("text-lg font-semibold", /* @__PURE__ */ new Date().getDate() === day.getDate() && /* @__PURE__ */ new Date().getMonth() === currentDate.getMonth() && /* @__PURE__ */ new Date().getFullYear() === currentDate.getFullYear() ? "text-secondary-500" : "")
-        }, day.getDate()))), /* @__PURE__ */ React9.createElement("div", {
+        }, day.getDate()))), /* @__PURE__ */ React4.createElement("div", {
             className: "absolute top-12 right-0 w-px h-[calc(100%-3rem)]"
         }));
-    })), detailedHour && /* @__PURE__ */ React9.createElement("div", {
+    })), detailedHour && /* @__PURE__ */ React4.createElement("div", {
         className: "absolute flex z-10 left-0 w-full h-[3px] bg-primary-300 dark:bg-primary/30 rounded-full pointer-events-none",
         style: {
             top: "".concat(timelinePosition, "px")
         }
-    }, /* @__PURE__ */ React9.createElement(Chip, {
+    }, /* @__PURE__ */ React4.createElement(Chip, {
         color: "success",
         variant: "flat",
         className: "absolute vertical-abs-center z-50 left-[-55px] text-xs uppercase"
-    }, detailedHour))), /* @__PURE__ */ React9.createElement("div", {
+    }, detailedHour))), /* @__PURE__ */ React4.createElement("div", {
         ref: hoursColumnRef,
         onMouseMove: handleMouseMove,
         onMouseLeave: function() {
             return setDetailedHour(null);
         },
         className: "relative grid grid-cols-8 col-span-8"
-    }, /* @__PURE__ */ React9.createElement("div", {
+    }, /* @__PURE__ */ React4.createElement("div", {
         className: "col-span-1 bg-default-50 hover:bg-default-100 transition duration-400"
     }, hours2.map(function(hour, index) {
-        return /* @__PURE__ */ React9.createElement("div", {
+        return /* @__PURE__ */ React4.createElement("div", {
             key: "hour-".concat(index),
             className: "cursor-pointer border-b border-default-200 p-[16px] h-[64px] text-center text-sm text-muted-foreground border-r"
         }, hour);
-    })), /* @__PURE__ */ React9.createElement("div", {
+    })), /* @__PURE__ */ React4.createElement("div", {
         className: "col-span-7 bg-default-50 grid h-full grid-cols-7"
     }, Array.from({
         length: 7
     }, function(_, dayIndex) {
         var dayEvents = getters.getEventsForDay(daysOfWeek[dayIndex % 7].getDate(), currentDate);
-        return /* @__PURE__ */ React9.createElement("div", {
+        return /* @__PURE__ */ React4.createElement("div", {
             key: "day-".concat(dayIndex),
             className: "col-span-1  border-default-200 z-20 relative transition duration-300 cursor-pointer border-r border-b text-center text-sm text-muted-foreground",
             onClick: function() {
                 handleAddEventWeek(dayIndex, detailedHour);
             }
-        }, /* @__PURE__ */ React9.createElement(AnimatePresence, {
+        }, /* @__PURE__ */ React4.createElement(AnimatePresence, {
             mode: "wait"
         }, dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.map(function(event, eventIndex) {
             var _handlers_handleEventStyling = handlers.handleEventStyling(event, dayEvents), height = _handlers_handleEventStyling.height, left = _handlers_handleEventStyling.left, maxWidth = _handlers_handleEventStyling.maxWidth, minWidth = _handlers_handleEventStyling.minWidth, top = _handlers_handleEventStyling.top, zIndex = _handlers_handleEventStyling.zIndex;
-            return /* @__PURE__ */ React9.createElement("div", {
+            return /* @__PURE__ */ React4.createElement("div", {
                 key: "event-".concat(event.id, "-").concat(eventIndex),
                 style: {
                     minHeight: height,
@@ -1602,7 +1655,7 @@ function WeeklyView(param) {
                     minWidth: minWidth
                 },
                 className: "flex transitio transition-all duration-1000 flex-grow flex-col z-50 absolute"
-            }, /* @__PURE__ */ React9.createElement(EventStyled, {
+            }, /* @__PURE__ */ React4.createElement(EventStyled, {
                 event: _object_spread_props(_object_spread({}, event), {
                     CustomEventComponent: CustomEventComponent,
                     minmized: true
@@ -1612,10 +1665,10 @@ function WeeklyView(param) {
         })), Array.from({
             length: 24
         }, function(_2, hourIndex) {
-            return /* @__PURE__ */ React9.createElement("div", {
+            return /* @__PURE__ */ React4.createElement("div", {
                 key: "day-".concat(dayIndex, "-hour-").concat(hourIndex),
                 className: "col-span-1 border-default-200 h-16 z-20 relative transition duration-300 cursor-pointer border-r border-b text-center text-sm text-muted-foreground"
-            }, /* @__PURE__ */ React9.createElement("div", {
+            }, /* @__PURE__ */ React4.createElement("div", {
                 className: "absolute bg-default-100 flex items-center justify-center text-xs opacity-0 transition duration-250 hover:opacity-100 w-full h-full"
             }, "Adicionar Evento"));
         }));
@@ -1655,11 +1708,11 @@ function SchedulerViewFilteration(param) {
     var _CustomComponents_customTabs, _CustomComponents_customButtons, _CustomComponents_customButtons1, _CustomComponents_customTabs1, _CustomComponents_customButtons2, _CustomComponents_customButtons3, _CustomComponents_customTabs2, _CustomComponents_customButtons4, _CustomComponents_customButtons5, // Add custom button
     _CustomComponents_customButtons6, _classNames_buttons;
     var _useModalContext = useModalContext(), showAddEventModal = _useModalContext.showModal;
-    var _React9_useState = _sliced_to_array(React9.useState(false), 2), clientSide = _React9_useState[0], setClientSide = _React9_useState[1];
+    var _React4_useState = _sliced_to_array(React4.useState(false), 2), clientSide = _React4_useState[0], setClientSide = _React4_useState[1];
     useEffect(function() {
         setClientSide(true);
     }, []);
-    var _React9_useState1 = _sliced_to_array(React9.useState(clientSide ? window.innerWidth <= 768 : false), 2), isMobile = _React9_useState1[0], setIsMobile = _React9_useState1[1];
+    var _React4_useState1 = _sliced_to_array(React4.useState(clientSide ? window.innerWidth <= 768 : false), 2), isMobile = _React4_useState1[0], setIsMobile = _React4_useState1[1];
     useEffect(function() {
         var handleResize = function handleResize() {
             if (window && window.innerWidth <= 768) {
@@ -1681,7 +1734,7 @@ function SchedulerViewFilteration(param) {
         var _CustomComponents_CustomEventModal_CustomAddEventModal, _CustomComponents_CustomEventModal, _CustomComponents_CustomEventModal_CustomAddEventModal1, _CustomComponents_CustomEventModal1, _CustomComponents_CustomEventModal_CustomAddEventModal2, _CustomComponents_CustomEventModal2;
         showAddEventModal({
             title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal = _CustomComponents_CustomEventModal.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal.title) || "Adicionar Evento",
-            body: /* @__PURE__ */ React9.createElement(AddEventModal, {
+            body: /* @__PURE__ */ React4.createElement(AddEventModal, {
                 CustomAddEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal1 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal1 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal1 = _CustomComponents_CustomEventModal1.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal1 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal1.CustomForm,
                 productData: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_CustomEventModal2 = CustomComponents.CustomEventModal) === null || _CustomComponents_CustomEventModal2 === void 0 ? void 0 : (_CustomComponents_CustomEventModal_CustomAddEventModal2 = _CustomComponents_CustomEventModal2.CustomAddEventModal) === null || _CustomComponents_CustomEventModal_CustomAddEventModal2 === void 0 ? void 0 : _CustomComponents_CustomEventModal_CustomAddEventModal2.ProductData
             }),
@@ -1704,64 +1757,64 @@ function SchedulerViewFilteration(param) {
         });
     }
     var viewsSelector = isMobile ? views === null || views === void 0 ? void 0 : views.mobileViews : views === null || views === void 0 ? void 0 : views.views;
-    return /* @__PURE__ */ React9.createElement("div", {
+    return /* @__PURE__ */ React4.createElement("div", {
         className: "flex w-full flex-col"
-    }, /* @__PURE__ */ React9.createElement("div", {
+    }, /* @__PURE__ */ React4.createElement("div", {
         className: "flex w-full"
-    }, /* @__PURE__ */ React9.createElement("div", {
+    }, /* @__PURE__ */ React4.createElement("div", {
         className: "dayly-weekly-monthly-selection relative w-full"
-    }, /* @__PURE__ */ React9.createElement(Tabs, {
+    }, /* @__PURE__ */ React4.createElement(Tabs, {
         classNames: _object_spread({}, classNames === null || classNames === void 0 ? void 0 : classNames.tabs),
         "aria-label": "Options",
         color: "primary",
         variant: "solid"
-    }, (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("day")) && /* @__PURE__ */ React9.createElement(Tab, {
+    }, (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("day")) && /* @__PURE__ */ React4.createElement(Tab, {
         key: "day",
-        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs = CustomComponents.customTabs) === null || _CustomComponents_customTabs === void 0 ? void 0 : _CustomComponents_customTabs.CustomDayTab) ? CustomComponents.customTabs.CustomDayTab : /* @__PURE__ */ React9.createElement("div", {
+        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs = CustomComponents.customTabs) === null || _CustomComponents_customTabs === void 0 ? void 0 : _CustomComponents_customTabs.CustomDayTab) ? CustomComponents.customTabs.CustomDayTab : /* @__PURE__ */ React4.createElement("div", {
             className: "flex items-center space-x-2"
-        }, /* @__PURE__ */ React9.createElement(CalendarDaysIcon, {
+        }, /* @__PURE__ */ React4.createElement(CalendarDaysIcon, {
             size: 15
-        }), /* @__PURE__ */ React9.createElement("span", null, "Dia"))
-    }, /* @__PURE__ */ React9.createElement(motion.div, _object_spread({}, animationConfig), /* @__PURE__ */ React9.createElement(DailyView, {
+        }), /* @__PURE__ */ React4.createElement("span", null, "Dia"))
+    }, /* @__PURE__ */ React4.createElement(motion.div, _object_spread({}, animationConfig), /* @__PURE__ */ React4.createElement(DailyView, {
         classNames: classNames === null || classNames === void 0 ? void 0 : classNames.buttons,
         prevButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons = CustomComponents.customButtons) === null || _CustomComponents_customButtons === void 0 ? void 0 : _CustomComponents_customButtons.CustomPrevButton,
         nextButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons1 = CustomComponents.customButtons) === null || _CustomComponents_customButtons1 === void 0 ? void 0 : _CustomComponents_customButtons1.CustomNextButton,
         CustomEventComponent: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventComponent,
         CustomEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventModal
-    }))), (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("week")) && /* @__PURE__ */ React9.createElement(Tab, {
+    }))), (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("week")) && /* @__PURE__ */ React4.createElement(Tab, {
         key: "week",
-        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs1 = CustomComponents.customTabs) === null || _CustomComponents_customTabs1 === void 0 ? void 0 : _CustomComponents_customTabs1.CustomWeekTab) ? CustomComponents.customTabs.CustomWeekTab : /* @__PURE__ */ React9.createElement("div", {
+        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs1 = CustomComponents.customTabs) === null || _CustomComponents_customTabs1 === void 0 ? void 0 : _CustomComponents_customTabs1.CustomWeekTab) ? CustomComponents.customTabs.CustomWeekTab : /* @__PURE__ */ React4.createElement("div", {
             className: "flex items-center space-x-2"
-        }, /* @__PURE__ */ React9.createElement(BsCalendarWeek, null), /* @__PURE__ */ React9.createElement("span", null, "Semana"))
-    }, /* @__PURE__ */ React9.createElement(motion.div, _object_spread({}, animationConfig), /* @__PURE__ */ React9.createElement(WeeklyView, {
+        }, /* @__PURE__ */ React4.createElement(BsCalendarWeek, null), /* @__PURE__ */ React4.createElement("span", null, "Semana"))
+    }, /* @__PURE__ */ React4.createElement(motion.div, _object_spread({}, animationConfig), /* @__PURE__ */ React4.createElement(WeeklyView, {
         classNames: classNames === null || classNames === void 0 ? void 0 : classNames.buttons,
         prevButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons2 = CustomComponents.customButtons) === null || _CustomComponents_customButtons2 === void 0 ? void 0 : _CustomComponents_customButtons2.CustomPrevButton,
         nextButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons3 = CustomComponents.customButtons) === null || _CustomComponents_customButtons3 === void 0 ? void 0 : _CustomComponents_customButtons3.CustomNextButton,
         CustomEventComponent: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventComponent,
         CustomEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventModal
-    }))), (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("month")) && /* @__PURE__ */ React9.createElement(Tab, {
+    }))), (viewsSelector === null || viewsSelector === void 0 ? void 0 : viewsSelector.includes("month")) && /* @__PURE__ */ React4.createElement(Tab, {
         key: "month",
-        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs2 = CustomComponents.customTabs) === null || _CustomComponents_customTabs2 === void 0 ? void 0 : _CustomComponents_customTabs2.CustomMonthTab) ? CustomComponents.customTabs.CustomMonthTab : /* @__PURE__ */ React9.createElement("div", {
+        title: (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customTabs2 = CustomComponents.customTabs) === null || _CustomComponents_customTabs2 === void 0 ? void 0 : _CustomComponents_customTabs2.CustomMonthTab) ? CustomComponents.customTabs.CustomMonthTab : /* @__PURE__ */ React4.createElement("div", {
             className: "flex items-center space-x-2"
-        }, /* @__PURE__ */ React9.createElement(BsCalendarMonth, null), /* @__PURE__ */ React9.createElement("span", null, "M\xEAs"))
-    }, /* @__PURE__ */ React9.createElement(motion.div, _object_spread({}, animationConfig), /* @__PURE__ */ React9.createElement(MonthView, {
+        }, /* @__PURE__ */ React4.createElement(BsCalendarMonth, null), /* @__PURE__ */ React4.createElement("span", null, "M\xEAs"))
+    }, /* @__PURE__ */ React4.createElement(motion.div, _object_spread({}, animationConfig), /* @__PURE__ */ React4.createElement(MonthView, {
         classNames: classNames === null || classNames === void 0 ? void 0 : classNames.buttons,
         prevButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons4 = CustomComponents.customButtons) === null || _CustomComponents_customButtons4 === void 0 ? void 0 : _CustomComponents_customButtons4.CustomPrevButton,
         nextButton: CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons5 = CustomComponents.customButtons) === null || _CustomComponents_customButtons5 === void 0 ? void 0 : _CustomComponents_customButtons5.CustomNextButton,
         CustomEventComponent: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventComponent,
         CustomEventModal: CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.CustomEventModal
-    })))), (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons6 = CustomComponents.customButtons) === null || _CustomComponents_customButtons6 === void 0 ? void 0 : _CustomComponents_customButtons6.CustomAddEventButton) ? /* @__PURE__ */ React9.createElement("div", {
+    })))), (CustomComponents === null || CustomComponents === void 0 ? void 0 : (_CustomComponents_customButtons6 = CustomComponents.customButtons) === null || _CustomComponents_customButtons6 === void 0 ? void 0 : _CustomComponents_customButtons6.CustomAddEventButton) ? /* @__PURE__ */ React4.createElement("div", {
         onClick: function() {
             return handleAddEvent();
         },
         className: "absolute top-0 right-0"
-    }, CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.customButtons.CustomAddEventButton) : /* @__PURE__ */ React9.createElement(Button, {
+    }, CustomComponents === null || CustomComponents === void 0 ? void 0 : CustomComponents.customButtons.CustomAddEventButton) : /* @__PURE__ */ React4.createElement(Button, {
         onClick: function() {
             return handleAddEvent();
         },
         className: "absolute top-0 right-0 " + (classNames === null || classNames === void 0 ? void 0 : (_classNames_buttons = classNames.buttons) === null || _classNames_buttons === void 0 ? void 0 : _classNames_buttons.addEvent),
         color: "primary",
-        startContent: /* @__PURE__ */ React9.createElement(Calendar, null)
+        startContent: /* @__PURE__ */ React4.createElement(Calendar, null)
     }, "Adicionar Evento"))));
 }
 export { SchedulerViewFilteration as SchedularView, SchedulerProvider, eventSchema, useScheduler, variants }; //# sourceMappingURL=index.mjs.map
