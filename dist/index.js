@@ -662,7 +662,7 @@ var eventSchema = zod.z.object({
     color: zod.z.string().nonempty("Color selection is required")
 });
 function AddEventModal(param) {
-    var CustomAddEventModal = param.CustomAddEventModal, productData = param.productData, _param_readOnly = param.readOnly, readOnly = _param_readOnly === void 0 ? true : _param_readOnly;
+    var CustomAddEventModal = param.CustomAddEventModal, productData = param.productData, _param_readOnly = param.readOnly, readOnly = _param_readOnly === void 0 ? true : _param_readOnly, id = param.id;
     var _errors_title, _uniqueProducts_find, _filteredModules_find, _colorOptions_find;
     var _useModalContext = useModalContext(), onClose = _useModalContext.onClose, data = _useModalContext.data;
     var _React4_useState = _sliced_to_array(React4.useState(getEventColor((data === null || data === void 0 ? void 0 : data.variant) || "primary")), 2), selectedColor = _React4_useState[0], setSelectedColor = _React4_useState[1];
@@ -780,7 +780,7 @@ function AddEventModal(param) {
             return str === null || str === void 0 ? void 0 : str.replace(/<[^>]*>/g, "");
         };
         var newEvent = {
-            id: uuid.v4(),
+            id: id !== null && id !== void 0 ? id : uuid.v4(),
             title: formData.title,
             startDate: formData.startDate,
             endDate: formData.endDate,
@@ -795,7 +795,7 @@ function AddEventModal(param) {
             } : void 0
         };
         if (!(typedData === null || typedData === void 0 ? void 0 : typedData.id)) handlers.handleAddEvent(newEvent);
-        else handlers.handleUpdateEvent(newEvent, typedData.id);
+        else handlers.handleUpdateEvent(newEvent, id !== null && id !== void 0 ? id : typedData.id);
         onClose();
     };
     return /* @__PURE__ */ React4__default.default.createElement("form", {
