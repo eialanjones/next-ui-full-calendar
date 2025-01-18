@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
-    "bundle": "tsup app/index.ts --dts --format esm,cjs"
+    "clean": "rm -rf dist",
+    "bundle": "npm run clean && tsup app/index.ts"
   },
   "peerDependencies": {
     "@nextui-org/system": "^2.2.6",
