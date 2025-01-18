@@ -1031,7 +1031,7 @@ function EventStyled(param) {
         classNames: {
             content: "p-0"
         },
-        className: "mb-2 min-w-full items-start p-0 flex-grow flex-col flex ".concat((event === null || event === void 0 ? void 0 : event.minmized) ? "h-full" : "min-h-fit p-1", " rounded-md")
+        className: "min-w-full items-start p-0 flex-grow flex-col flex ".concat((event === null || event === void 0 ? void 0 : event.minmized) ? "h-full" : "min-h-fit p-1", " rounded-md")
     }, /* @__PURE__ */ React4.createElement("div", {
         className: "flex ".concat((event === null || event === void 0 ? void 0 : event.minmized) ? "p-0" : "p-1", " flex-col flex-grow px-1 rounded-md  items-start w-full")
     }, /* @__PURE__ */ React4.createElement("h1", {
@@ -1189,7 +1189,8 @@ function DailyView(param) {
         mode: "wait"
     }, dayEvents && (dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.length) ? dayEvents === null || dayEvents === void 0 ? void 0 : dayEvents.map(function(event, eventIndex) {
         return /* @__PURE__ */ React4.createElement("div", {
-            key: "event-".concat(event.id, "-").concat(eventIndex)
+            key: "event-".concat(event.id, "-").concat(eventIndex),
+            className: "mb-2"
         }, /* @__PURE__ */ React4.createElement(EventStyled, {
             event: _object_spread_props(_object_spread({}, event), {
                 CustomEventComponent: CustomEventComponent,
