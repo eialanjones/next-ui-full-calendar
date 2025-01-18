@@ -648,6 +648,7 @@ var variants = [
     "danger"
 ];
 var eventSchema = zod.z.object({
+    id: zod.z.string().optional(),
     title: zod.z.string().nonempty("Event name is required"),
     description: zod.z.string().optional(),
     startDate: zod.z.date(),
@@ -659,7 +660,14 @@ var eventSchema = zod.z.object({
         "warning",
         "default"
     ]),
-    color: zod.z.string().nonempty("Color selection is required")
+    color: zod.z.string().nonempty("Color selection is required"),
+    productData: zod.z.object({
+        product_id: zod.z.string().nonempty("Product ID is required"),
+        product_title: zod.z.string().nonempty("Product title is required"),
+        learning_path_title: zod.z.string().optional(),
+        module_id: zod.z.string().nonempty("Module ID is required"),
+        module_title: zod.z.string().nonempty("Module title is required")
+    }).optional()
 });
 function AddEventModal(param) {
     var CustomAddEventModal = param.CustomAddEventModal, productData = param.productData, _param_readOnly = param.readOnly, readOnly = _param_readOnly === void 0 ? true : _param_readOnly;
@@ -699,26 +707,35 @@ function AddEventModal(param) {
         }) === index;
     });
     var handlers = useScheduler().handlers;
+    var _data_id, _data_title, _data_description, _data_startDate, _data_endDate, _data_variant, _data_color;
     var _reactHookForm_useForm = reactHookForm.useForm({
         resolver: zod$1.zodResolver(eventSchema),
         defaultValues: {
-            title: "",
-            description: "",
-            startDate: /* @__PURE__ */ new Date(),
-            endDate: /* @__PURE__ */ new Date(),
-            variant: (data === null || data === void 0 ? void 0 : data.variant) || "primary",
-            color: (data === null || data === void 0 ? void 0 : data.color) || "blue"
+            id: (_data_id = data === null || data === void 0 ? void 0 : data.id) !== null && _data_id !== void 0 ? _data_id : uuid.v4(),
+            title: (_data_title = data === null || data === void 0 ? void 0 : data.title) !== null && _data_title !== void 0 ? _data_title : "",
+            description: (_data_description = data === null || data === void 0 ? void 0 : data.description) !== null && _data_description !== void 0 ? _data_description : "",
+            startDate: (_data_startDate = data === null || data === void 0 ? void 0 : data.startDate) !== null && _data_startDate !== void 0 ? _data_startDate : /* @__PURE__ */ new Date(),
+            endDate: (_data_endDate = data === null || data === void 0 ? void 0 : data.endDate) !== null && _data_endDate !== void 0 ? _data_endDate : function() {
+                var date = /* @__PURE__ */ new Date();
+                date.setHours(date.getHours() + 1);
+                return date;
+            }(),
+            variant: (_data_variant = data === null || data === void 0 ? void 0 : data.variant) !== null && _data_variant !== void 0 ? _data_variant : "primary",
+            color: (_data_color = data === null || data === void 0 ? void 0 : data.color) !== null && _data_color !== void 0 ? _data_color : "blue",
+            productData: data === null || data === void 0 ? void 0 : data.productData
         }
     }), register = _reactHookForm_useForm.register, handleSubmit = _reactHookForm_useForm.handleSubmit, reset = _reactHookForm_useForm.reset, errors = _reactHookForm_useForm.formState.errors, setValue = _reactHookForm_useForm.setValue;
     React4.useEffect(function() {
         if (data) {
             reset({
+                id: data.id,
                 title: data.title,
                 description: data.description || "",
                 startDate: data.startDate,
                 endDate: data.endDate,
                 variant: data.variant || "primary",
-                color: data.color || "blue"
+                color: data.color || "blue",
+                productData: data.productData
             });
         }
     }, [
@@ -778,8 +795,9 @@ function AddEventModal(param) {
         var removeHtmlTags = function(str) {
             return str === null || str === void 0 ? void 0 : str.replace(/<[^>]*>/g, "");
         };
+        var _data_id;
         var newEvent = {
-            id: uuid.v4(),
+            id: (_data_id = data === null || data === void 0 ? void 0 : data.id) !== null && _data_id !== void 0 ? _data_id : uuid.v4(),
             title: formData.title,
             startDate: formData.startDate,
             endDate: formData.endDate,

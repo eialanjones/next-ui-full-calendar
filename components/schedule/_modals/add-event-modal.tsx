@@ -87,12 +87,18 @@ export default function AddEventModal({
   } = useForm<EventFormData>({
     resolver: zodResolver(eventSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      startDate: new Date(),
-      endDate: new Date(),
-      variant: data?.variant || "primary",
-      color: data?.color || "blue",
+      id: data?.id ?? uuidv4(),
+      title: data?.title ?? "",
+      description: data?.description ?? "",
+      startDate: data?.startDate ?? new Date(),
+      endDate: data?.endDate ?? (() => {
+        const date = new Date();
+        date.setHours(date.getHours() + 1);
+        return date;
+      })(),
+      variant: data?.variant ?? "primary",
+      color: data?.color ?? "blue",
+      productData: data?.productData,
     },
   });
 
@@ -100,12 +106,14 @@ export default function AddEventModal({
   useEffect(() => {
     if (data) {
       reset({
+        id: data.id,
         title: data.title,
         description: data.description || "",
         startDate: data.startDate,
         endDate: data.endDate,
         variant: data.variant || "primary",
         color: data.color || "blue",
+        productData: data.productData,
       });
     }
   }, [data, reset]);
@@ -160,7 +168,7 @@ export default function AddEventModal({
     };
 
     const newEvent: Event = {
-      id: uuidv4(),
+      id: data?.id ?? uuidv4(),
       title: formData.title,
       startDate: formData.startDate,
       endDate: formData.endDate,

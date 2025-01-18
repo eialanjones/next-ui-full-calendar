@@ -91,12 +91,20 @@ export type Variant = (typeof variants)[number];
 
 // Define Zod schema for form validation
 export const eventSchema = z.object({
+  id: z.string().optional(),
   title: z.string().nonempty("Event name is required"),
   description: z.string().optional(),
   startDate: z.date(),
   endDate: z.date(),
   variant: z.enum(["primary", "danger", "success", "warning", "default"]),
   color: z.string().nonempty("Color selection is required"),
+  productData: z.object({
+    product_id: z.string().nonempty("Product ID is required"),
+    product_title: z.string().nonempty("Product title is required"),
+    learning_path_title: z.string().optional(),
+    module_id: z.string().nonempty("Module ID is required"),
+    module_title: z.string().nonempty("Module title is required"),
+  }).optional(),
 });
 
 export type EventFormData = z.infer<typeof eventSchema>;
