@@ -654,7 +654,7 @@ var eventSchema = z.object({
     color: z.string().nonempty("Color selection is required")
 });
 function AddEventModal(param) {
-    var CustomAddEventModal = param.CustomAddEventModal, productData = param.productData, _param_readOnly = param.readOnly, readOnly = _param_readOnly === void 0 ? true : _param_readOnly, id = param.id;
+    var CustomAddEventModal = param.CustomAddEventModal, productData = param.productData, _param_readOnly = param.readOnly, readOnly = _param_readOnly === void 0 ? true : _param_readOnly;
     var _errors_title, _uniqueProducts_find, _filteredModules_find, _colorOptions_find;
     var _useModalContext = useModalContext(), onClose = _useModalContext.onClose, data = _useModalContext.data;
     var _useState = _sliced_to_array(useState(getEventColor((data === null || data === void 0 ? void 0 : data.variant) || "primary")), 2), selectedColor = _useState[0], setSelectedColor = _useState[1];
@@ -690,7 +690,6 @@ function AddEventModal(param) {
             return p.id === value.id;
         }) === index;
     });
-    var typedData = data;
     var handlers = useScheduler().handlers;
     var _useForm = useForm({
         resolver: zodResolver(eventSchema),
@@ -772,7 +771,7 @@ function AddEventModal(param) {
             return str === null || str === void 0 ? void 0 : str.replace(/<[^>]*>/g, "");
         };
         var newEvent = {
-            id: id !== null && id !== void 0 ? id : v4(),
+            id: v4(),
             title: formData.title,
             startDate: formData.startDate,
             endDate: formData.endDate,
@@ -786,8 +785,8 @@ function AddEventModal(param) {
                 module_title: selectedProductData.module_title
             } : void 0
         };
-        if (!(typedData === null || typedData === void 0 ? void 0 : typedData.id)) handlers.handleAddEvent(newEvent);
-        else handlers.handleUpdateEvent(newEvent, id !== null && id !== void 0 ? id : typedData.id);
+        if (!(data === null || data === void 0 ? void 0 : data.id)) handlers.handleAddEvent(newEvent);
+        else handlers.handleUpdateEvent(newEvent, data === null || data === void 0 ? void 0 : data.id);
         onClose();
     };
     return /* @__PURE__ */ React4.createElement("form", {

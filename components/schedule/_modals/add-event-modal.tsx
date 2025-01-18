@@ -27,19 +27,16 @@ interface ProductData {
   learning_path_title?: string;
   module_id: string;
   module_title: string;
-  id?: string;
 }
 
 export default function AddEventModal({
   CustomAddEventModal,
   productData,
   readOnly = true,
-  id
 }: {
   CustomAddEventModal?: React.FC<{ register: any; errors: any }>;
   productData?: ProductData[];
   readOnly?: boolean;
-  id?: string;
 }) {
   const { onClose, data } = useModalContext();
   const [selectedColor, setSelectedColor] = useState<string>(
@@ -163,7 +160,7 @@ export default function AddEventModal({
     };
 
     const newEvent: Event = {
-      id: id ?? uuidv4(),
+      id: uuidv4(),
       title: formData.title,
       startDate: formData.startDate,
       endDate: formData.endDate,
@@ -178,8 +175,8 @@ export default function AddEventModal({
       } : undefined,
     };
 
-    if (!typedData?.id) handlers.handleAddEvent(newEvent);
-    else handlers.handleUpdateEvent(newEvent, id ?? typedData.id);
+    if (!data?.id) handlers.handleAddEvent(newEvent);
+    else handlers.handleUpdateEvent(newEvent, data?.id);
     onClose();
   };
 
