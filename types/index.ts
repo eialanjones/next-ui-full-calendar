@@ -15,9 +15,17 @@ export interface Event {
   startDate: Date;
   endDate: Date;
   variant?: Variant;
+  event_type?: string;
+  mentor_id?: string;
+  profile_ids?: string[];
+  created_at?: string;
   productData?: {
+    id: string;
+    title: string;
+    description?: string;
+    owner?: string;
+    member_area_tool?: any[];
     product_id: string;
-    product_title: string;
     learning_path_title?: string;
     module_id: string;
     module_title: string;
@@ -76,6 +84,7 @@ export interface SchedulerContextType {
   getters: Getters;
   handlers: Handlers;
   weekStartsOn: startOfWeek;
+  canEdit: (id: string) => boolean;
 }
 
 // Define the variant options

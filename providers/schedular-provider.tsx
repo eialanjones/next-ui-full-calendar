@@ -81,6 +81,7 @@ export const SchedulerProvider = ({
   onDeleteEvent,
   initialState,
   weekStartsOn = "sunday",
+  canEdit = (id: string) => true,
 }: {
   onAddEvent?: (event: Event) => void;
   onUpdateEvent?: (event: Event) => void;
@@ -88,6 +89,7 @@ export const SchedulerProvider = ({
   weekStartsOn?: startOfWeek;
   children: ReactNode;
   initialState?: Event[];
+  canEdit?: (id: string) => boolean;
 }) => {
   const [state, dispatch] = useReducer(
     schedulerReducer,
@@ -280,7 +282,7 @@ export const SchedulerProvider = ({
 
   return (
     <SchedulerContext.Provider
-      value={{ events: state, dispatch, getters, handlers, weekStartsOn }}
+      value={{ events: state, dispatch, getters, handlers, weekStartsOn, canEdit }}
     >
       <ModalProvider>{children}</ModalProvider>
     </SchedulerContext.Provider>

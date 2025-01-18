@@ -32,13 +32,14 @@ interface ProductData {
 export default function AddEventModal({
   CustomAddEventModal,
   productData,
-  readOnly = true,
 }: {
   CustomAddEventModal?: React.FC<{ register: any; errors: any }>;
   productData?: ProductData[];
-  readOnly?: boolean;
 }) {
   const { onClose, data } = useModalContext();
+  const { canEdit } = useScheduler();
+  const readOnly = !canEdit(data?.id || '');
+  
   const [selectedColor, setSelectedColor] = useState<string>(
     getEventColor(data?.variant || "primary")
   );
@@ -173,7 +174,7 @@ export default function AddEventModal({
       startDate: formData.startDate,
       endDate: formData.endDate,
       variant: formData.variant,
-      description: removeHtmlTags(formData.description || ""),
+      description: formData.description || "",
       productData: selectedProductData ? {
         product_id: selectedProductData.product_id,
         product_title: selectedProductData.product_title,
@@ -197,8 +198,8 @@ export default function AddEventModal({
         CustomAddEventModal({ register, errors })
       ) : (
         <>
-          {readOnly ? (
-            <div className="w-full p-3 rounded-medium bg-default-100" dangerouslySetInnerHTML={{ __html: data?.title || '' }} />
+          {readOnly ? (<></>
+            // <div className="w-full p-3 rounded-medium bg-default-100" dangerouslySetInnerHTML={{ __html: data?.title || '' }} />
           ) : (
             <Input
               {...register("title")}
@@ -227,16 +228,16 @@ export default function AddEventModal({
           )}
           <SelectDate data={data} setValue={setValue} readOnly={readOnly}/>
 
-          {productData && productData.length > 0 && (
+          {uniqueProducts && uniqueProducts.length > 0 && (
             <div className="flex flex-col gap-3">
-              {readOnly ? (
+              {readOnly ? selectedProduct ? (
                 <div className="flex flex-col gap-1">
                   <span className="text-sm text-default-700">Conteúdo</span>
                   <div className="w-full p-3 rounded-medium bg-default-100">
                     {uniqueProducts?.find(p => p.id === selectedProduct)?.title || ''}
                   </div>
                 </div>
-              ) : (
+              ): null : (
                 <Select
                   label="Conteúdo"
                   placeholder="Selecione um conteúdo"
