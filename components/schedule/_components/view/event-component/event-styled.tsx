@@ -23,17 +23,14 @@ const formatDate = (date: Date) => {
 interface EventStyledProps extends Event {
   minmized?: boolean;
   CustomEventComponent?: React.FC<Event>;
-  canEdit?: boolean;
 }
 
 export default function EventStyled({
   event,
   CustomEventModal,
-  canEdit,
 }: {
   event: EventStyledProps;
   CustomEventModal?: CustomEventModal;
-  canEdit?: boolean;
 }) {
   const { showModal: showEventModal } = useModalContext();
 
@@ -71,7 +68,7 @@ export default function EventStyled({
       key={event?.id}
       className="w-full relative use-automation-zoom-in cursor-pointer border border-default-400/60 rounded-lg  flex flex-col flex-grow "
     >
-      {canEdit && (
+      {event?.canEdit && (
         <Chip
           onClickCapture={(e: React.MouseEvent<HTMLDivElement>) => {
             e.stopPropagation();

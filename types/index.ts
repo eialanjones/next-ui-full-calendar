@@ -19,6 +19,7 @@ export interface Event {
   mentor_id?: string;
   profile_ids?: string[];
   created_at?: string;
+  canEdit?: boolean;
   productData?: {
     id: string;
     title: string;
@@ -107,6 +108,7 @@ export const eventSchema = z.object({
   endDate: z.date(),
   variant: z.enum(["primary", "danger", "success", "warning", "default"]),
   color: z.string().nonempty("Color selection is required"),
+  event_type: z.string().optional(),
   productData: z.object({
     product_id: z.string().nonempty("Product ID is required"),
     product_title: z.string().nonempty("Product title is required"),

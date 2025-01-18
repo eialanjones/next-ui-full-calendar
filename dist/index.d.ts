@@ -15,6 +15,7 @@ interface Event {
     mentor_id?: string;
     profile_ids?: string[];
     created_at?: string;
+    canEdit?: boolean;
     productData?: {
         id: string;
         title: string;
@@ -86,6 +87,7 @@ declare const eventSchema: z.ZodObject<{
     endDate: z.ZodDate;
     variant: z.ZodEnum<["primary", "danger", "success", "warning", "default"]>;
     color: z.ZodString;
+    event_type: z.ZodOptional<z.ZodString>;
     productData: z.ZodOptional<z.ZodObject<{
         product_id: z.ZodString;
         product_title: z.ZodString;
@@ -113,6 +115,7 @@ declare const eventSchema: z.ZodObject<{
     variant: "success" | "primary" | "default" | "warning" | "danger";
     id?: string | undefined;
     description?: string | undefined;
+    event_type?: string | undefined;
     productData?: {
         product_id: string;
         product_title: string;
@@ -128,6 +131,7 @@ declare const eventSchema: z.ZodObject<{
     variant: "success" | "primary" | "default" | "warning" | "danger";
     id?: string | undefined;
     description?: string | undefined;
+    event_type?: string | undefined;
     productData?: {
         product_id: string;
         product_title: string;

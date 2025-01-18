@@ -32,13 +32,15 @@ interface ProductData {
 export default function AddEventModal({
   CustomAddEventModal,
   productData,
+  eventTypes,
 }: {
   CustomAddEventModal?: React.FC<{ register: any; errors: any }>;
   productData?: ProductData[];
+  eventTypes?: string[];
 }) {
   const { onClose, data } = useModalContext();
   const { canEdit } = useScheduler();
-  const readOnly = !canEdit(data?.id || '');
+  const readOnly = !!data?.id && !canEdit(data?.id || '');
   
   const [selectedColor, setSelectedColor] = useState<string>(
     getEventColor(data?.variant || "primary")
@@ -100,6 +102,7 @@ export default function AddEventModal({
       variant: data?.variant ?? "primary",
       color: data?.color ?? "blue",
       productData: data?.productData,
+      event_type: data?.event_type ?? "",
     },
   });
 
@@ -115,6 +118,7 @@ export default function AddEventModal({
         variant: data.variant || "primary",
         color: data.color || "blue",
         productData: data.productData,
+        event_type: data.event_type || "",
       });
     }
   }, [data, reset]);
@@ -175,6 +179,7 @@ export default function AddEventModal({
       endDate: formData.endDate,
       variant: formData.variant,
       description: formData.description || "",
+      event_type: formData.event_type,
       productData: selectedProductData ? {
         product_id: selectedProductData.product_id,
         product_title: selectedProductData.product_title,
@@ -226,6 +231,31 @@ export default function AddEventModal({
               variant="flat"
             />
           )}
+
+          {readOnly ? data?.event_type ?(
+            <div className="flex flex-col gap-1">
+              <span className="text-sm text-default-700">Tipo do Evento</span>
+              <div className="w-full p-3 rounded-medium bg-default-100">
+                {data?.event_type || ''}
+              </div>
+            </div>
+          ) : null : eventTypes && eventTypes.length > 0 ? (
+            <Select
+              {...register("event_type")}
+              label="Tipo do Evento"
+              placeholder="Selecione o tipo do evento"
+              variant="flat"
+              isInvalid={!!errors.event_type}
+              errorMessage={errors.event_type?.message}
+            >
+              {(eventTypes || []).map((type) => (
+                <SelectItem key={type} value={type}>
+                  {type}
+                </SelectItem>
+              ))}
+            </Select>
+          ) : null}
+
           <SelectDate data={data} setValue={setValue} readOnly={readOnly}/>
 
           {uniqueProducts && uniqueProducts.length > 0 && (

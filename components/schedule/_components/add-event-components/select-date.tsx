@@ -102,11 +102,12 @@ export default function SelectDate({
           }}
         />
 
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-4 flex-row flex-grow">
           <TimeInput
             label="Hora de Início"
             defaultValue={dateState?.startTime}
             isReadOnly={readOnly}
+            className="flex-1"
             onChange={(e: Time | null) => {
               setDateState({
                 ...dateState,
@@ -119,6 +120,7 @@ export default function SelectDate({
             label="Hora de Término"
             defaultValue={dateState?.endTime}
             isReadOnly={readOnly}
+            className="flex-1"
             onChange={(e: Time | null) => {
               setDateState({
                 ...dateState,
