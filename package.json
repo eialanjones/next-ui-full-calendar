@@ -104,5 +104,9 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     }
-  }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
 }
