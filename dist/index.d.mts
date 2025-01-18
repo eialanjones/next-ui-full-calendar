@@ -160,6 +160,7 @@ interface CustomEventModal {
             module_id: string;
             module_title: string;
         }[];
+        eventTypes?: string[];
     };
 }
 interface CustomComponents {

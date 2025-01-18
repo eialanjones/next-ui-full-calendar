@@ -75,6 +75,7 @@ export default function SchedulerViewFilteration({
             CustomComponents?.CustomEventModal?.CustomAddEventModal?.CustomForm
           }
           productData={CustomComponents?.CustomEventModal?.CustomAddEventModal?.ProductData}
+          eventTypes={CustomComponents?.CustomEventModal?.CustomAddEventModal?.eventTypes}
         />
       ),
       getter: async () => {
