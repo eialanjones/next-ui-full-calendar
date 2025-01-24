@@ -34,7 +34,7 @@ export default function AddEventModal({
   productData,
   eventTypes,
 }: {
-  CustomAddEventModal?: React.FC<{ register: any; errors: any }>;
+  CustomAddEventModal?: React.FC<{ register: any; errors: any; readOnly: boolean; setValue: any; reset: any; onClose: any; eventTypes: any; uniqueProducts: any; data: any; }>;
   productData?: ProductData[];
   eventTypes?: string[];
 }) {
@@ -208,7 +208,7 @@ export default function AddEventModal({
       onSubmit={handleSubmit(onSubmit)}
     >
       {CustomAddEventModal ? (
-        CustomAddEventModal({ register, errors })
+        CustomAddEventModal({ register, errors, readOnly, setValue, reset, onClose, eventTypes, uniqueProducts, data })
       ) : (
         <>
           {readOnly ? (<></>
