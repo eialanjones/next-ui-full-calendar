@@ -27,9 +27,10 @@ export interface Event {
     owner?: string;
     member_area_tool?: any[];
     product_id: string;
+    product_title: string;
     learning_path_title?: string;
-    module_id: string;
-    module_title: string;
+    module_id?: string;
+    module_title?: string;
   };
 }
 
@@ -115,6 +116,11 @@ export const eventSchema = z.object({
     learning_path_title: z.string().optional(),
     module_id: z.string().nonempty("Module ID is required"),
     module_title: z.string().nonempty("Module title is required"),
+  }).optional(),
+  selectedProduct: z.object({
+    product_id: z.string().nonempty("Product ID is required"),
+    learning_path_id: z.string().optional(),
+    module_id: z.string().optional(),
   }).optional(),
 });
 

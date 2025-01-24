@@ -23,9 +23,10 @@ interface Event {
         owner?: string;
         member_area_tool?: any[];
         product_id: string;
+        product_title: string;
         learning_path_title?: string;
-        module_id: string;
-        module_title: string;
+        module_id?: string;
+        module_title?: string;
     };
 }
 interface SchedulerState {
@@ -107,6 +108,19 @@ declare const eventSchema: z.ZodObject<{
         module_title: string;
         learning_path_title?: string | undefined;
     }>>;
+    selectedProduct: z.ZodOptional<z.ZodObject<{
+        product_id: z.ZodString;
+        learning_path_id: z.ZodOptional<z.ZodString>;
+        module_id: z.ZodOptional<z.ZodString>;
+    }, "strip", z.ZodTypeAny, {
+        product_id: string;
+        module_id?: string | undefined;
+        learning_path_id?: string | undefined;
+    }, {
+        product_id: string;
+        module_id?: string | undefined;
+        learning_path_id?: string | undefined;
+    }>>;
 }, "strip", z.ZodTypeAny, {
     title: string;
     color: string;
@@ -123,6 +137,11 @@ declare const eventSchema: z.ZodObject<{
         module_title: string;
         learning_path_title?: string | undefined;
     } | undefined;
+    selectedProduct?: {
+        product_id: string;
+        module_id?: string | undefined;
+        learning_path_id?: string | undefined;
+    } | undefined;
 }, {
     title: string;
     color: string;
@@ -138,6 +157,11 @@ declare const eventSchema: z.ZodObject<{
         module_id: string;
         module_title: string;
         learning_path_title?: string | undefined;
+    } | undefined;
+    selectedProduct?: {
+        product_id: string;
+        module_id?: string | undefined;
+        learning_path_id?: string | undefined;
     } | undefined;
 }>;
 type EventFormData = z.infer<typeof eventSchema>;

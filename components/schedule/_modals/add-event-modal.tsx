@@ -15,9 +15,9 @@ import {
 
 import { useModalContext } from "@/providers/modal-provider";
 import SelectDate from "@/components/schedule/_components/add-event-components/select-date";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EventFormData, eventSchema, Variant, Event } from "@/types/index";
+import { type EventFormData, eventSchema, type Variant, type Event } from "@/types/index";
 import { useScheduler } from "@/providers/schedular-provider";
 import { v4 as uuidv4 } from "uuid"; // Use UUID to generate event IDs
 
@@ -33,10 +33,16 @@ export default function AddEventModal({
   CustomAddEventModal,
   productData,
   eventTypes,
+  selectedProduct: initialSelectedProduct,
 }: {
   CustomAddEventModal?: React.FC<{ register: any; errors: any }>;
   productData?: ProductData[];
   eventTypes?: string[];
+  selectedProduct?: {
+    id: string;
+    learning_path_id?: string;
+    module_id: string;
+  };
 }) {
   const { onClose, data } = useModalContext();
   const { canEdit } = useScheduler();
@@ -45,9 +51,21 @@ export default function AddEventModal({
   const [selectedColor, setSelectedColor] = useState<string>(
     getEventColor(data?.variant || "primary")
   );
-  const [selectedProduct, setSelectedProduct] = useState<string>("");
-  const [selectedPath, setSelectedPath] = useState<string>("");
-  const [selectedModule, setSelectedModule] = useState<string>("");
+  const [selectedProduct, setSelectedProduct] = useState<string>(initialSelectedProduct?.id || data?.selectedProduct?.product_id || "");
+  const [selectedPath, setSelectedPath] = useState<string>(initialSelectedProduct?.learning_path_id || data?.selectedProduct?.learning_path_id || "");
+  const [selectedModule, setSelectedModule] = useState<string>(initialSelectedProduct?.module_id || data?.selectedProduct?.module_id || "");
+
+  useEffect(() => {
+    if (initialSelectedProduct) {
+      setSelectedProduct(initialSelectedProduct.id || "");
+      setSelectedPath(initialSelectedProduct.learning_path_id || "");
+      setSelectedModule(initialSelectedProduct.module_id || "");
+    } else if (data?.selectedProduct) {
+      setSelectedProduct(data.selectedProduct.product_id || "");
+      setSelectedPath(data.selectedProduct.learning_path_id || "");
+      setSelectedModule(data.selectedProduct.module_id || "");
+    }
+  }, [initialSelectedProduct, data?.selectedProduct]);
 
   const filteredPaths = productData
     ?.filter((item) => item.product_id === selectedProduct)
@@ -77,8 +95,6 @@ export default function AddEventModal({
       self.findIndex(p => p.id === value.id) === index
     );
 
-  const typedData = data as Event;
-
   const { handlers } = useScheduler();
 
   const {
@@ -103,6 +119,11 @@ export default function AddEventModal({
       color: data?.color ?? "blue",
       productData: data?.productData,
       event_type: data?.event_type ?? "",
+      selectedProduct: {
+        product_id: data?.selectedProduct?.product_id ?? "",
+        learning_path_id: data?.selectedProduct?.learning_path_id ?? "",
+        module_id: data?.selectedProduct?.module_id ?? "",
+      }
     },
   });
 
@@ -119,6 +140,11 @@ export default function AddEventModal({
         color: data.color || "blue",
         productData: data.productData,
         event_type: data.event_type || "",
+        selectedProduct: {
+          product_id: data?.selectedProduct?.product_id ?? "",
+          learning_path_id: data?.selectedProduct?.learning_path_id ?? "",
+          module_id: data?.selectedProduct?.module_id ?? "",
+        }
       });
     }
   }, [data, reset]);
@@ -181,6 +207,8 @@ export default function AddEventModal({
       description: formData.description || "",
       event_type: formData.event_type,
       productData: selectedProductData ? {
+        id: selectedProductData.product_id,
+        title: selectedProductData.product_title,
         product_id: selectedProductData.product_id,
         product_title: selectedProductData.product_title,
         learning_path_title: selectedProductData.learning_path_title,
