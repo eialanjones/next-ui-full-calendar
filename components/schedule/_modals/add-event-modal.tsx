@@ -45,9 +45,15 @@ export default function AddEventModal({
   const [selectedColor, setSelectedColor] = useState<string>(
     getEventColor(data?.variant || "primary")
   );
-  const [selectedProduct, setSelectedProduct] = useState<string>(data?.productData?.product_id || "");
-  const [selectedPath, setSelectedPath] = useState<string>(data?.productData?.learning_path_title || "");
-  const [selectedModule, setSelectedModule] = useState<string>(data?.productData?.module_id || "");
+  const [selectedProduct, setSelectedProduct] = useState<string>();
+  const [selectedPath, setSelectedPath] = useState<string>();
+  const [selectedModule, setSelectedModule] = useState<string>();
+
+  useEffect(() => {
+    setSelectedProduct(data?.productData?.product_id || "");
+    setSelectedPath(data?.productData?.learning_path_title || "");
+    setSelectedModule(data?.productData?.module_id || "");
+  }, [data]);
 
   useEffect(() => {
     if (data?.productData) {
