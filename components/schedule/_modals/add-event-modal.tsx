@@ -33,16 +33,10 @@ export default function AddEventModal({
   CustomAddEventModal,
   productData,
   eventTypes,
-  selectedProduct: initialSelectedProduct,
 }: {
   CustomAddEventModal?: React.FC<{ register: any; errors: any }>;
   productData?: ProductData[];
   eventTypes?: string[];
-  selectedProduct?: {
-    id: string;
-    learning_path_id?: string;
-    module_id: string;
-  };
 }) {
   const { onClose, data } = useModalContext();
   const { canEdit } = useScheduler();
@@ -51,21 +45,17 @@ export default function AddEventModal({
   const [selectedColor, setSelectedColor] = useState<string>(
     getEventColor(data?.variant || "primary")
   );
-  const [selectedProduct, setSelectedProduct] = useState<string>(initialSelectedProduct?.id || data?.selectedProduct?.product_id || "");
-  const [selectedPath, setSelectedPath] = useState<string>(initialSelectedProduct?.learning_path_id || data?.selectedProduct?.learning_path_id || "");
-  const [selectedModule, setSelectedModule] = useState<string>(initialSelectedProduct?.module_id || data?.selectedProduct?.module_id || "");
+  const [selectedProduct, setSelectedProduct] = useState<string>(data?.productData?.product_id || "");
+  const [selectedPath, setSelectedPath] = useState<string>(data?.productData?.learning_path_title || "");
+  const [selectedModule, setSelectedModule] = useState<string>(data?.productData?.module_id || "");
 
   useEffect(() => {
-    if (initialSelectedProduct) {
-      setSelectedProduct(initialSelectedProduct.id || "");
-      setSelectedPath(initialSelectedProduct.learning_path_id || "");
-      setSelectedModule(initialSelectedProduct.module_id || "");
-    } else if (data?.selectedProduct) {
-      setSelectedProduct(data.selectedProduct.product_id || "");
-      setSelectedPath(data.selectedProduct.learning_path_id || "");
-      setSelectedModule(data.selectedProduct.module_id || "");
+    if (data?.productData) {
+      setSelectedProduct(data.productData.product_id || "");
+      setSelectedPath(data.productData.learning_path_title || "");
+      setSelectedModule(data.productData.module_id || "");
     }
-  }, [initialSelectedProduct, data?.selectedProduct]);
+  }, [data?.productData]);
 
   const filteredPaths = productData
     ?.filter((item) => item.product_id === selectedProduct)
@@ -119,11 +109,6 @@ export default function AddEventModal({
       color: data?.color ?? "blue",
       productData: data?.productData,
       event_type: data?.event_type ?? "",
-      selectedProduct: {
-        product_id: data?.selectedProduct?.product_id ?? "",
-        learning_path_id: data?.selectedProduct?.learning_path_id ?? "",
-        module_id: data?.selectedProduct?.module_id ?? "",
-      }
     },
   });
 
@@ -140,11 +125,6 @@ export default function AddEventModal({
         color: data.color || "blue",
         productData: data.productData,
         event_type: data.event_type || "",
-        selectedProduct: {
-          product_id: data?.selectedProduct?.product_id ?? "",
-          learning_path_id: data?.selectedProduct?.learning_path_id ?? "",
-          module_id: data?.selectedProduct?.module_id ?? "",
-        }
       });
     }
   }, [data, reset]);

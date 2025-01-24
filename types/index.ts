@@ -117,11 +117,6 @@ export const eventSchema = z.object({
     module_id: z.string().nonempty("Module ID is required"),
     module_title: z.string().nonempty("Module title is required"),
   }).optional(),
-  selectedProduct: z.object({
-    product_id: z.string().nonempty("Product ID is required"),
-    learning_path_id: z.string().optional(),
-    module_id: z.string().optional(),
-  }).optional(),
 });
 
 export type EventFormData = z.infer<typeof eventSchema>;
